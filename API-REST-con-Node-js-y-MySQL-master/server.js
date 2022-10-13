@@ -11,7 +11,7 @@ const dbOptions = {
     port: 3306,
     user: 'root',
     password: '',
-    database: 'bd_hotel_sigloxi'
+    database: 'db_restaurant_sigloxi'
 }
 
 // middlewares -------------------------------------
@@ -20,6 +20,15 @@ app.use(express.json())
 app.use(cors())
 // routes -------------------------------------------
 app.get('/comuna', (req, res)=>{
+    res.send('Api')
+})
+app.get('/usuario', (req, res)=>{
+    res.send('Api')
+})
+app.get('/rol', (req, res)=>{
+    res.send('Api')
+})
+app.get('/empleado', (req, res)=>{
     res.send('Api')
 })
 app.use('/api', routes)

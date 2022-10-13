@@ -8,17 +8,16 @@ POST http://localhost:9000/api/comuna HTTP/1.1
 Content-Type: application/json
 
 {
-    "id_comuna" : 6,
-    "nom_comuna": "jamon"
+    "nom_comuna" : "jiji"
 }
 
 ###
-DELETE http://localhost:9000/api/comuna/3 HTTP/1.1
+DELETE http://localhost:9000/api/comuna/8 HTTP/1.1
 
 ###
-PUT http://localhost:9000/api/comuna/3 HTTP/1.1
+PUT http://localhost:9000/api/usuario/1 HTTP/1.1
 Content-Type: application/json
 
 {
-    "nom_comuna": "maipu"
+    "ape1_empl": ""
 }
