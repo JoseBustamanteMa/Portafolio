@@ -1,10 +1,10 @@
 //Tests to see if the CRUD is working
 
 ###
-GET http://localhost:9000/api/comuna HTTP/1.1
+GET http://localhost:9000/api/mesa HTTP/1.1
 
 ###
-POST http://localhost:9000/api/comuna HTTP/1.1
+POST http://localhost:9000/api/mesa HTTP/1.1
 Content-Type: application/json
 
 {

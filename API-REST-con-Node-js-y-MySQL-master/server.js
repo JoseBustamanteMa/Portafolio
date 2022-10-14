@@ -31,6 +31,30 @@ app.get('/rol', (req, res)=>{
 app.get('/empleado', (req, res)=>{
     res.send('Api')
 })
+app.get('/cliente', (req, res)=>{
+    res.send('Api')
+})
+app.get('/reserva', (req, res)=>{
+    res.send('Api')
+})
+app.get('/receta', (req, res)=>{
+    res.send('Api')
+})
+app.get('/provedoor', (req, res)=>{
+    res.send('Api')
+})
+app.get('/mesa', (req, res)=>{
+    res.send('Api')
+})
+app.get('/producto', (req, res)=>{
+    res.send('Api')
+})
+app.get('/direccion', (req, res)=>{
+    res.send('Api')
+})
+app.get('/solicitud', (req, res)=>{
+    res.send('Api')
+})
 app.use('/api', routes)
 
 // server running -----------------------------------

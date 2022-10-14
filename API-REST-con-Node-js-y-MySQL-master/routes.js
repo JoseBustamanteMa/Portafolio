@@ -180,17 +180,17 @@ routes.put('/empleado/:idEmpleado', (req, res)=>{
         conn.query('UPDATE empleado set ? WHERE idEmpleado = ?', [req.body, req.params.idEmpleado], (err, rows)=>{
             if(err) return res.send(err)
 
-            res.send('usuario empleado')
+            res.send('empleado cambiado')
         })
     })
 })
-//Crud Empleado ---------------------------------------------------------------
+//Crud Cliente ---------------------------------------------------------------
 // Read 
-routes.get('/empleado', (req, res)=>{
+routes.get('/cliente', (req, res)=>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
 
-        conn.query('SELECT * FROM empleado', (err, rows)=>{
+        conn.query('SELECT * FROM cliente', (err, rows)=>{
             if(err) return res.send(err)
 
             res.json(rows)
@@ -198,35 +198,357 @@ routes.get('/empleado', (req, res)=>{
     })
 })
 // Instert into
-routes.post('/empleado', (req, res)=>{
+routes.post('/cliente', (req, res)=>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
-        conn.query('INSERT INTO empleado set ?', [req.body], (err, rows)=>{
+        conn.query('INSERT INTO cliente set ?', [req.body], (err, rows)=>{
             if(err) return res.send(err)
 
-            res.send('empleado añadido')
+            res.send('cliente añadido')
         })
     })
 })
 // Delete 
-routes.delete('/empleado/:idEmpleado', (req, res)=>{
+routes.delete('/cliente/:idCliente', (req, res)=>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
-        conn.query('DELETE FROM empleado WHERE idEmpleado = ?', [req.params.idEmpleado], (err, rows)=>{
+        conn.query('DELETE FROM cliente WHERE idCliente = ?', [req.params.idCliente], (err, rows)=>{
             if(err) return res.send(err)
 
-            res.send('empleado eliminado')
+            res.send('cliente eliminado')
         })
     })
 })
 // Update
-routes.put('/empleado/:idEmpleado', (req, res)=>{
+routes.put('/cliente/:idCliente', (req, res)=>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
-        conn.query('UPDATE empleado set ? WHERE idEmpleado = ?', [req.body, req.params.idEmpleado], (err, rows)=>{
+        conn.query('UPDATE cliente set ? WHERE idCliente = ?', [req.body, req.params.idCliente], (err, rows)=>{
             if(err) return res.send(err)
 
-            res.send('usuario empleado')
+            res.send('usuario cliente')
+        })
+    })
+})
+//Crud Reserva ---------------------------------------------------------------
+// Read 
+routes.get('/reserva', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+
+        conn.query('SELECT * FROM reserva', (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.json(rows)
+        })
+    })
+})
+// Instert into
+routes.post('/reserva', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+        conn.query('INSERT INTO reserva set ?', [req.body], (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.send('reserva añadido')
+        })
+    })
+})
+// Delete 
+routes.delete('/reserva/:idReserva', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+        conn.query('DELETE FROM empleado WHERE idReserva = ?', [req.params.idReserva], (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.send('reserva eliminado')
+        })
+    })
+})
+// Update
+routes.put('/reserva/:idReserva', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+        conn.query('UPDATE reserva set ? WHERE idReserva = ?', [req.body, req.params.idReserva], (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.send('usuario reserva')
+        })
+    })
+})
+//Crud Receta ---------------------------------------------------------------
+// Read 
+routes.get('/receta', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+
+        conn.query('SELECT * FROM receta', (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.json(rows)
+        })
+    })
+})
+// Instert into
+routes.post('/receta', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+        conn.query('INSERT INTO receta set ?', [req.body], (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.send('receta añadido')
+        })
+    })
+})
+// Delete 
+routes.delete('/receta/:idReceta', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+        conn.query('DELETE FROM receta WHERE idReceta = ?', [req.params.idReceta], (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.send('receta eliminado')
+        })
+    })
+})
+// Update
+routes.put('/receta/:idReceta', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+        conn.query('UPDATE receta set ? WHERE idReceta = ?', [req.body, req.params.idReceta], (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.send('usuario receta')
+        })
+    })
+})
+//Crud Provedoor ---------------------------------------------------------------
+// Read 
+routes.get('/provedoor', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+
+        conn.query('SELECT * FROM provedoor', (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.json(rows)
+        })
+    })
+})
+// Instert into
+routes.post('/provedoor', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+        conn.query('INSERT INTO provedoor set ?', [req.body], (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.send('provedoor añadido')
+        })
+    })
+})
+// Delete 
+routes.delete('/provedoor/:idProvedoor', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+        conn.query('DELETE FROM provedoor WHERE idProvedoor = ?', [req.params.idProvedoor], (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.send('provedoor eliminado')
+        })
+    })
+})
+// Update
+routes.put('/provedoor/:idProvedoor', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+        conn.query('UPDATE provedoor set ? WHERE idProvedoor = ?', [req.body, req.params.idProvedoor], (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.send('usuario provedoor')
+        })
+    })
+})
+//Crud Mesa ---------------------------------------------------------------
+// Read 
+routes.get('/mesa', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+
+        conn.query('SELECT * FROM mesa', (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.json(rows)
+        })
+    })
+})
+// Instert into
+routes.post('/mesa', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+        conn.query('INSERT INTO mesa set ?', [req.body], (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.send('mesa añadido')
+        })
+    })
+})
+// Delete 
+routes.delete('/mesa/:idMesa', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+        conn.query('DELETE FROM mesa WHERE idMesa = ?', [req.params.idMesa], (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.send('mesa eliminado')
+        })
+    })
+})
+// Update
+routes.put('/mesa/:idMesa', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+        conn.query('UPDATE mesa set ? WHERE idMesa = ?', [req.body, req.params.idMesa], (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.send('usuario mesa')
+        })
+    })
+})
+//Crud Producto ---------------------------------------------------------------
+// Read 
+routes.get('/producto', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+
+        conn.query('SELECT * FROM producto', (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.json(rows)
+        })
+    })
+})
+// Instert into
+routes.post('/producto', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+        conn.query('INSERT INTO producto set ?', [req.body], (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.send('producto añadido')
+        })
+    })
+})
+// Delete 
+routes.delete('/producto/:idProducto', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+        conn.query('DELETE FROM producto WHERE idProducto = ?', [req.params.idProducto], (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.send('producto eliminado')
+        })
+    })
+})
+// Update
+routes.put('/producto/:idProducto', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+        conn.query('UPDATE producto set ? WHERE idProducto = ?', [req.body, req.params.idProducto], (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.send('producto cambiado')
+        })
+    })
+})
+//Crud Direccion ---------------------------------------------------------------
+// Read 
+routes.get('/direccion', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+
+        conn.query('SELECT * FROM direccion', (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.json(rows)
+        })
+    })
+})
+// Instert into
+routes.post('/direccion', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+        conn.query('INSERT INTO direccion set ?', [req.body], (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.send('direccion añadida')
+        })
+    })
+})
+// Delete 
+routes.delete('/direccion/:idDireccion', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+        conn.query('DELETE FROM direccion WHERE idDireccion = ?', [req.params.idDireccion], (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.send('direccion eliminada')
+        })
+    })
+})
+// Update
+routes.put('/direccion/:idDireccion', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+        conn.query('UPDATE direccion set ? WHERE idDireccion = ?', [req.body, req.params.idDireccion], (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.send('direccion cambiada')
+        })
+    })
+})
+//Crud Solicitud ---------------------------------------------------------------
+// Read 
+routes.get('/solicitud', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+
+        conn.query('SELECT * FROM solicitud', (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.json(rows)
+        })
+    })
+})
+// Instert into
+routes.post('/solicitud', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+        conn.query('INSERT INTO solicitud set ?', [req.body], (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.send('solicitud añadido')
+        })
+    })
+})
+// Delete 
+routes.delete('/solicitud/:idSolicitud', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+        conn.query('DELETE FROM solicitud WHERE idSolicitud = ?', [req.params.idSolicitud], (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.send('solicitud eliminado')
+        })
+    })
+})
+// Update
+routes.put('/solicitud/:idSolicitud', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+        conn.query('UPDATE solicitud set ? WHERE idSolicitud = ?', [req.body, req.params.idSolicitud], (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.send('solicitud cambiada')
         })
     })
 })
