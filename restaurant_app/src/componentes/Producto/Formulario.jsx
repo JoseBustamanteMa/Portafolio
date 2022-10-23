@@ -1,30 +1,68 @@
 import React from 'react'
 import { nanoid } from 'nanoid'
-import 'bootstrap/dist/css/bootstrap.css'
+//import 'bootstrap/dist/css/bootstrap.css'
 //import Productos from './Productos'
+
 
 //class Formulario extends React.Component{
 
 const Formulario = ({productos, setProductos, producto ,setProducto, cantidad, setCantidad,
 id, setId, estadoEditar, setEstadoEditar}) => {
 
+const [errorProducto, setErrorProducto] = React.useState(false)
+const [errorCantidad, setErrorCantidad] = React.useState(false)
+//const [errores, setErrores] = React.useState([])
+//const [cerrarModal, setCerrarModal] = React.useState(true)
 
 
 
- 
+
+  // const cambiarEstadosAlCerrarModal = () => {
+  //   setEstadoEditar(false)
+  //   setErrorCantidad(false)
+  //   setErrorProducto(false)
+    
+  // }
 
 
   const agregarProducto = (e) => {
     e.preventDefault()
 
-    const randomId = nanoid(10)
+    
 
     //Validacion de datos
+
     if (!producto.trim()) {
-        alert('Todos los campos son obligatorios')
-        return
+      //alert('Ingresa producto en agregar')
+      setErrorProducto(true)
+      
+      
+      return
     }
     
+    setErrorProducto(false)
+
+    if (!cantidad.trim()) {
+      //alert('Ingresa cantidad')
+      setErrorCantidad(true)
+      
+      
+      return
+
+    }
+    
+    setErrorCantidad(false)
+    
+    
+    const randomId = nanoid(10)
+    
+
+
+    
+
+      
+    
+      
     const requestInit = {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -36,25 +74,53 @@ id, setId, estadoEditar, setEstadoEditar}) => {
     .then(res => res.text())
     .then(res => console.log(res))
 
-    
+      
 
-    
-    
+      
+      
     const arrayAgregado = [...productos ,{idProducto: randomId,  nom_producto: producto, stock_producto: cantidad}]
-
+    
     setProductos(arrayAgregado)
+
+
     setProducto('')
     setCantidad('')
     
+    setErrorCantidad(false)
+    setErrorProducto(false)
+    
+    
+    
 }
+
+
+
 
 const actualizarProducto = (e) => {
   e.preventDefault()
   //Validacion de datos
+  
+
   if (!producto.trim()) {
-      alert('Todos los campos son obligatorios')
-      return
+    //alert('Ingresa producto en agregar')
+    setErrorProducto(true)
+    
+    
+    return
   }
+  
+  setErrorProducto(false)
+
+  const strCantidad = cantidad.toString()
+
+  if (!strCantidad.trim()) {
+    //alert('Ingresa cantidad')
+    setErrorCantidad(true)
+    
+    return
+
+  }
+
   console.log(producto)
   const requestInit = {
       method: 'PUT',
@@ -114,25 +180,42 @@ const actualizarProducto = (e) => {
       <form onSubmit={estadoEditar ? actualizarProducto : agregarProducto}>
 
       
+      
       <div className="modal-body">
+      {/* Alerta producto */}
+
+      {errorProducto ? (<div className="alert alert-danger mx-1 mb-0" role="alert">
+        ¡Debes ingresar un nombre!
+      </div>) : <div></div>}
+      
         <input type="text"
         placeholder='Nombre producto' 
-        className='form-control mb-3'
+        className='form-control mb-3 mt-3'
         onChange={(e) => setProducto(e.target.value)}
-        value={producto}/>
+        value={producto}
+        //required
+       />
 
 
+      {/* Alerta cantidad */}
+
+      {errorCantidad ? <div className="alert alert-danger mx-1 mb-0" role="alert">
+          ¡Debes ingresar una cantidad!
+        </div> : <div></div>}
+        
         <input type="number"
         placeholder='Cantidad' 
         className='form-control mt-3'
         onChange={(e) => setCantidad(e.target.value)}
-        value={cantidad}/>
+        value={cantidad}
+        //required
+        />
       </div>
 
       
       <div className="modal-footer">
-        {estadoEditar ? <button type="submit" className="btn btn-warning" data-bs-dismiss="modal">Editar</button> :
-        <button type="submit" className="btn btn-success" data-bs-dismiss="modal">Agregar</button>
+        {estadoEditar ? <button type="submit" className="btn btn-warning">Editar</button> :
+        <button onClick={() => setEstadoEditar(false)} type="submit" className="btn btn-success">Agregar</button>
         }
 
         

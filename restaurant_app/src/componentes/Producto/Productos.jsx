@@ -5,8 +5,8 @@ import Formulario from './Formulario'
 
 const Productos = () => {
 
-    const [producto, setProducto] = React.useState([])
-    const [cantidad, setCantidad] = React.useState([])
+    const [producto, setProducto] = React.useState('')
+    const [cantidad, setCantidad] = React.useState('')
     const [productos, setProductos] = React.useState([])
     //const [estadoModal, setEstadoModal] = React.useState(false)
     const [estadoEditar, setEstadoEditar] = React.useState(false)
