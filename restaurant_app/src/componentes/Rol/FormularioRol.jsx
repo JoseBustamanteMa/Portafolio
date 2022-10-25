@@ -2,59 +2,99 @@ import React from 'react'
 
 const FormularioRol = ({rol, setRol, idRol, setIdRol, roles, setRoles, editarRol, setEditarRol}) => {
 
+
+    const [rolIgualError, setRolIgualError] = React.useState(false)
+    const [idIgualError, setIdIgualError] = React.useState(false)
+    const [vacioId, setVacioId] = React.useState(false)
+    const [vacioRol, setVacioRol] = React.useState(false)
+
     const agregarRol = (e) => {
         e.preventDefault()
+
+        const strId = idRol.toString()
+        if(!strId.trim()){
+            setVacioId(true)
+            return
+        }
+        setVacioId(false)
+
+        if(!rol.trim()){
+            setVacioRol(true)
+            return
+        }
+        setVacioRol(false)
         
         //Validacion de datos
     
-         
-        const requestInit = {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                idRol : idRol, nom_rol : rol
-            })
-        }
-        fetch('http://localhost:9000/api/rol/', requestInit)
-        .then(res => res.text())
-        .then(res => console.log(res))
-
-        const arrayAgregado = [...roles, {idRol : idRol, nom_rol : rol}]
-
-        setRoles(arrayAgregado)
-
-        setEditarRol(false)
-        setRol('')
-        setIdRol('')
+        if(!rolIgualError && !idIgualError){
+            const requestInit = {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    idRol : idRol, nom_rol : rol
+                })
+            }
+            fetch('http://localhost:9000/api/rol/', requestInit)
+            .then(res => res.text())
+            .then(res => console.log(res))
     
+            const arrayAgregado = [...roles, {idRol : idRol, nom_rol : rol}]
+    
+            setRoles(arrayAgregado)
+    
+            setEditarRol(false)
+            setRol('')
+            setIdRol('')
+        
+        }
+        
 }   
 
 
 const actualizarRol = (e) => {
     e.preventDefault()
     //Validacion de datos
-   
-      const requestInit = {
-        method: 'PUT',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-            idRol : idRol, nom_rol : rol
-        })
-        }
-        fetch('http://localhost:9000/api/rol/' + idRol, requestInit)
-        .then(res => res.text())
-        .then(res => console.log(res))
+
+    const strId = idRol.toString()
+    if(!strId.trim()){
+        setVacioId(true)
+        return
+    }
+    setVacioId(false)
+
+    if(!rol.trim()){
+        setVacioRol(true)
+        return
+    }
+    setVacioRol(false)
 
 
-        const arrayEditado = roles.map((item) => (item.idRol === idRol ? (
-            {idRol: idRol, nom_rol: rol} 
-        ) : item))
+    if(!rolIgualError && !idIgualError){
+        const requestInit = {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                idRol : idRol, nom_rol : rol
+            })
+            }
+            fetch('http://localhost:9000/api/rol/' + idRol, requestInit)
+            .then(res => res.text())
+            .then(res => console.log(res))
+    
+    
+            const arrayEditado = roles.map((item) => (item.idRol === idRol ? (
+                {idRol: idRol, nom_rol: rol} 
+            ) : item))
+    
+            setRoles(arrayEditado)
+    
+            setEditarRol(false)
+            setRol('')
+            setIdRol('')
 
-        setRoles(arrayEditado)
-
-        setEditarRol(false)
-        setRol('')
-        setIdRol('')
+    }
+    
+     
 
     }
 
@@ -63,6 +103,43 @@ const actualizarRol = (e) => {
         setIdRol('')
         setRol('')
     }
+
+
+    const onBlurId = () =>{
+
+        
+        let idRolIgual = ''
+        roles.forEach(item => {
+            if(item.idRol == idRol){
+                console.log('estamos dentro del if')
+                idRolIgual = item.idRol
+                setIdIgualError(true)
+            }
+        });
+
+        if(!idRolIgual){
+            setIdIgualError(false)
+        }
+   
+    }
+
+    const onBlurRol = () => {
+        let rolIgual = ''
+        roles.forEach(item => {
+            if(item.nom_rol === rol){
+                console.log('estamos dentro del if')
+                rolIgual = item.nom_rol
+                setRolIgualError(true)
+            }
+        });
+
+        if(!rolIgual){
+            setRolIgualError(false)
+        }
+    }
+
+
+
   return (
     <div>
 
@@ -100,27 +177,58 @@ const actualizarRol = (e) => {
       <div className="modal-body">
       {/* Alerta producto */}
 
-      
-      
-        <input type="text"
+        
+      {idIgualError ? <div className="alert alert-danger mx-1 mb-0" role="alert">
+          ¡Ya existe esa ID!
+        </div> : <div></div>}
+
+        {vacioId ? <div className="alert alert-danger mx-1 mb-0" role="alert">
+          ¡Debes ingresar una id!
+        </div> : <div></div>}
+
+
+
+        {editarRol ? (<input type="number"
         placeholder='Id del rol' 
         className='form-control mb-3 mt-3'
         onChange={(e) => setIdRol(e.target.value)}
         value={idRol}
+        //onBlur={onBlurId}
+        readOnly
+        
+        
+        //required
+       />) : 
+       <input type="number"
+        placeholder='Id del rol' 
+        className='form-control mb-3 mt-3'
+        onChange={(e) => setIdRol(e.target.value)}
+        value={idRol}
+        onBlur={onBlurId}
+        
         
         //required
        />
+       }
+      
 
 
       {/* Alerta cantidad */}
 
      
-        
+        {rolIgualError ? <div className="alert alert-danger mx-1 mb-0" role="alert">
+          ¡Ese rol ya existe!
+        </div> : <div></div>}
+
+        {vacioRol ? <div className="alert alert-danger mx-1 mb-0" role="alert">
+          ¡Debes ingresar un rol!
+        </div> : <div></div>}
         <input type="text"
         placeholder='Rol' 
         className='form-control mt-3'
         onChange={(e) => setRol(e.target.value)}
         value={rol}
+        onBlur={onBlurRol}
         //required
         />
       </div>
