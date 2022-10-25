@@ -11,6 +11,12 @@ id, setId, estadoEditar, setEstadoEditar}) => {
 
 const [errorProducto, setErrorProducto] = React.useState(false)
 const [errorCantidad, setErrorCantidad] = React.useState(false)
+const [errorProductoNombre, setErrorProductoNombre] = React.useState(false)
+
+
+
+
+
 //const [errores, setErrores] = React.useState([])
 //const [cerrarModal, setCerrarModal] = React.useState(true)
 
@@ -24,16 +30,41 @@ const [errorCantidad, setErrorCantidad] = React.useState(false)
     
   // }
 
+  const onBlur = () => {
+    
+    let produ = ''
+    productos.forEach(item => {
+      if(item.nom_producto===producto){
+        console.log(item.nom_producto)
+        produ = item.nom_producto
+        setErrorProductoNombre(true)
+        
+      }
+      
+    });
+    if(!produ){
+      console.log('estoy en el produ') 
+      setErrorProductoNombre(false)
+      
+    }
+    
+    
+  }
+  console.log(errorProductoNombre)
+
+ 
+
 
   const agregarProducto = (e) => {
     e.preventDefault()
 
     
+    
 
     //Validacion de datos
 
     if (!producto.trim()) {
-      //alert('Ingresa producto en agregar')
+      alert('Ingresa producto en agregar')
       setErrorProducto(true)
       
       
@@ -52,17 +83,11 @@ const [errorCantidad, setErrorCantidad] = React.useState(false)
     }
     
     setErrorCantidad(false)
-    
-    
-    const randomId = nanoid(10)
-    
 
 
-    
-
-      
-    
-      
+    if(!errorProductoNombre){
+      const randomId = nanoid(10)
+     
     const requestInit = {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -88,8 +113,13 @@ const [errorCantidad, setErrorCantidad] = React.useState(false)
     
     setErrorCantidad(false)
     setErrorProducto(false)
+    setErrorProductoNombre(false)
+    
+    }
     
     
+    
+   
     
 }
 
@@ -121,26 +151,35 @@ const actualizarProducto = (e) => {
 
   }
 
-  console.log(producto)
-  const requestInit = {
+  //console.log(producto)
+
+
+  if(!errorProductoNombre){
+    const requestInit = {
       method: 'PUT',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
           idProducto : id, nom_producto : producto, stock_producto : cantidad 
       })
+      }
+      fetch('http://localhost:9000/api/producto/' + id, requestInit)
+      .then(res => res.text())
+      .then(res => console.log(res))
+
+
+      const arrayEditado = productos.map((item) => item.idProducto === id ? 
+      {idProducto : id, nom_producto: producto, stock_producto: cantidad} : item)
+
+      setProductos(arrayEditado)
+      setEstadoEditar(false)
+      setProducto('')
+      setCantidad('')
+      setErrorProducto(false)
+      setErrorCantidad(false)
+      
   }
-  fetch('http://localhost:9000/api/producto/' + id, requestInit)
-  .then(res => res.text())
-  .then(res => console.log(res))
 
-
-  const arrayEditado = productos.map((item) => item.idProducto === id ? 
-  {idProducto : id, nom_producto: producto, stock_producto: cantidad} : item)
-
-  setProductos(arrayEditado)
-  setEstadoEditar(false)
-  setProducto('')
-  setCantidad('')
+ 
 }
 
   
@@ -187,12 +226,16 @@ const actualizarProducto = (e) => {
       {errorProducto ? (<div className="alert alert-danger mx-1 mb-0" role="alert">
         ¡Debes ingresar un nombre!
       </div>) : <div></div>}
+      {errorProductoNombre ? (<div className="alert alert-danger mx-1 mb-0" role="alert">
+        ¡El producto ya existe!
+      </div>) : <div></div>}
       
         <input type="text"
         placeholder='Nombre producto' 
         className='form-control mb-3 mt-3'
         onChange={(e) => setProducto(e.target.value)}
         value={producto}
+        onBlur={onBlur}
         //required
        />
 
