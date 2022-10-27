@@ -1,5 +1,4 @@
 import React from 'react'
-import NavBarProductos from './NavBarProductos'
 //import { nanoid } from 'nanoid'
 import Formulario from './Formulario'
 
@@ -81,10 +80,7 @@ const Productos = () => {
         
         <div className='container-fluid'>
         <div className='row flex-nowrap'>
-            <NavBarProductos/>
             <div className='col py-3 ms-5'>
-                
-                
                 <div>
                 <h1 className='text-center mb-5'>Productos</h1>
 

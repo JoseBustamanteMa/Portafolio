@@ -142,18 +142,17 @@ const actualizarRol = (e) => {
 
   return (
     <div>
-
         <div>
-        
-{editarRol ? <div className='text-center'>
-<button type="button" className="btn btn-success text-center mb-5" data-bs-toggle="modal" data-bs-target="#myModal">
-    <h4>+ Editar rol</h4>
-</button>
-</div> : <div className='text-center'>
-<button type="button" className="btn btn-success text-center mb-5" data-bs-toggle="modal" data-bs-target="#myModal">
-    <h4>+ Agregar</h4>
-</button>
-</div>}
+            {editarRol ? 
+            <div className='text-center'>
+                <button type="button" className="btn btn-success text-center mb-5" data-bs-toggle="modal" data-bs-target="#myModal">
+                    <h4>+ Editar rol</h4>
+                </button>
+            </div> : <div className='text-center'>
+            <button type="button" className="btn btn-success text-center mb-5" data-bs-toggle="modal" data-bs-target="#myModal">
+                <h4>+ Agregar</h4>
+            </button>
+        </div>}
 
 
 
@@ -205,17 +204,10 @@ const actualizarRol = (e) => {
         onChange={(e) => setIdRol(e.target.value)}
         value={idRol}
         onBlur={onBlurId}
-        
-        
         //required
        />
        }
-      
-
-
       {/* Alerta cantidad */}
-
-     
         {rolIgualError ? <div className="alert alert-danger mx-1 mb-0" role="alert">
           ¡Ese rol ya existe!
         </div> : <div></div>}
@@ -232,14 +224,10 @@ const actualizarRol = (e) => {
         //required
         />
       </div>
-
-      
       <div className="modal-footer">
 
         {editarRol ? <button className='btn btn-warning' type='submit'>Editar rol</button> :
         <button className='btn btn-success' type='submit'>Agregar rol</button>}
-        
-
         
         <button onClick={limpiarCasillas} type="button" className="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
       </div>
@@ -252,4 +240,4 @@ const actualizarRol = (e) => {
   )
 }
 
-export default FormularioRol
+export default FormularioRol;

@@ -1,0 +1,9 @@
+.title-container{
+
+    font-size:40px;
+    text-align: center;
+    justify-content:center;
+    align-items: center;
+    font-weight:bold;
+    color: linear-gradient(-45deg,#7f379b,#ffa26c);
+}
