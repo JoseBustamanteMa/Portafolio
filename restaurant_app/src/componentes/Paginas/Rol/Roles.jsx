@@ -32,7 +32,7 @@ const Roles = () => {
             .then(res => res.text())
             .then(res => console.log(res))
 
-            const arrayEliminado = roles.filter((item) => item.idRol !== id)
+            const arrayEliminado = roles.filter((item) => item.id_rol !== id)
 
             setRoles(arrayEliminado)
 
@@ -44,7 +44,7 @@ const Roles = () => {
 
     const editar = (item) => {
         setEditarRol(true)
-        setIdRol(item.idRol)
+        setIdRol(item.id_rol)
         setRol(item.nom_rol)
     }
 
@@ -72,13 +72,13 @@ const Roles = () => {
             </tr>
         </thead>
         {roles.map(item => (
-            <tbody key={item.idRol}>
+            <tbody key={item.id_rol}>
             <tr>
-                <td>{item.idRol}</td>
+                <td>{item.id_rol}</td>
                 <td>{item.nom_rol}</td>
                 <td className='col text-end'>
                 <button onClick={() => editar(item)} className='col-3 btn btn-warning me-2' data-bs-toggle="modal" data-bs-target="#myModal">Editar</button>
-                <button onClick={() => eliminarRol(item.idRol)} className='col-3 btn btn-danger '>Eliminar</button>
+                <button onClick={() => eliminarRol(item.id_rol)} className='col-3 btn btn-danger '>Eliminar</button>
                 </td>
             </tr>
             

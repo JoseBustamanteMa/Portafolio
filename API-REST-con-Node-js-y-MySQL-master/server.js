@@ -11,7 +11,7 @@ const dbOptions = {
     port: 3306,
     user: 'root',
     password: '',
-    database: 'db_restaurant_sigloxi'
+    database: 'db_restaurante_siglo_xxi'
 }
 
 // middlewares -------------------------------------

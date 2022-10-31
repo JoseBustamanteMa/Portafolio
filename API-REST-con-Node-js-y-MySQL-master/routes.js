@@ -120,7 +120,7 @@ routes.post('/rol', (req, res)=>{
 routes.delete('/rol/:idRol', (req, res)=>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
-        conn.query('DELETE FROM rol WHERE idRol = ?', [req.params.idRol], (err, rows)=>{
+        conn.query('DELETE FROM rol WHERE id_rol = ?', [req.params.idRol], (err, rows)=>{
             if(err) return res.send(err)
 
             res.send('usuario eliminado')
@@ -131,7 +131,7 @@ routes.delete('/rol/:idRol', (req, res)=>{
 routes.put('/rol/:idRol', (req, res)=>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
-        conn.query('UPDATE rol set ? WHERE idRol = ?', [req.body, req.params.idRol], (err, rows)=>{
+        conn.query('UPDATE rol set ? WHERE id_rol = ?', [req.body, req.params.idRol], (err, rows)=>{
             if(err) return res.send(err)
 
             res.send('rol cambiada')

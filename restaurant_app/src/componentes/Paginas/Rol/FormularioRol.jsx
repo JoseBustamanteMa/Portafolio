@@ -31,24 +31,26 @@ const FormularioRol = ({rol, setRol, idRol, setIdRol, roles, setRoles, editarRol
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
-                    idRol : idRol, nom_rol : rol
+                    id_rol : idRol, nom_rol : rol
                 })
             }
             fetch('http://localhost:9000/api/rol/', requestInit)
             .then(res => res.text())
             .then(res => console.log(res))
     
-            const arrayAgregado = [...roles, {idRol : idRol, nom_rol : rol}]
+            const arrayAgregado = [...roles, {id_rol : idRol, nom_rol : rol}]
     
             setRoles(arrayAgregado)
     
             setEditarRol(false)
             setRol('')
             setIdRol('')
+            
         
         }
         
 }   
+console.log(roles)
 
 
 const actualizarRol = (e) => {
@@ -74,7 +76,7 @@ const actualizarRol = (e) => {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
-                idRol : idRol, nom_rol : rol
+                id_rol : idRol, nom_rol : rol
             })
             }
             fetch('http://localhost:9000/api/rol/' + idRol, requestInit)
@@ -82,8 +84,8 @@ const actualizarRol = (e) => {
             .then(res => console.log(res))
     
     
-            const arrayEditado = roles.map((item) => (item.idRol === idRol ? (
-                {idRol: idRol, nom_rol: rol} 
+            const arrayEditado = roles.map((item) => (item.id_rol === idRol ? (
+                {id_rol: idRol, nom_rol: rol} 
             ) : item))
     
             setRoles(arrayEditado)
