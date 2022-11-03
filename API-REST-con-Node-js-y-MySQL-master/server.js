@@ -40,7 +40,7 @@ app.get('/reserva', (req, res)=>{
 app.get('/receta', (req, res)=>{
     res.send('Api')
 })
-app.get('/provedoor', (req, res)=>{
+app.get('/proveedor', (req, res)=>{
     res.send('Api')
 })
 app.get('/mesa', (req, res)=>{

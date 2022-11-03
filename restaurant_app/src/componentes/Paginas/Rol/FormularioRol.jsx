@@ -112,9 +112,9 @@ const actualizarRol = (e) => {
         
         let idRolIgual = ''
         roles.forEach(item => {
-            if(item.idRol == idRol){
+            if(item.id_rol == idRol){
                 console.log('estamos dentro del if')
-                idRolIgual = item.idRol
+                idRolIgual = item.id_rol
                 setIdIgualError(true)
             }
         });

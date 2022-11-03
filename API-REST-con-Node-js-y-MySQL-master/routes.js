@@ -28,7 +28,7 @@ routes.post('/comuna', (req, res)=>{
 routes.delete('/comuna/:idComuna', (req, res)=>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
-        conn.query('DELETE FROM comuna WHERE idComuna = ?', [req.params.idComuna], (err, rows)=>{
+        conn.query('DELETE FROM comuna WHERE id_comuna = ?', [req.params.idComuna], (err, rows)=>{
             if(err) return res.send(err)
 
             res.send('Comuna eliminada')
@@ -39,7 +39,7 @@ routes.delete('/comuna/:idComuna', (req, res)=>{
 routes.put('/comuna/:idComuna', (req, res)=>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
-        conn.query('UPDATE comuna set ? WHERE idComuna = ?', [req.body, req.params.idComuna], (err, rows)=>{
+        conn.query('UPDATE comuna set ? WHERE id_comuna = ?', [req.body, req.params.idComuna], (err, rows)=>{
             if(err) return res.send(err)
 
             res.send('comuna cambiada')
@@ -324,11 +324,11 @@ routes.put('/receta/:idReceta', (req, res)=>{
 })
 //Crud Provedoor ---------------------------------------------------------------
 // Read 
-routes.get('/provedoor', (req, res)=>{
+routes.get('/proveedor', (req, res)=>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
 
-        conn.query('SELECT * FROM provedoor', (err, rows)=>{
+        conn.query('SELECT * FROM proveedor', (err, rows)=>{
             if(err) return res.send(err)
 
             res.json(rows)
@@ -336,10 +336,10 @@ routes.get('/provedoor', (req, res)=>{
     })
 })
 // Instert into
-routes.post('/provedoor', (req, res)=>{
+routes.post('/proveedor', (req, res)=>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
-        conn.query('INSERT INTO provedoor set ?', [req.body], (err, rows)=>{
+        conn.query('INSERT INTO proveedor set ?', [req.body], (err, rows)=>{
             if(err) return res.send(err)
 
             res.send('provedoor añadido')
@@ -347,10 +347,10 @@ routes.post('/provedoor', (req, res)=>{
     })
 })
 // Delete 
-routes.delete('/provedoor/:idProvedoor', (req, res)=>{
+routes.delete('/proveedor/:id_proveedor', (req, res)=>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
-        conn.query('DELETE FROM provedoor WHERE idProvedoor = ?', [req.params.idProvedoor], (err, rows)=>{
+        conn.query('DELETE FROM proveedor WHERE id_proveedor = ?', [req.params.id_proveedor], (err, rows)=>{
             if(err) return res.send(err)
 
             res.send('provedoor eliminado')
@@ -358,13 +358,13 @@ routes.delete('/provedoor/:idProvedoor', (req, res)=>{
     })
 })
 // Update
-routes.put('/provedoor/:idProvedoor', (req, res)=>{
+routes.put('/proveedor/:idProvedoor', (req, res)=>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
-        conn.query('UPDATE provedoor set ? WHERE idProvedoor = ?', [req.body, req.params.idProvedoor], (err, rows)=>{
+        conn.query('UPDATE proveedor set ? WHERE id_proveedor = ?', [req.body, req.params.idProvedoor], (err, rows)=>{
             if(err) return res.send(err)
 
-            res.send('usuario provedoor')
+            res.send('usuario proveedor')
         })
     })
 })
@@ -396,10 +396,10 @@ routes.post('/mesa', (req, res)=>{
 routes.delete('/mesa/:idMesa', (req, res)=>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
-        conn.query('DELETE FROM mesa WHERE idMesa = ?', [req.params.idMesa], (err, rows)=>{
+        conn.query('DELETE FROM mesa WHERE id_mesa = ?', [req.params.idMesa], (err, rows)=>{
             if(err) return res.send(err)
 
-            res.send('mesa eliminado')
+            res.send('mesa eliminada con exito')
         })
     })
 })
@@ -407,10 +407,10 @@ routes.delete('/mesa/:idMesa', (req, res)=>{
 routes.put('/mesa/:idMesa', (req, res)=>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
-        conn.query('UPDATE mesa set ? WHERE idMesa = ?', [req.body, req.params.idMesa], (err, rows)=>{
+        conn.query('UPDATE mesa set ? WHERE id_mesa = ?', [req.body, req.params.idMesa], (err, rows)=>{
             if(err) return res.send(err)
 
-            res.send('usuario mesa')
+            res.send('Mesa actualizada con exito')
         })
     })
 })
