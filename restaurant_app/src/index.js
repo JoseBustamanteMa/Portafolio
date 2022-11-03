@@ -4,7 +4,9 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import Comunas from './componentes/Paginas/Comuna/Comunas';
 import Mesas from './componentes/Paginas/Mesa/Mesas';
+import Productos from './componentes/Paginas/Producto/Productos';
 import Proveedores from './componentes/Paginas/Proveedor/Proveedores';
+import Empleados from './componentes/Paginas/Empleado/Empleados';
 import Roles from './componentes/Paginas/Rol/Roles';
 
 
@@ -15,7 +17,9 @@ root.render(
     // <Roles/>
     // <Comunas/>
     // <Mesas/>
-    <Proveedores/>
+    // <Proveedores/>
+    <Productos/>
+    // <Empleados/>
   
 );
 

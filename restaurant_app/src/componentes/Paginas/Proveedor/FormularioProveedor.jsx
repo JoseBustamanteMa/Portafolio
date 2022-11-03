@@ -3,7 +3,8 @@ import { nanoid } from 'nanoid'
 
 
 const FormularioProveedor = ({provs, setProvs, id , setId ,nombre , setNombre, correo , setCorreo, 
-    direccion, setDireccion, telefono , setTelefono, comuna, setComuna, editarProv , setEditarProv}) => {
+    direccion, setDireccion, telefono , setTelefono, comuna, setComuna, editarProv , setEditarProv,
+    comunas, setComunas}) => {
     
     const [vacioId, setVacioId] = React.useState()
     const [vacioNombre, setVacioNombre] = React.useState()
@@ -12,26 +13,19 @@ const FormularioProveedor = ({provs, setProvs, id , setId ,nombre , setNombre, c
     const [vacioTelefono, setVacioTelefono] = React.useState()
     const [vacioComuna, setVacioComuna] = React.useState()
     const [nombreIgualError, setNombreIgualError] = React.useState()
-    const [comunas, setComunas] = React.useState([])
-    const valorInicial = "Elige una comuna"
-
-    React.useEffect(() => {
-        const obtenerComunas = async () => {
-            const data = await fetch('http://localhost:9000/api/comuna')
-            const coms = await data.json()
-            setComunas(coms)
-        }
-            
-        
+    const [correoIgualError, setCorreoIgualError] = React.useState()
     
-        obtenerComunas()
-      }, [])
+    
 
+   
 
 
     const onBlurNombre = () => {
         let NombreIgual = ''
-        provs.forEach(item => {
+
+        const provsFiltrado = provs.filter((item) => item.id_proveedor !== id)
+
+        provsFiltrado.forEach(item => {
             if(item.nom_proveedor === nombre){
                 console.log('estamos dentro del if')
                 NombreIgual = item.id_proveedor
@@ -41,6 +35,24 @@ const FormularioProveedor = ({provs, setProvs, id , setId ,nombre , setNombre, c
 
         if(!NombreIgual){
             setNombreIgualError(false)  
+        }
+    }
+
+    const onBlurCorreo = () => {
+        let CorreoIgual = ''
+
+        const provsFiltrado = provs.filter((item) => item.id_proveedor !== id)
+
+        provsFiltrado.forEach(item => {
+            if(item.correo_prov === correo){
+                console.log('estamos dentro del if')
+                CorreoIgual = item.id_proveedor
+                setCorreoIgualError(true)
+            }
+        });
+
+        if(!CorreoIgual){
+            setCorreoIgualError(false)  
         }
     }
     
@@ -252,6 +264,11 @@ const actualizarProveedor = (e) => {
         value={nombre}
         onBlur={onBlurNombre}/>
 
+
+
+        {correoIgualError ? <div className="alert alert-danger mx-1 mb-0" role="alert">
+        ¡Correo ya existe!
+        </div> : <div></div>}
         {vacioCorreo ? <div className="alert alert-danger mx-1 mb-0" role="alert">
         ¡Debes ingresar un correo!
         </div> : <div></div>}
@@ -260,6 +277,7 @@ const actualizarProveedor = (e) => {
         className='form-control mt-3'
         onChange={(e) => setCorreo(e.target.value)}
         value={correo}
+        onBlur={onBlurCorreo}
                 
         //required
         />
@@ -288,17 +306,19 @@ const actualizarProveedor = (e) => {
         //required
         />
 
-        
-        <select name="comunas"
+        {vacioComuna ? <div className="alert alert-danger mx-1 mb-0" role="alert">
+            ¡Debes elegir    una comuna!
+        </div> : <div></div>}
+        <select onChange={(e) => setComuna(e.target.value)} name="comunas"
         className='form-control mt-3'
         
         >
-            
+            <option value={''}>Elige una comuna</option> 
           {comunas.map((item) => (
             <option 
             key={item.id_comuna} 
             value={item.id_comuna} 
-            onClick={(e) => setComuna(e.target.value)}
+            
             >
                 {item.nom_comuna}
             </option>

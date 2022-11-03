@@ -6,12 +6,14 @@ import { nanoid } from 'nanoid'
 
 //class Formulario extends React.Component{
 
-const Formulario = ({productos, setProductos, producto ,setProducto, cantidad, setCantidad,
-id, setId, estadoEditar, setEstadoEditar}) => {
+const FormularioProducto = ({productos, setProductos, producto ,setProducto, cantidad, setCantidad,
+proveedor, setProveedor, id, setId, estadoEditar, setEstadoEditar, provs, setProvs}) => {
 
 const [errorProducto, setErrorProducto] = React.useState(false)
 const [errorCantidad, setErrorCantidad] = React.useState(false)
+const [errorProveedor, setErrorProveedor] = React.useState(false)
 const [errorProductoNombre, setErrorProductoNombre] = React.useState(false)
+
 
 
 
@@ -30,10 +32,16 @@ const [errorProductoNombre, setErrorProductoNombre] = React.useState(false)
     
   // }
 
+
+  
+
   const onBlur = () => {
     
     let produ = ''
-    productos.forEach(item => {
+
+    const productosFiltrados = productos.filter((item) => item.id_producto !== id)
+
+    productosFiltrados.forEach(item => {
       if(item.nom_producto===producto){
         console.log(item.nom_producto)
         produ = item.nom_producto
@@ -64,25 +72,29 @@ const [errorProductoNombre, setErrorProductoNombre] = React.useState(false)
     //Validacion de datos
 
     if (!producto.trim()) {
-      alert('Ingresa producto en agregar')
       setErrorProducto(true)
-      
-      
       return
     }
-    
     setErrorProducto(false)
+      
+      
+    
 
     if (!cantidad.trim()) {
-      //alert('Ingresa cantidad')
       setErrorCantidad(true)
-      
-      
       return
-
     }
-    
     setErrorCantidad(false)
+    
+    const strProveedor = proveedor.toString()
+    if (!strProveedor.trim()) {
+      setErrorProveedor(true)
+      return
+    }
+    setErrorProveedor(false)
+      
+
+    
 
 
     if(!errorProductoNombre){
@@ -92,7 +104,8 @@ const [errorProductoNombre, setErrorProductoNombre] = React.useState(false)
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
-            idProducto : randomId, nom_producto : producto, stock_producto : cantidad 
+            id_producto : randomId, nom_producto : producto, cantidad : cantidad, 
+            id_proveedor : proveedor
         })
     }
     fetch('http://localhost:9000/api/producto/', requestInit)
@@ -103,17 +116,21 @@ const [errorProductoNombre, setErrorProductoNombre] = React.useState(false)
 
       
       
-    const arrayAgregado = [...productos ,{idProducto: randomId,  nom_producto: producto, stock_producto: cantidad}]
+    const arrayAgregado = [...productos ,{id_producto: randomId,  nom_producto: producto, cantidad: cantidad,
+      id_proveedor : proveedor}]
     
     setProductos(arrayAgregado)
 
 
     setProducto('')
     setCantidad('')
+    setProveedor('')
     
     setErrorCantidad(false)
     setErrorProducto(false)
+    setErrorProveedor(false)
     setErrorProductoNombre(false)
+    setEstadoEditar(false)
     
     }
     
@@ -132,24 +149,29 @@ const actualizarProducto = (e) => {
   
 
   if (!producto.trim()) {
-    //alert('Ingresa producto en agregar')
     setErrorProducto(true)
-    
-    
     return
   }
-  
   setErrorProducto(false)
-
+  
   const strCantidad = cantidad.toString()
-
   if (!strCantidad.trim()) {
-    //alert('Ingresa cantidad')
     setErrorCantidad(true)
-    
     return
-
   }
+  setErrorCantidad(false)
+  
+  
+  if (!proveedor.trim()) {
+    setErrorCantidad(true)
+    return
+  }
+  setErrorCantidad(false)
+    
+
+  
+    
+
 
   //console.log(producto)
 
@@ -159,7 +181,7 @@ const actualizarProducto = (e) => {
       method: 'PUT',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
-          idProducto : id, nom_producto : producto, stock_producto : cantidad 
+          id_producto : id, nom_producto : producto, cantidad : cantidad, id_proveedor : proveedor
       })
       }
       fetch('http://localhost:9000/api/producto/' + id, requestInit)
@@ -167,13 +189,18 @@ const actualizarProducto = (e) => {
       .then(res => console.log(res))
 
 
-      const arrayEditado = productos.map((item) => item.idProducto === id ? 
-      {idProducto : id, nom_producto: producto, stock_producto: cantidad} : item)
+      const arrayEditado = productos.map((item) => item.id_producto === id ? 
+      {id_producto : id, nom_producto: producto, cantidad: cantidad, id_proveedor : proveedor}
+       : item)
 
       setProductos(arrayEditado)
+      
+      
       setEstadoEditar(false)
       setProducto('')
       setCantidad('')
+      setProveedor('')
+      setErrorProveedor(false)
       setErrorProducto(false)
       setErrorCantidad(false)
       
@@ -182,7 +209,16 @@ const actualizarProducto = (e) => {
  
 }
 
-  
+
+const limpiarCasillas = () => {
+      setEstadoEditar(false)
+      setProducto('')
+      setCantidad('')
+      setProveedor('')
+      // setErrorProveedor(false)
+      // setErrorProducto(false)
+      // setErrorCantidad(false)
+}
    
 
  
@@ -214,7 +250,7 @@ const actualizarProducto = (e) => {
       
       <div className="modal-header">
         <h4 className="modal-title">{estadoEditar ? "Editar producto" : "Agregar producto"}</h4>
-        <button type="button" className="btn-close" data-bs-dismiss="modal"></button>
+        <button onClick={limpiarCasillas} type="button" className="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <form onSubmit={estadoEditar ? actualizarProducto : agregarProducto}>
 
@@ -253,16 +289,32 @@ const actualizarProducto = (e) => {
         value={cantidad}
         //required
         />
+      
+      {errorProveedor ? <div className="alert alert-danger mx-1 mb-0" role="alert">
+          ¡Debes elegir un proveedor!
+        </div> : <div></div>}
+        
+        <select onChange={(e) => setProveedor(e.target.value)} name="" id="" className='form-control mt-3'>
+          <option value={''}
+          >
+            Elige una opcion</option>
+          {provs.map((item) => (
+            <option 
+            key={item.id_proveedor}
+            value={item.id_proveedor}
+            >{item.nom_proveedor}</option>
+          ))}
+        </select>
       </div>
 
       
       <div className="modal-footer">
         {estadoEditar ? <button type="submit" className="btn btn-warning">Editar</button> :
-        <button onClick={() => setEstadoEditar(false)} type="submit" className="btn btn-success">Agregar</button>
+        <button type="submit" className="btn btn-success">Agregar</button>
         }
 
         
-        <button onClick={() => setEstadoEditar(false)} type="button" className="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+        <button onClick={limpiarCasillas} type="button" className="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
       </div>
       </form>
 
@@ -282,4 +334,4 @@ const actualizarProducto = (e) => {
   
 
 
-export default Formulario
+export default FormularioProducto

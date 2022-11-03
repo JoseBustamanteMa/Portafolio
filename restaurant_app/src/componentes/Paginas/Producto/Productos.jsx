@@ -1,15 +1,17 @@
 import React from 'react'
 //import { nanoid } from 'nanoid'
-import Formulario from './Formulario'
+import FormularioProducto from './FormularioProducto'
 
 const Productos = () => {
 
     const [producto, setProducto] = React.useState('')
     const [cantidad, setCantidad] = React.useState('')
+    const [proveedor, setProveedor] = React.useState('')
     const [productos, setProductos] = React.useState([])
     //const [estadoModal, setEstadoModal] = React.useState(false)
     const [estadoEditar, setEstadoEditar] = React.useState(false)
     const [id, setId] = React.useState('')
+    const [provs, setProvs] = React.useState([])
     
 
 
@@ -31,25 +33,23 @@ const Productos = () => {
         
     
         obtenerProductos()
+
+        const obtenerProveedores = async () => {
+            const data = await fetch('http://localhost:9000/api/proveedor')
+            const coms = await data.json()
+            setProvs(coms)
+        }
+        obtenerProveedores()
       }, [])
 
       
 
-    //   const cambiarEstadoModalTrue = () => {
-    //     setEstadoModal(true)
-        
-    //     }
-
-    //     const cambiarEstadoModalFalse = () => {
-    //         setEstadoModal(false)
-    //     }
-
         const editar = (item) => {
             setEstadoEditar(true)
             setProducto(item.nom_producto)
-            setCantidad(item.stock_producto)
-            //setEstadoModal(true)
-            setId(item.idProducto)
+            setCantidad(item.cantidad)
+            setProveedor(item.id_proveedor)
+            setId(item.id_producto)
         
         }
 
@@ -63,7 +63,7 @@ const Productos = () => {
                 .then(res => res.text())
                 .then(res => console.log(res))
     
-                const arrayEditado =  productos.filter((item) => item.idProducto !== id )
+                const arrayEditado =  productos.filter((item) => item.id_producto !== id )
     
                 setProductos(arrayEditado)
             }
@@ -84,12 +84,14 @@ const Productos = () => {
                 <div>
                 <h1 className='text-center mb-5'>Productos</h1>
 
-                <Formulario 
+                <FormularioProducto 
         productos={productos} setProductos={setProductos}
         producto={producto} setProducto={setProducto}
         cantidad={cantidad} setCantidad={setCantidad}
+        proveedor={proveedor} setProveedor={setProveedor}
         id={id} setId={setId}
         estadoEditar={estadoEditar} setEstadoEditar={setEstadoEditar}
+        provs={provs} setProvs={setProvs}
         />
     <div className='container col-12'> 
     <div className='col-10 text-center'>      
@@ -98,17 +100,23 @@ const Productos = () => {
             <tr>
                 <th>Producto</th>
                 <th>Cantidad</th>
+                <th>Proveedor</th>
                 <th></th>
+
             </tr>
         </thead>
         {productos.map(item => (
-            <tbody key={item.idProducto}>
+            <tbody key={item.id_producto}>
             <tr>
                 <td>{item.nom_producto}</td>
-                <td>{item.stock_producto}</td>
+                <td>{item.cantidad}</td>
+                {provs.map((prov) => (
+                    item.id_proveedor === prov.id_proveedor && <td key={prov.id_proveedor}>{prov.nom_proveedor}</td> 
+                ))}
+                {/* <td>{item.id_proveedor}</td> */}
                 <td className='col text-end'>
                 <button onClick={() => editar(item)} className='col-3 btn btn-warning me-2' data-bs-toggle="modal" data-bs-target="#myModal">Editar</button>
-                <button onClick={() => eliminarProducto(item.idProducto)} className='col-3 btn btn-danger '>Eliminar</button>
+                <button onClick={() => eliminarProducto(item.id_producto)} className='col-3 btn btn-danger '>Eliminar</button>
                 </td>
             </tr>
             

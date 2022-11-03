@@ -166,7 +166,7 @@ routes.post('/empleado', (req, res)=>{
 routes.delete('/empleado/:idEmpleado', (req, res)=>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
-        conn.query('DELETE FROM empleado WHERE idEmpleado = ?', [req.params.idEmpleado], (err, rows)=>{
+        conn.query('DELETE FROM empleado WHERE id_empleado = ?', [req.params.idEmpleado], (err, rows)=>{
             if(err) return res.send(err)
 
             res.send('empleado eliminado')
@@ -177,7 +177,7 @@ routes.delete('/empleado/:idEmpleado', (req, res)=>{
 routes.put('/empleado/:idEmpleado', (req, res)=>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
-        conn.query('UPDATE empleado set ? WHERE idEmpleado = ?', [req.body, req.params.idEmpleado], (err, rows)=>{
+        conn.query('UPDATE empleado set ? WHERE id_Empleado = ?', [req.body, req.params.idEmpleado], (err, rows)=>{
             if(err) return res.send(err)
 
             res.send('empleado cambiado')
@@ -442,7 +442,7 @@ routes.post('/producto', (req, res)=>{
 routes.delete('/producto/:idProducto', (req, res)=>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
-        conn.query('DELETE FROM producto WHERE idProducto = ?', [req.params.idProducto], (err, rows)=>{
+        conn.query('DELETE FROM producto WHERE id_producto = ?', [req.params.idProducto], (err, rows)=>{
             if(err) return res.send(err)
 
             res.send('producto eliminado')
@@ -453,7 +453,7 @@ routes.delete('/producto/:idProducto', (req, res)=>{
 routes.put('/producto/:idProducto', (req, res)=>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
-        conn.query('UPDATE producto set ? WHERE idProducto = ?', [req.body, req.params.idProducto], (err, rows)=>{
+        conn.query('UPDATE producto set ? WHERE id_producto = ?', [req.body, req.params.idProducto], (err, rows)=>{
             if(err) return res.send(err)
 
             res.send('producto cambiado')

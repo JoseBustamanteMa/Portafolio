@@ -123,7 +123,7 @@ const actualizarMesa = (e) => {
             .then(res => console.log(res))
     
     
-            const arrayEditado = mesas.map((item) => (item.id_cmesa === idMesa ? (
+            const arrayEditado = mesas.map((item) => (item.id_mesa === idMesa ? (
                 {  id_mesa : idMesa, cant_personas_min : minMesa, cant_personas_max : maxMesa} 
             ) : item))
     

@@ -7,6 +7,7 @@ const Roles = () => {
     const [idRol, setIdRol] = React.useState('')
     const [roles, setRoles] = React.useState([])
     const [editarRol, setEditarRol] = React.useState(false)
+    const [empleados, setEmpleados] = React.useState(false)
     
 
     
@@ -16,29 +17,52 @@ const Roles = () => {
             const rols = await data.json()
             setRoles(rols)
         }
-            
-        
-    
         obtenerRoles()
+
+        const obtenerEmpleados  = async () => {
+            const data = await fetch('http://localhost:9000/api/empleado')
+            const emps = await data.json()
+            setEmpleados(emps)
+        }
+        obtenerEmpleados()
+
+
       }, [])
 
       const eliminarRol = id => {
 
-        if(window.confirm()){
-            const requestInit = {
-                method: 'DELETE'
+        let existeId = ''
+        empleados.forEach(item => {
+            if(id === item.id_rol){
+                existeId = 'existe'
+                return
             }
-            fetch('http://localhost:9000/api/rol/' + id, requestInit)
-            .then(res => res.text())
-            .then(res => console.log(res))
+            
 
-            const arrayEliminado = roles.filter((item) => item.id_rol !== id)
+            
+        })
 
-            setRoles(arrayEliminado)
-
-
-
-
+        if(!existeId){
+            if(window.confirm()){
+                const requestInit = {
+                    method: 'DELETE'
+                }
+                fetch('http://localhost:9000/api/rol/' + id, requestInit)
+                .then(res => res.text())
+                .then(res => console.log(res))
+    
+                const arrayEliminado = roles.filter((item) => item.id_rol !== id)
+    
+                setRoles(arrayEliminado)
+    
+    
+    
+    
+            }
+          return  
+        }
+        if(existeId){
+            alert("¡No puedes eliminar el rol porque está asignado en empleado!")
         }
     }
 
