@@ -50,7 +50,7 @@ const FormularioRol = ({rol, setRol, idRol, setIdRol, roles, setRoles, editarRol
         }
         
 }   
-console.log(roles)
+
 
 
 
