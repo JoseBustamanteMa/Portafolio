@@ -53,6 +53,7 @@ const FormularioRol = ({rol, setRol, idRol, setIdRol, roles, setRoles, editarRol
 console.log(roles)
 
 
+
 const actualizarRol = (e) => {
     e.preventDefault()
     //Validacion de datos
@@ -104,6 +105,8 @@ const actualizarRol = (e) => {
         setEditarRol(false)
         setIdRol('')
         setRol('')
+        setVacioId(false)
+        setVacioRol(false)
     }
 
 
@@ -127,7 +130,9 @@ const actualizarRol = (e) => {
 
     const onBlurRol = () => {
         let rolIgual = ''
-        roles.forEach(item => {
+
+        const rolesFiltrado = roles.filter((item) => item.id_rol !== idRol)
+        rolesFiltrado.forEach(item => {
             if(item.nom_rol === rol){
                 console.log('estamos dentro del if')
                 rolIgual = item.nom_rol
@@ -150,7 +155,7 @@ const actualizarRol = (e) => {
                 </button>
             </div> : <div className='text-center'>
             <button type="button" className="btn btn-success text-center mb-5" data-bs-toggle="modal" data-bs-target="#myModal">
-                <h4>+ Agregar</h4>
+                <h4>+ Agregar rol</h4>
             </button>
         </div>}
 

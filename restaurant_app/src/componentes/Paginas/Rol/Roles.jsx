@@ -35,6 +35,7 @@ const Roles = () => {
     setIdRol(item.id_rol);
     setRol(item.nom_rol);
   };
+
   return (
     <div className="container col-12">
       <div className="container box1">
@@ -89,6 +90,7 @@ const Roles = () => {
             />
           </div>
           <hr></hr>
+
         </div>
       </div>
     </div>
