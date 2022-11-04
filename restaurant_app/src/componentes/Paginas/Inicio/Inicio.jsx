@@ -1,10 +1,10 @@
 import React from 'react'
 
-function Home (){
+function Inicio (){
   return (
     <div className='home'>
-        Homeeeee
+        Home
     </div>
   )
 }
-export default Home;
+export default Inicio;

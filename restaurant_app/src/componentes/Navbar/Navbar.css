@@ -1,11 +1,13 @@
 .navbar{
     background-color: #060b26;
     height: 100px;
+    width: 100%;
     display: flex;
     justify-content: start;
     align-items: center;
 }
 .menu-bars{
+
     margin-left: 2rem;
     font-size: 2rem;
     background: none;
@@ -61,7 +63,59 @@
     justify-content: start;
     align-items: center;
 }
-
 span {
     margin-left: 16px;
+}
+.nav-menu .btn:hover{
+    background-color: #1a83ff;
+    color: #fff;
+
+}
+.btn{
+    font-size: 17px;
+    width: 100%;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 0px 8px 16px;
+    list-style: none;
+    height: 60px;
+    margin-top: 0.5rem;
+    margin-right: 0.4rem;
+
+}
+.btnexcel{
+    font-size: 17px;
+    width: 100%;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 0px 8px 16px;
+    list-style: none;
+    height: 60px;
+    margin-top: 0.5rem;
+    margin-right: 0.4rem;
+
+}
+
+.btn-3{
+    font-size: 15px;
+    width: 100%;
+    color: rgb(255, 255, 255);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 0px 8px 16px;
+    list-style: none;
+    height: 60px;
+    margin-top: 0.5rem;
+    margin-right: 0.4rem;
+    background-color: rgb(50, 53, 57);
+
+}
+.btn-3:hover{
+    color: rgb(255, 255, 255);
+    background-color: #45494f;
 }

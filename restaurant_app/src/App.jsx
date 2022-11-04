@@ -2,40 +2,35 @@ import React from "react";
 import Navbar from "./componentes/Navbar/Navbar";
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css';
-import Home from './componentes/Paginas/Home/Home';
-import Productos from './componentes/Paginas/Producto/Productos';
+import Productos from './componentes/Paginas/Productos/Productos';
 import Reportes from './componentes/Paginas/Reportes/Reportes';
-import Login from './componentes/Login/Login';
 import Roles from './componentes/Paginas/Rol/Roles';
-import Registro from './componentes/Paginas/Registro/Registro';
+import Ayuda from './componentes/Paginas/Ayuda/Ayuda';
+import Inicio from './componentes/Paginas/Inicio/Inicio';
+import Mesas from './componentes/Paginas/Mesas/Mesas';
+import Empleados from './componentes/Paginas/Empleados/Empleados';
+import Reservas from './componentes/Paginas/Reservas/Reservas';
+import Proveedores from './componentes/Paginas/Proveedores/Proveedores';
 
-function App() {
-
-  // function requireAuth(nextState, replace, next) {
-  //   if (!authenticated) {
-  //     replace({
-  //       pathname: "/login",
-  //       state: {nextPathname: nextState.location.pathname}
-  //     });
-  //   }
-  //   next();
-  // }
-
+const App =() => {
   return (
     <div>
       <Router>
         <Navbar/> 
-        <Login/>
         <Switch>
-          <Route path='/productos' exact component={Productos}/>
+          <Route path='/' exact component={Inicio}/>
+          <Route path='/reservas' component={Reservas}/>
+          <Route path='/productos' component={Productos}/>
           <Route path='/reportes' component={Reportes}/>
-          <Route path='/reportes' component={Reportes}/>
+          <Route path='/empleados' component={Empleados}/>
           <Route path='/rol' component={Roles}/>
-          <Route path='/registro' component={Registro}/>
+          <Route path='/mesas' component={Mesas}/>
+          <Route path='/proveedores' component={Proveedores}/>
+          <Route path='/ayuda' component={Ayuda}/>
        </Switch>
       </Router>
     </div>
   );
 }
 
-export default App;
+export default (App);

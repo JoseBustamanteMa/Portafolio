@@ -2,10 +2,30 @@ import React from 'react';
 import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
 import * as IoIcons from 'react-icons/io';
-
-import * as IconName from "react-icons/hi2";
+import * as HiIcons from "react-icons/hi2";
+import * as GiIcons from "react-icons/gi";
+import * as FiIcons  from "react-icons/fi";
+import * as BsIcons  from "react-icons/bs";
 
 export const SidebarData = [
+    {
+        tittle: 'Inicio',
+        path:'/',
+        icon: <FaIcons.FaHome/>,
+        cName: 'nav-text'
+    },
+    {
+        tittle: 'Reservas',
+        path:'/reservas',
+        icon: <BsIcons.BsCalendar3/>,
+        cName: 'nav-text'
+    },
+    {
+        tittle: 'Productos',
+        path:'/Productos',
+        icon: <FaIcons.FaBox/>,
+        cName: 'nav-text'
+    },
     {
         tittle: 'Reportes',
         path: '/reportes',
@@ -21,7 +41,19 @@ export const SidebarData = [
     {
         tittle: 'Roles',
         path: '/rol',
-        icon: <IconName.HiUserGroup/>,
+        icon: <HiIcons.HiUserGroup/>,
+        cName: 'nav-text'
+    },
+    {
+        tittle: 'Mesas',
+        path: '/mesas',
+        icon: <GiIcons.GiTable/>,
+        cName: 'nav-text'
+    },
+    {
+        tittle: 'Proveedores',
+        path: '/proveedores',
+        icon: <FiIcons.FiTruck/>,
         cName: 'nav-text'
     },
     {
@@ -31,20 +63,8 @@ export const SidebarData = [
         cName: 'nav-text'
     },
     {
-        tittle: 'Finanzas',
-        path: '/finanzas',
-        icon: <AiIcons.AiFillBank/>,
-        cName: 'nav-text'
-    },
-    {
         tittle: 'Ayuda',
-        path: '/support',
-        icon: <IoIcons.IoMdHelpCircle/>,
-        cName: 'nav-text'
-    },
-    {
-        tittle: 'Registro',
-        path: '/registro',
+        path: '/ayuda',
         icon: <IoIcons.IoMdHelpCircle/>,
         cName: 'nav-text'
     }

@@ -31,24 +31,26 @@ const FormularioRol = ({rol, setRol, idRol, setIdRol, roles, setRoles, editarRol
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
-                    idRol : idRol, nom_rol : rol
+                    id_rol : idRol, nom_rol : rol
                 })
             }
             fetch('http://localhost:9000/api/rol/', requestInit)
             .then(res => res.text())
             .then(res => console.log(res))
     
-            const arrayAgregado = [...roles, {idRol : idRol, nom_rol : rol}]
+            const arrayAgregado = [...roles, {id_rol : idRol, nom_rol : rol}]
     
             setRoles(arrayAgregado)
     
             setEditarRol(false)
             setRol('')
             setIdRol('')
+            
         
         }
         
 }   
+console.log(roles)
 
 
 const actualizarRol = (e) => {
@@ -74,7 +76,7 @@ const actualizarRol = (e) => {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
-                idRol : idRol, nom_rol : rol
+                id_rol : idRol, nom_rol : rol
             })
             }
             fetch('http://localhost:9000/api/rol/' + idRol, requestInit)
@@ -82,8 +84,8 @@ const actualizarRol = (e) => {
             .then(res => console.log(res))
     
     
-            const arrayEditado = roles.map((item) => (item.idRol === idRol ? (
-                {idRol: idRol, nom_rol: rol} 
+            const arrayEditado = roles.map((item) => (item.id_rol === idRol ? (
+                {id_rol: idRol, nom_rol: rol} 
             ) : item))
     
             setRoles(arrayEditado)
@@ -110,9 +112,9 @@ const actualizarRol = (e) => {
         
         let idRolIgual = ''
         roles.forEach(item => {
-            if(item.idRol == idRol){
+            if(item.id_rol == idRol){
                 console.log('estamos dentro del if')
-                idRolIgual = item.idRol
+                idRolIgual = item.id_rol
                 setIdIgualError(true)
             }
         });
@@ -137,11 +139,9 @@ const actualizarRol = (e) => {
             setRolIgualError(false)
         }
     }
-
-
-
+    
   return (
-    <div>
+    <div >
         <div>
             {editarRol ? 
             <div className='text-center'>
@@ -187,7 +187,7 @@ const actualizarRol = (e) => {
 
 
 
-        {editarRol ? (<input type="number"
+        {editarRol ? (<input type="number" 
         placeholder='Id del rol' 
         className='form-control mb-3 mt-3'
         onChange={(e) => setIdRol(e.target.value)}
@@ -198,7 +198,7 @@ const actualizarRol = (e) => {
         
         //required
        />) : 
-       <input type="number"
+       <input type="number" 
         placeholder='Id del rol' 
         className='form-control mb-3 mt-3'
         onChange={(e) => setIdRol(e.target.value)}
@@ -216,6 +216,7 @@ const actualizarRol = (e) => {
           ¡Debes ingresar un rol!
         </div> : <div></div>}
         <input type="text"
+        maxLength={30}
         placeholder='Rol' 
         className='form-control mt-3'
         onChange={(e) => setRol(e.target.value)}

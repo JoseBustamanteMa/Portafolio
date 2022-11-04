@@ -1,97 +1,97 @@
-import React from 'react'
-import FormularioRol from './FormularioRol'
+import React from "react";
+import FormularioRol from "./FormularioRol";
+import "./Roles.css";
 
 const Roles = () => {
+  const [rol, setRol] = React.useState("");
+  const [idRol, setIdRol] = React.useState("");
+  const [roles, setRoles] = React.useState([]);
+  const [editarRol, setEditarRol] = React.useState(false);
 
-    const [rol, setRol] = React.useState('')
-    const [idRol, setIdRol] = React.useState('')
-    const [roles, setRoles] = React.useState([])
-    const [editarRol, setEditarRol] = React.useState(false)
-    
+  React.useEffect(() => {
+    const obtenerRoles = async () => {
+      const data = await fetch("http://localhost:9000/api/rol");
+      const rols = await data.json();
+      setRoles(rols);
+    };
+    obtenerRoles();
+  }, []);
 
-    
-    React.useEffect(() => {
-        const obtenerRoles  = async () => {
-            const data = await fetch('http://localhost:9000/api/rol')
-            const rols = await data.json()
-            setRoles(rols)
-        }
-            
-        
-    
-        obtenerRoles()
-      }, [])
+  const eliminarRol = (id) => {
+    if (window.confirm("¿Desea Eliminar?")) {
+      const requestInit = {
+        method: "DELETE",
+      };
+      fetch("http://localhost:9000/api/rol/" + id, requestInit)
+        .then((res) => res.text())
+        .then((res) => console.log(res));
+      const arrayEliminado = roles.filter((item) => item.id_rol !== id);
 
-      const eliminarRol = id => {
-
-        if(window.confirm()){
-            const requestInit = {
-                method: 'DELETE'
-            }
-            fetch('http://localhost:9000/api/rol/' + id, requestInit)
-            .then(res => res.text())
-            .then(res => console.log(res))
-
-            const arrayEliminado = roles.filter((item) => item.idRol !== id)
-
-            setRoles(arrayEliminado)
-
-
-
-
-        }
+      setRoles(arrayEliminado);
     }
-
-    const editar = (item) => {
-        setEditarRol(true)
-        setIdRol(item.idRol)
-        setRol(item.nom_rol)
-    }
-
-
-
-    
+  };
+  const editar = (item) => {
+    setEditarRol(true);
+    setIdRol(item.id_rol);
+    setRol(item.nom_rol);
+  };
   return (
-    <div>
-        <div className='container'>
-            <h1 className='text-center'>
-                Roles
-            </h1>
-            <div>
-                <FormularioRol rol={rol} setRol={setRol} idRol={idRol} setIdRol={setIdRol}
-                roles={roles} setRoles={setRoles} editarRol={editarRol} setEditarRol={setEditarRol}
-                editar={editar}/>
-            </div>
-            <div className='col-6 mx-auto'>
-            <table className="table">
-        <thead>
-            <tr>
-                <th>ID</th>
+    <div className="container col-12">
+      <div className="container box1">
+        <hr/>
+        <h1 className="container text-center">Gestión de Roles</h1>
+        <div className="container">
+          <table className="table col-12 table-dark table-responsive table-hover box align-middle">
+            <thead>
+              <tr>
+                <th>Id </th>
                 <th>Rol</th>
                 <th></th>
-            </tr>
-        </thead>
-        {roles.map(item => (
-            <tbody key={item.idRol}>
-            <tr>
-                <td>{item.idRol}</td>
-                <td>{item.nom_rol}</td>
-                <td className='col text-end'>
-                <button onClick={() => editar(item)} className='col-3 btn btn-warning me-2' data-bs-toggle="modal" data-bs-target="#myModal">Editar</button>
-                <button onClick={() => eliminarRol(item.idRol)} className='col-3 btn btn-danger '>Eliminar</button>
-                </td>
-            </tr>
-            
-        </tbody>
-        ))}
-        
-  </table>
-            </div>
+              </tr>
+            </thead>
+            {roles.map((item) => (
+              <tbody className="container col-12" key={item.id_rol}>
+                <tr className="align-middle">
+                  <td className="col-1">{item.id_rol}</td>
+                  <td className="col-4">{item.nom_rol}</td>
+                  <td className="col-1">
+                    <button
+                      onClick={() => editar(item)}
+                      className="btn btn-1"
+                      data-bs-toggle="modal"
+                      data-bs-target="#myModal"
+                    >
+                      Editar
+                    </button>
+                    <button
+                      onClick={() => eliminarRol(item.id_rol)}
+                      className="btn btn-2"
+                    >
+                      Eliminar
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            ))}
+          </table>
+
+          <div className="col-12">
+            <FormularioRol
+              rol={rol}
+              setRol={setRol}
+              idRol={idRol}
+              setIdRol={setIdRol}
+              roles={roles}
+              setRoles={setRoles}
+              editarRol={editarRol}
+              setEditarRol={setEditarRol}
+              editar={editar}
+            />
+          </div>
+          <hr></hr>
         </div>
-
-
+      </div>
     </div>
-  )
-}
-
-export default Roles
+  );
+};
+export default Roles;
