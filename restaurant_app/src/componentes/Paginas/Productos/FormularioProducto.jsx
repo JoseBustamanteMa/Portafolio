@@ -6,7 +6,7 @@ import { nanoid } from 'nanoid'
 
 //class Formulario extends React.Component{
 
-const FormularioProducto = ({productos, setProductos, producto ,setProducto, cantidad, setCantidad,
+const FormularioProducto = ({productos, setProductos, producto ,setProducto, estado, setEstado,
 proveedor, setProveedor, id, setId, estadoEditar, setEstadoEditar, provs, setProvs}) => {
 
 const [errorProducto, setErrorProducto] = React.useState(false)
@@ -80,11 +80,11 @@ const [errorProductoNombre, setErrorProductoNombre] = React.useState(false)
       
     
 
-    if (!cantidad.trim()) {
-      setErrorCantidad(true)
-      return
-    }
-    setErrorCantidad(false)
+    // if (!cantidad.trim()) {
+    //   setErrorCantidad(true)
+    //   return
+    // }
+    // setErrorCantidad(false)
     
     const strProveedor = proveedor.toString()
     if (!strProveedor.trim()) {
@@ -104,8 +104,8 @@ const [errorProductoNombre, setErrorProductoNombre] = React.useState(false)
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
-            id_producto : randomId, nom_producto : producto, cantidad : cantidad, 
-            id_proveedor : proveedor
+            id_producto : randomId, nom_producto : producto, 
+            id_proveedor : proveedor, estado : estado
         })
     }
     fetch('http://localhost:9000/api/producto/', requestInit)
@@ -116,14 +116,14 @@ const [errorProductoNombre, setErrorProductoNombre] = React.useState(false)
 
       
       
-    const arrayAgregado = [...productos ,{id_producto: randomId,  nom_producto: producto, cantidad: cantidad,
-      id_proveedor : proveedor}]
+    const arrayAgregado = [...productos ,{id_producto : randomId, nom_producto : producto, 
+      id_proveedor : proveedor, estado : true}]
     
     setProductos(arrayAgregado)
 
 
     setProducto('')
-    setCantidad('')
+    setEstado(false)
     setProveedor('')
     
     setErrorCantidad(false)
@@ -154,12 +154,12 @@ const actualizarProducto = (e) => {
   }
   setErrorProducto(false)
   
-  const strCantidad = cantidad.toString()
-  if (!strCantidad.trim()) {
-    setErrorCantidad(true)
-    return
-  }
-  setErrorCantidad(false)
+  // const strCantidad = cantidad.toString()
+  // if (!strCantidad.trim()) {
+  //   setErrorCantidad(true)
+  //   return
+  // }
+  // setErrorCantidad(false)
   
   
   if (!proveedor.trim()) {
@@ -181,7 +181,8 @@ const actualizarProducto = (e) => {
       method: 'PUT',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
-          id_producto : id, nom_producto : producto, cantidad : cantidad, id_proveedor : proveedor
+        id_producto : id, nom_producto : producto, 
+        id_proveedor : proveedor, estado : estado
       })
       }
       fetch('http://localhost:9000/api/producto/' + id, requestInit)
@@ -190,7 +191,8 @@ const actualizarProducto = (e) => {
 
 
       const arrayEditado = productos.map((item) => item.id_producto === id ? 
-      {id_producto : id, nom_producto: producto, cantidad: cantidad, id_proveedor : proveedor}
+      { id_producto : id, nom_producto : producto, 
+        id_proveedor : proveedor, estado : estado}
        : item)
 
       setProductos(arrayEditado)
@@ -198,7 +200,7 @@ const actualizarProducto = (e) => {
       
       setEstadoEditar(false)
       setProducto('')
-      setCantidad('')
+      setEstado(false)
       setProveedor('')
       setErrorProveedor(false)
       setErrorProducto(false)
@@ -213,7 +215,7 @@ const actualizarProducto = (e) => {
 const limpiarCasillas = () => {
       setEstadoEditar(false)
       setProducto('')
-      setCantidad('')
+      setEstado(false)
       setProveedor('')
       // setErrorProveedor(false)
       // setErrorProducto(false)
@@ -276,19 +278,62 @@ const limpiarCasillas = () => {
        />
 
 
-      {/* Alerta cantidad */}
+        {/* {estado ?  */}
+        <>
+        <div className='form-check'>
+        <input 
+        class="form-check-input" 
+        type="radio" 
+        name="flexRadioDefault" 
+        id="verdadero"
+        onChange={() => setEstado(true)}/>
+        <label class="form-check-label" for="verdadero">
+          Disponible
+        </label>  
+        </div>
 
-      {errorCantidad ? <div className="alert alert-danger mx-1 mb-0" role="alert">
-          ¡Debes ingresar una cantidad!
-        </div> : <div></div>}
+        <div className='form-check'> 
+        <input class="form-check-input" 
+          type="radio" 
+          name="flexRadioDefault" 
+          id="falso" 
+          onChange={() => setEstado(false)}/>
+          <label class="form-check-label" for="falso">
+            No disponible
+          </label>
+        </div>
+        {/* </> : 
+
+<>
+<div className='form-check'>
+<input 
+class="form-check-input" 
+type="radio" 
+name="flexRadioDefault" 
+id="verdadero"
+onChange={() => setEstado(true)}/>
+<label class="form-check-label" for="verdadero">
+  Disponible
+</label>  
+</div>
+
+<div className='form-check'>
+<input class="form-check-input" 
+  type="radio" 
+  name="flexRadioDefault" 
+  checked
+  id="falso" onChange={() => setEstado(false)}/>
+  <label class="form-check-label" for="falso">
+    No disponible
+  </label>
+</div> */}
+</>
+          
+{/* }  */}
+
         
-        <input type="number"
-        placeholder='Cantidad' 
-        className='form-control mt-3'
-        onChange={(e) => setCantidad(e.target.value)}
-        value={cantidad}
-        //required
-        />
+
+        
       
       {errorProveedor ? <div className="alert alert-danger mx-1 mb-0" role="alert">
           ¡Debes elegir un proveedor!

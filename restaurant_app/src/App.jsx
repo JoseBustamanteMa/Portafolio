@@ -15,7 +15,7 @@ import Proveedores from './componentes/Paginas/Proveedores/Proveedores';
 const App =() => {
   return (
     <div>
-      <Router>
+      {/* <Router>
         <Navbar/> 
         <Switch>
           <Route path='/' exact component={Inicio}/>
@@ -28,7 +28,9 @@ const App =() => {
           <Route path='/proveedores' component={Proveedores}/>
           <Route path='/ayuda' component={Ayuda}/>
        </Switch>
-      </Router>
+      </Router> */}
+
+      <Productos/>
     </div>
   );
 }

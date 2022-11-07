@@ -5,7 +5,7 @@ import ReactHtmlTableToExcel from "react-html-table-to-excel";
 
 const Productos = () => {
   const [producto, setProducto] = React.useState("");
-  const [cantidad, setCantidad] = React.useState("");
+  const [estado, setEstado] = React.useState(true);
   const [proveedor, setProveedor] = React.useState("");
   const [productos, setProductos] = React.useState([]);
   //const [estadoModal, setEstadoModal] = React.useState(false)
@@ -33,7 +33,7 @@ const Productos = () => {
   const editar = (item) => {
     setEstadoEditar(true);
     setProducto(item.nom_producto);
-    setCantidad(item.cantidad);
+    setEstado(item.estado);
     setProveedor(item.id_proveedor);
     setId(item.id_producto);
   };
@@ -66,7 +66,7 @@ const Productos = () => {
                     <thead>
                       <tr className="align-middle">
                         <th className="col-4">Producto</th>
-                        <th className="col-4">Cantidad</th>
+                        <th className="col-4">Disponibilidad</th>
                         <th className="col-4">Proveedor</th>
                         <th className="col-1">
                             <div>
@@ -85,7 +85,7 @@ const Productos = () => {
                       <tbody key={item.id_producto}>
                         <tr>
                           <td>{item.nom_producto}</td>
-                          <td>{item.cantidad}</td>
+                          <td>{item.estado ? <p>Disponible</p> : <p>No disponible</p>}</td>
                           {provs.map(
                             (prov) =>
                               item.id_proveedor === prov.id_proveedor && (
@@ -123,8 +123,8 @@ const Productos = () => {
                 setProductos={setProductos}
                 producto={producto}
                 setProducto={setProducto}
-                cantidad={cantidad}
-                setCantidad={setCantidad}
+                estado={estado}
+                setEstado={setEstado}
                 proveedor={proveedor}
                 setProveedor={setProveedor}
                 id={id}
