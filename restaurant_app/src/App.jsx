@@ -11,6 +11,7 @@ import Mesas from './componentes/Paginas/Mesas/Mesas';
 import Empleados from './componentes/Paginas/Empleados/Empleados';
 import Reservas from './componentes/Paginas/Reservas/Reservas';
 import Proveedores from './componentes/Paginas/Proveedores/Proveedores';
+import Recetas from "./componentes/Paginas/Recetas/Recetas";
 
 const App =() => {
   return (
@@ -29,8 +30,10 @@ const App =() => {
           <Route path='/ayuda' component={Ayuda}/>
        </Switch>
       </Router> */}
-
-      <Productos/>
+      {/* <Proveedores/> */}
+      {/* <Productos/> */}
+      <Recetas/>
+      
     </div>
   );
 }

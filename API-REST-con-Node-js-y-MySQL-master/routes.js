@@ -304,7 +304,7 @@ routes.post('/receta', (req, res)=>{
 routes.delete('/receta/:idReceta', (req, res)=>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
-        conn.query('DELETE FROM receta WHERE idReceta = ?', [req.params.idReceta], (err, rows)=>{
+        conn.query('DELETE FROM receta WHERE id_receta = ?', [req.params.idReceta], (err, rows)=>{
             if(err) return res.send(err)
 
             res.send('receta eliminado')
@@ -315,13 +315,77 @@ routes.delete('/receta/:idReceta', (req, res)=>{
 routes.put('/receta/:idReceta', (req, res)=>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
-        conn.query('UPDATE receta set ? WHERE idReceta = ?', [req.body, req.params.idReceta], (err, rows)=>{
+        conn.query('UPDATE receta set ? WHERE id_receta = ?', [req.body, req.params.idReceta], (err, rows)=>{
             if(err) return res.send(err)
 
             res.send('usuario receta')
         })
     })
 })
+
+
+
+//Crud RECETA_PRODUCTOS ---------------------------------------------------------------
+// Read 
+routes.get('/receta-productos', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+
+        conn.query('SELECT * FROM receta_productos', (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.json(rows)
+        })
+    })
+})
+// Instert into
+routes.post('/receta-productos', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+        conn.query('INSERT INTO receta_productos set ?', [req.body], (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.send('receta añadida correctamente')
+        })
+    })
+})
+// Delete 
+routes.delete('/receta-productos/:idReceta', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+        conn.query('DELETE FROM receta_productos WHERE id_rec_producto = ?', [req.params.idReceta], (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.send('receta y productos eliminados correctamente')
+        })
+    })
+})
+// Update
+routes.put('/receta-productos/:idReceta', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+        conn.query('UPDATE receta_productos set ? WHERE id_rec_producto = ?', [req.body, req.params.idReceta], (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.send('Receta actualiada correctamente')
+        })
+    })
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //Crud Provedoor ---------------------------------------------------------------
 // Read 
 routes.get('/proveedor', (req, res)=>{

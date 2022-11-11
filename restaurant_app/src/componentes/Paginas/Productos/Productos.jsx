@@ -85,7 +85,8 @@ const Productos = () => {
                       <tbody key={item.id_producto}>
                         <tr>
                           <td>{item.nom_producto}</td>
-                          <td>{item.estado ? <p>Disponible</p> : <p>No disponible</p>}</td>
+                          <td>{item.estado ? <p className="text-success ">Disponible</p> 
+                          : <p className="text-danger">No disponible</p>}</td>
                           {provs.map(
                             (prov) =>
                               item.id_proveedor === prov.id_proveedor && (
