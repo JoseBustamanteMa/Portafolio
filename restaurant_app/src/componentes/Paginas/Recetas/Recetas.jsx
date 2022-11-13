@@ -201,18 +201,10 @@ const Recetas = () => {
                     <tr className="align-middle">
                       <th className="col-4">Receta</th>
                       <th className="col-4">Productos</th>
-                      <th className="col-4">Disponibilidad</th>
+                      <th className="col-4"></th>
+                      
                       <th className="">
-                        <div>
-                          <ReactHtmlTableToExcel
-                            id="btnExportExcelRol"
-                            table="1"
-                            className="btn btn-3"
-                            filename="Recetas"
-                            sheet="pagina 1"
-                            buttonText="Imp.Excel"
-                          />
-                        </div>
+                        
                       </th>
                     </tr>
                   </thead>
@@ -241,7 +233,7 @@ const Recetas = () => {
                         <td className="">
                           <thead>
                             <tr className="align-middle">
-                              <th className="col-2">Id</th>
+                             
                               <th className="col-4">Nombre</th>
                               <th className="col-2">Disponibilidad</th>
                               <th className="col-2"></th>
@@ -258,14 +250,12 @@ const Recetas = () => {
                                           <tbody className="container">
                                             <tr>
                                               {" "}
-                                              <td className="col-2">
-                                                {p.id_producto}{" "}
-                                              </td>
+                                              
                                               <td className="col-4">
                                                 {p.nom_producto}
                                               </td>
                                               {/* <td> aki va la disponibilidad del producto</td> */}
-                                              <td></td>
+                                              
                                               <td className="col-2">
                                                 <button
                                                   onClick={() =>

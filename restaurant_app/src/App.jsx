@@ -12,11 +12,12 @@ import Empleados from './componentes/Paginas/Empleados/Empleados';
 import Reservas from './componentes/Paginas/Reservas/Reservas';
 import Proveedores from './componentes/Paginas/Proveedores/Proveedores';
 import Recetas from "./componentes/Paginas/Recetas/Recetas";
+import Pedidos from "./componentes/Paginas/Pedidos/Pedidos";
 
 const App =() => {
   return (
     <div>
-      <Router>
+      {/* <Router>
         <Navbar/> 
         <Switch>
           <Route path='/' exact component={Inicio}/>
@@ -29,7 +30,9 @@ const App =() => {
           <Route path='/proveedores' component={Proveedores}/>
           <Route path='/ayuda' component={Ayuda}/>
        </Switch>
-      </Router>
+      </Router> */}
+
+      <Pedidos/>
       
     </div>
   );

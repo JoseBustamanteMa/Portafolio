@@ -325,6 +325,58 @@ routes.put('/receta/:idReceta', (req, res)=>{
 
 
 
+
+//Crud PEDIDO ---------------------------------------------------------------
+// Read 
+routes.get('/pedido', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+
+        conn.query('SELECT * FROM pedido', (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.json(rows)
+        })
+    })
+})
+// Instert into
+routes.post('/pedido', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+        conn.query('INSERT INTO pedido set ?', [req.body], (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.send('receta añadido')
+        })
+    })
+})
+// Delete 
+routes.delete('/pedido/:idReceta', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+        conn.query('DELETE FROM pedido WHERE id_pedido = ?', [req.params.idReceta], (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.send('receta eliminado')
+        })
+    })
+})
+// Update
+routes.put('/pedido/:idReceta', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+        conn.query('UPDATE peddio set ? WHERE id_pedido = ?', [req.body, req.params.idReceta], (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.send('usuario receta')
+        })
+    })
+})
+
+
+
+
+
 //Crud RECETA_PRODUCTOS ---------------------------------------------------------------
 // Read 
 routes.get('/receta-productos', (req, res)=>{
@@ -365,6 +417,63 @@ routes.put('/receta-productos/:idReceta', (req, res)=>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
         conn.query('UPDATE receta_productos set ? WHERE id_rec_producto = ?', [req.body, req.params.idReceta], (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.send('Receta actualiada correctamente')
+        })
+    })
+})
+
+
+
+
+
+
+
+
+
+
+
+//Crud PEDIDO_RECETAS ---------------------------------------------------------------
+// Read 
+routes.get('/pedido-recetas', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+
+        conn.query('SELECT * FROM pedido_recetas', (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.json(rows)
+        })
+    })
+})
+// Instert into
+routes.post('/pedido-recetas', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+        conn.query('INSERT INTO pedido_recetas set ?', [req.body], (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.send('receta añadida correctamente')
+        })
+    })
+})
+// Delete 
+routes.delete('/pedido-recetas/:idReceta', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+        conn.query('DELETE FROM pedido_recetas WHERE id_ped_recetas = ?', [req.params.idReceta], (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.send('receta y productos eliminados correctamente')
+        })
+    })
+})
+// Update
+routes.put('/pedido-recetas/:idReceta', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+        conn.query('UPDATE pedido_recetas set ? WHERE id_ped_recetas = ?', [req.body, req.params.idReceta], (err, rows)=>{
             if(err) return res.send(err)
 
             res.send('Receta actualiada correctamente')
