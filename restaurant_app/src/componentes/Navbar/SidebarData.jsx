@@ -27,8 +27,8 @@ export const SidebarData = [
         cName: 'nav-text'
     },
     {
-        tittle: 'Reportes',
-        path: '/reportes',
+        tittle: 'Recetas',
+        path: '/recetas',
         icon: <IoIcons.IoIosPaper/>,
         cName: 'nav-text'
     },
@@ -56,16 +56,16 @@ export const SidebarData = [
         icon: <FiIcons.FiTruck/>,
         cName: 'nav-text'
     },
-    {
-        tittle: 'Correo',
-        path: '/correo',
-        icon: <FaIcons.FaEnvelopeOpenText/>,
-        cName: 'nav-text'
-    },
-    {
-        tittle: 'Ayuda',
-        path: '/ayuda',
-        icon: <IoIcons.IoMdHelpCircle/>,
-        cName: 'nav-text'
-    }
+    // {
+    //     tittle: 'Correo',
+    //     path: '/correo',
+    //     icon: <FaIcons.FaEnvelopeOpenText/>,
+    //     cName: 'nav-text'
+    // },
+    // {
+    //     tittle: 'Ayuda',
+    //     path: '/ayuda',
+    //     icon: <IoIcons.IoMdHelpCircle/>,
+    //     cName: 'nav-text'
+    // }
 ]

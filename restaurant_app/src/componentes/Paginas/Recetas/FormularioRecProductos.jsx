@@ -18,105 +18,93 @@ const FormularioRecProductos = ({
   recetaProductos,
   setRecetaProductos,
 }) => {
-
-  const [existeIdReceta, setExisteIdReceta] = React.useState(false)
-
- 
+  const [existeIdReceta, setExisteIdReceta] = React.useState(false);
 
   const agregarProductoAReceta = (e) => {
     e.preventDefault();
 
-    let existeProducto = ''
-    recetaProductos.forEach(item => {
-        if(item.id_receta === idReceta && item.id_producto === producto){
-            
-            existeProducto = 'existe'
-            return
-        }
-    })
+    let existeProducto = "";
+    recetaProductos.forEach((item) => {
+      if (item.id_receta === idReceta && item.id_producto === producto) {
+        existeProducto = "existe";
+        return;
+      }
+    });
 
-    if(existeProducto){
-        alert("El producto ya existe en la receta")
-        return
+    if (existeProducto) {
+      alert("El producto ya existe en la receta");
+      return;
     }
 
-    if(!producto.trim()){
-        alert("Elige un producto")
-        return
+    if (!producto.trim()) {
+      alert("Elige un producto");
+      return;
     }
 
-    if(!existeProducto){
-        const randomId = nanoid(4);
+    if (!existeProducto) {
+      const randomId = nanoid(4);
+
+      const requestInit = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id_rec_producto: randomId,
+          id_receta: idReceta,
+          id_producto: producto,
+        }),
+      };
+      fetch("http://localhost:9000/api/receta-productos/", requestInit)
+        .then((res) => res.text())
+        .then((res) => console.log(res));
+
+      const arrayAgregado = [
+        ...recetaProductos,
+        {
+          id_rec_producto: randomId,
+          id_receta: idReceta,
+          id_producto: producto,
+        },
+      ];
+
+      setRecetaProductos(arrayAgregado);
+    }
+  };
+
+  const actualizarReceta = (e) => {
+    e.preventDefault();
 
     const requestInit = {
-      method: "POST",
+      method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        id_rec_producto: randomId,
-        id_receta: idReceta,
-        id_producto: producto,
+        nom_receta: nomReceta,
+        precio_receta: precioReceta,
       }),
     };
-    fetch("http://localhost:9000/api/receta-productos/", requestInit)
+    fetch("http://localhost:9000/api/receta/" + idReceta, requestInit)
       .then((res) => res.text())
       .then((res) => console.log(res));
 
-    const arrayAgregado = [
-      ...recetaProductos,
-      { id_rec_producto: randomId, id_receta: idReceta, id_producto: producto },
-    ];
+    const arrayEditado = recetas.map((item) =>
+      item.id_receta === idReceta
+        ? {
+            id_receta: idReceta,
+            nom_receta: nomReceta,
+            precio_receta: precioReceta,
+          }
+        : item
+    );
 
-    setRecetaProductos(arrayAgregado);
-
-    }
-
-    
+    setRecetas(arrayEditado);
   };
-
-
-  const actualizarReceta = (e) => {
-    e.preventDefault()
-   
-  
-    
-      const requestInit = {
-        method: 'PUT',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-          nom_receta : nomReceta, 
-          precio_receta : precioReceta
-        })
-        }
-        fetch('http://localhost:9000/api/receta/' + idReceta, requestInit)
-        .then(res => res.text())
-        .then(res => console.log(res))
-  
-  
-        const arrayEditado = recetas.map((item) => item.id_receta === idReceta ? 
-        { id_receta : idReceta, nom_receta : nomReceta, 
-            precio_receta : precioReceta}
-         : item)
-  
-        setRecetas(arrayEditado)
-    }
 
   return (
     <div>
-      {/* <div>
-        <button
-          className="btn btn-success"
-          data-bs-toggle="modal"
-          data-bs-target="#myModal1"
-          
-        >
-          Modificar receta
-        </button>
-      </div> */}
       <div className="modal fade" id="myModal1">
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h4 className="modal-title">Modificar receta</h4>
+              <h2 className="table">Modificar receta</h2>
               <button
                 type="button"
                 className="btn-close"
@@ -151,28 +139,30 @@ const FormularioRecProductos = ({
                   className="btn btn-danger"
                   data-bs-dismiss="modal"
                 >
-                  Cerrar
+                  Cancelar
                 </button>
               </div>
             </form>
 
-            
-
             <form onSubmit={agregarProductoAReceta}>
-              <select
-                onChange={(e) => setProducto(e.target.value)}
-                name="productos"
-                className="form-control mt-3"
-              >
-                <option value={""}>Elige un producto</option>
-                {productos.map((item) => (
-                  <option key={item.id_producto} value={item.id_producto}>
-                    {item.nom_producto}
-                  </option>
-                ))}
-              </select>
+              <div className="modal-footer">
+                <select
+                  onChange={(e) => setProducto(e.target.value)}
+                  name="productos"
+                  className="form-control mt-3"
+                >
+                  <option value={""}>Elige un producto</option>
+                    {productos.map((item) => (
+                    <option 
+                      key={item.id_producto} 
+                      value={item.id_producto}>
+                      {item.nom_producto}
+                    </option>
+                  ))}
+                </select>
 
-              <button className="btn btn-success">Agregar producto</button>
+                <button className="btn btn-success">+ Agregar producto</button>
+              </div>
             </form>
           </div>
         </div>

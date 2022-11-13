@@ -125,7 +125,7 @@ const FormularioReceta = ({
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h4 className="modal-title">TITULO</h4>
+              <h4 className="modal-title">Nueva Receta</h4>
               <button
                 type="button"
                 className="btn-close"
@@ -157,7 +157,7 @@ const FormularioReceta = ({
                   type="submit"
                   className="btn btn-success"
                 >
-                  Confirmar Receta
+                   Confirmar Receta
                 </button>
 
                 <button

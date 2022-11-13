@@ -2,6 +2,7 @@ import React from "react";
 import FormularioReceta from "./FormularioReceta";
 import FormularioRecProductos from "./FormularioRecProductos";
 import { Link } from "react-router-dom";
+import ReactHtmlTableToExcel from "react-html-table-to-excel";
 const Recetas = () => {
   const [idReceta, setIdReceta] = React.useState("");
   const [nomReceta, setNomReceta] = React.useState("");
@@ -105,44 +106,43 @@ const Recetas = () => {
   const eliminarReceta = (idRec) => {
     // FUNCION ELIMINAR PRODUCTOS DE LA RECETA, ANTES DE ELIMINAR LA RECETA
 
-    if(window.confirm("Deseas eliminar la receta?"))
-    {recetaProductos.forEach((rp) => {
-      if (rp.id_receta === idRec) {
-        const requestInit = {
-          method: "DELETE",
-        };
-        fetch(
-          "http://localhost:9000/api/receta-productos/" + rp.id_rec_producto,
-          requestInit
-        )
-          .then((res) => res.text())
-          .then((res) => console.log(res));
-      }
-    });
+    if (window.confirm("Deseas eliminar la receta?")) {
+      recetaProductos.forEach((rp) => {
+        if (rp.id_receta === idRec) {
+          const requestInit = {
+            method: "DELETE",
+          };
+          fetch(
+            "http://localhost:9000/api/receta-productos/" + rp.id_rec_producto,
+            requestInit
+          )
+            .then((res) => res.text())
+            .then((res) => console.log(res));
+        }
+      });
 
-    let arrayEditado = [];
+      let arrayEditado = [];
 
-    recetaProductos.forEach((rp) => {
-      if (rp.id_receta !== idRec) {
-        console.log(rp.id_rec_producto);
-        arrayEditado.push(rp);
-      }
-    });
-    setRecetaProductos(arrayEditado);
+      recetaProductos.forEach((rp) => {
+        if (rp.id_receta !== idRec) {
+          console.log(rp.id_rec_producto);
+          arrayEditado.push(rp);
+        }
+      });
+      setRecetaProductos(arrayEditado);
 
-    // FIN FUNCION ELIMINAR PRODUCTOS DE LA RECETA, ANTES DE ELIMINAR LA RECETA
-    //--------------------
-    //--------------------
-    //--------------------
-    //--------------------
+      // FIN FUNCION ELIMINAR PRODUCTOS DE LA RECETA, ANTES DE ELIMINAR LA RECETA
+      //--------------------
+      //--------------------
+      //--------------------
+      //--------------------
 
-    //INICIO DEL DELETE BOLETA
-    //-------------------------
-    //-------------------------
-    //-------------------------
-    //-------------------------
+      //INICIO DEL DELETE BOLETA
+      //-------------------------
+      //-------------------------
+      //-------------------------
+      //-------------------------
 
-    
       const requestInit = {
         method: "DELETE",
       };
@@ -185,181 +185,159 @@ const Recetas = () => {
   //inicio lista
 
   return (
-    <div>
-      <div>
-        <FormularioReceta
-          idReceta={idReceta}
-          setIdReceta={setIdReceta}
-          nomReceta={nomReceta}
-          setNomReceta={setNomReceta}
-          precioReceta={precioReceta}
-          setPrecioReceta={setPrecioReceta}
-          recetas={recetas}
-          setRecetas={setRecetas}
-          producto={producto}
-          setProducto={setProducto}
-          productos={productos}
-          setProductos={setProductos}
-          recetaProductos={recetaProductos}
-          setRecetaProductos={setRecetaProductos}
-        />
-          
-        {/* <FormularioRecProductos 
-                idReceta={idReceta}
-                setIdReceta={setIdReceta}
-                nomReceta={nomReceta}
-                setNomReceta={setNomReceta}
-                recetas={recetas}
-                setRecetas={setRecetas}/> */}
-      </div>
-
+    <>
       <div className="container">
-        <div>
-          {recetas.map((r) => (
-            <div className="card mb-5" key={r.id_receta}>
-              <div>
-                <button
-                  className="btn btn-success"
-                  data-bs-toggle="modal"
-                  data-bs-target="#myModal1"
-                  onClick={() => editar(r)}
+        <div className="container box1">
+          <div className="col-12">
+            <hr />
+            <h1 className="text-center">Recetas</h1>
+            <div className="container col-12">
+              <div className=" text-center">
+                <table
+                  id="1"
+                  className="table col-12 table-dark table-responsive table-hover box align-middle"
                 >
-                  Modificar receta
-                </button>
-                <button
-                  className="btn btn-danger"
-                  onClick={() => eliminarReceta(r.id_receta)}
-                >
-                  Eliminar receta
-                </button>
-              </div>
-              {r.nom_receta} -{" "}
-              <FormularioRecProductos
-                idReceta={idReceta}
-                setIdReceta={setIdReceta}
-                nomReceta={nomReceta}
-                setNomReceta={setNomReceta}
-                precioReceta={precioReceta}
-                setPrecioReceta={setPrecioReceta}
-                recetas={recetas}
-                setRecetas={setRecetas}
-                producto={producto}
-                setProducto={setProducto}
-                productos={productos}
-                setProductos={setProductos}
-                recetaProductos={recetaProductos}
-                setRecetaProductos={setRecetaProductos}
-              />
-              <div className="card-body">
-                {recetaProductos.map(
-                  (rp) =>
-                    rp.id_receta === r.id_receta && (
-                      <div>
-                        <li>
-                          {productos.map(
-                            (p) =>
-                              rp.id_producto === p.id_producto && (
+                  <thead>
+                    <tr className="align-middle">
+                      <th className="col-4">Receta</th>
+                      <th className="col-4">Productos</th>
+                      <th className="col-4">Disponibilidad</th>
+                      <th className="">
+                        <div>
+                          <ReactHtmlTableToExcel
+                            id="btnExportExcelRol"
+                            table="1"
+                            className="btn btn-3"
+                            filename="Recetas"
+                            sheet="pagina 1"
+                            buttonText="Imp.Excel"
+                          />
+                        </div>
+                      </th>
+                    </tr>
+                  </thead>
+                  {recetas.map((r) => (
+                    <tbody className="container" key={r.id_receta}>
+                      <tr>
+                        <td>
+                          {r.nom_receta}{" "}
+                          <FormularioRecProductos
+                            idReceta={idReceta}
+                            setIdReceta={setIdReceta}
+                            nomReceta={nomReceta}
+                            setNomReceta={setNomReceta}
+                            precioReceta={precioReceta}
+                            setPrecioReceta={setPrecioReceta}
+                            recetas={recetas}
+                            setRecetas={setRecetas}
+                            producto={producto}
+                            setProducto={setProducto}
+                            productos={productos}
+                            setProductos={setProductos}
+                            recetaProductos={recetaProductos}
+                            setRecetaProductos={setRecetaProductos}
+                          />
+                        </td>
+                        <td className="">
+                          <thead>
+                            <tr className="align-middle">
+                              <th className="col-2">Id</th>
+                              <th className="col-4">Nombre</th>
+                              <th className="col-2">Disponibilidad</th>
+                              <th className="col-2"></th>
+                            </tr>
+                          </thead>
+                          {recetaProductos.map(
+                            (rp) =>
+                              rp.id_receta === r.id_receta && (
                                 <div>
-                                  El nombre del producto es {p.nom_producto}
-                                  ---- Id de la receta: {r.id_receta} - ID de
-                                  receta producto: {rp.id_rec_producto}
-                                  <button
-                                    onClick={() =>
-                                      eliminarProductoDeReceta(
-                                        p.id_producto,
-                                        r.id_receta
-                                      )
-                                    }
-                                    className="bg-warning ms-2"
-                                  >
-                                    Eliminar producto
-                                  </button>
+                                  <table className="table table-success col-12  table-responsive table-hover box align-middle">
+                                    {productos.map(
+                                      (p) =>
+                                        rp.id_producto === p.id_producto && (
+                                          <tbody className="container">
+                                            <tr>
+                                              {" "}
+                                              <td className="col-2">
+                                                {p.id_producto}{" "}
+                                              </td>
+                                              <td className="col-4">
+                                                {p.nom_producto}
+                                              </td>
+                                              {/* <td> aki va la disponibilidad del producto</td> */}
+                                              <td></td>
+                                              <td className="col-2">
+                                                <button
+                                                  onClick={() =>
+                                                    eliminarProductoDeReceta(
+                                                      p.id_producto,
+                                                      r.id_receta
+                                                    )
+                                                  }
+                                                  className="btn btn-2"
+                                                >
+                                                  Eliminar
+                                                </button>
+                                              </td>
+                                            </tr>
+                                          </tbody>
+                                        )
+                                    )}
+                                  </table>
                                 </div>
                               )
                           )}
-                        </li>
-                      </div>
-                    )
-                )}
+                        </td>
+
+                        <td>
+                          {/* aqui va la weaita de la disponibilidad de la receta */}
+                        </td>
+
+                        <td className="container">
+                          <button
+                            className="btn btn-1"
+                            data-bs-toggle="modal"
+                            data-bs-target="#myModal1"
+                            onClick={() => editar(r)}
+                          >
+                            Modificar
+                          </button>
+                          <button
+                            className="btn btn-2"
+                            onClick={() => eliminarReceta(r.id_receta)}
+                          >
+                            Eliminar
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  ))}
+                </table>
+              </div>
+              <div>
+                <FormularioReceta
+                  idReceta={idReceta}
+                  setIdReceta={setIdReceta}
+                  nomReceta={nomReceta}
+                  setNomReceta={setNomReceta}
+                  precioReceta={precioReceta}
+                  setPrecioReceta={setPrecioReceta}
+                  recetas={recetas}
+                  setRecetas={setRecetas}
+                  producto={producto}
+                  setProducto={setProducto}
+                  productos={productos}
+                  setProductos={setProductos}
+                  recetaProductos={recetaProductos}
+                  setRecetaProductos={setRecetaProductos}
+                />
+                <hr />
               </div>
             </div>
-          ))}
+          </div>
         </div>
       </div>
-
-      {/* <div className="container">
-        <div className="row">
-          {arregloNombreReceta.map((rp, index) => (
-            <div className="col-4 mb-5" key={index}>
-              {recetas.map(
-                (r, indexR) =>
-                  rp === r.id_receta && (
-                    <div key={indexR} className="card">
-                      <div className="card-title">
-                        <h1 className="text-center">
-                          {r.nom_receta}
-                          <button
-                            onClick={() => editar(r)}
-                            data-bs-toggle="modal"
-                            data-bs-target="#myModal"
-                            className="btn btn-warning"
-                          >
-                            Editar
-                          </button>
-                        </h1>
-                        <button
-                          onClick={() => eliminarReceta(rp)}
-                          type="button"
-                          className="btn btn-danger"
-                        >
-                          Eliminar Receta
-                        </button>
-                      </div>
-                      <div className="card-body text-center">
-                        {recetaProductos.map(
-                          (item, indexRP) =>
-                            item.id_receta === rp && (
-                              <li
-                                key={indexRP}
-                                className="list-group-item col-6 mx-auto"
-                              >
-                                {productos.map(
-                                  (p) =>
-                                    item.id_producto === p.id_producto &&
-                                    p.nom_producto
-                                )}
-                                <button
-                                  onClick={() =>
-                                    eliminarProductoDeReceta(
-                                      item.id_producto,
-                                      rp
-                                    )
-                                  }
-                                  type="button"
-                                  className="me-2"
-                                >
-                                  Eliminar
-                                </button>
-                              </li>
-                            )
-                        )}
-                        <div className="ms-auto ">
-                          {rp === r.id_receta && (
-                            <li className="list-group-item text-success col-6 mx-auto d-flex">
-                              Valor:
-                              <p className="ms-auto">${r.precio_receta}</p>
-                            </li>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  )
-              )}
-            </div>
-          ))}
-        </div>
-      </div> */}
-    </div>
+    </>
   );
 };
 

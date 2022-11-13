@@ -75,7 +75,6 @@ const Roles = () => {
               </tbody>
             ))}
           </table>
-
           <div className="col-12">
             <FormularioRol
               rol={rol}
