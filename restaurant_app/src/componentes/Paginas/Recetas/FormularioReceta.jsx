@@ -1,5 +1,5 @@
 import React from "react";
-import { nanoid } from "nanoid";
+import { nanoid, random } from "nanoid";
 
 const FormularioReceta = ({
   idReceta,
@@ -24,49 +24,49 @@ const FormularioReceta = ({
 
     let existeProducto = ''
     recetaProductos.forEach(item => {
-        if(item.id_receta === idReceta && item.id_producto === producto){
-            
-            existeProducto = 'existe'
-            return
-        }
+      if (item.id_receta === idReceta && item.id_producto === producto) {
+
+        existeProducto = 'existe'
+        return
+      }
     })
 
-    if(existeProducto){
-        alert("El producto ya existe en la receta")
-        return
+    if (existeProducto) {
+      alert("El producto ya existe en la receta")
+      return
     }
 
-    if(!producto.trim()){
-        alert("Elige un producto")
-        return
+    if (!producto.trim()) {
+      alert("Elige un producto")
+      return
     }
 
-    if(!existeProducto){
-        const randomId = nanoid(4);
+    if (!existeProducto) {
+      const randomId = nanoid(4);
 
-    const requestInit = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        id_rec_producto: randomId,
-        id_receta: idReceta,
-        id_producto: producto,
-      }),
-    };
-    fetch("http://localhost:9000/api/receta-productos/", requestInit)
-      .then((res) => res.text())
-      .then((res) => console.log(res));
+      const requestInit = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id_rec_producto: randomId,
+          id_receta: idReceta,
+          id_producto: producto,
+        }),
+      };
+      fetch("http://localhost:9000/api/receta-productos/", requestInit)
+        .then((res) => res.text())
+        .then((res) => console.log(res));
 
-    const arrayAgregado = [
-      ...recetaProductos,
-      { id_rec_producto: randomId, id_receta: idReceta, id_producto: producto },
-    ];
+      const arrayAgregado = [
+        ...recetaProductos,
+        { id_rec_producto: randomId, id_receta: idReceta, id_producto: producto },
+      ];
 
-    setRecetaProductos(arrayAgregado);
+      setRecetaProductos(arrayAgregado);
 
     }
 
-    
+
   };
 
 
@@ -101,17 +101,21 @@ const FormularioReceta = ({
     ];
 
     setRecetas(arrayAgregado);
+    setIdReceta(randomId)
+    
 
     // }
   };
 
 
-  const limpiarCasillas = () =>{
+  const limpiarCasillas = () => {
     setNomReceta('')
     setPrecioReceta(0)
   }
 
   
+
+
 
   return (
     <div>
@@ -129,7 +133,7 @@ const FormularioReceta = ({
           <div className="modal-content">
             <div className="modal-header">
               <h4 className="modal-title">Nueva Receta</h4>
-              
+
             </div>
             <form onSubmit={agregarReceta}>
               <div className="modal-body">
@@ -139,7 +143,7 @@ const FormularioReceta = ({
                   className="form-control mb-3 mt-3"
                   onChange={(e) => setNomReceta(e.target.value)}
                   value={nomReceta}
-                  
+
                 />
 
                 <input
@@ -156,7 +160,7 @@ const FormularioReceta = ({
                   type="submit"
                   className="btn btn-success"
                 >
-                   Confirmar Receta
+                  Confirmar Receta
                 </button>
 
                 <button
@@ -169,35 +173,36 @@ const FormularioReceta = ({
                 </button>
               </div>
 
-              <div className="mb-3 container">
+              
 
-                
-                
-                  <form  onSubmit={agregarProductoAReceta}>
 
-                    
-              <select
-                onChange={(e) => setProducto(e.target.value)}
-                name="productos"
-                className="form-control mt-3"
-              >
-                <option value={""}>Elige un producto</option>
-                {productos.map((item) => (
-                  <option key={item.id_producto} value={item.id_producto}>
-                    {item.nom_producto}
-                  </option>
-                ))}
-              </select>
-
-              <button className="btn btn-success">Agregar producto</button>
             </form>
-                
+            <div className="mb-3 container">
+
+
+
+                <form onSubmit={agregarProductoAReceta}>
+
+
+                  <select
+                    onChange={(e) => setProducto(e.target.value)}
+                    name="productos"
+                    className="form-control mt-3"
+                  >
+                    <option value={""}>Elige un producto</option>
+                    {productos.map((item) => (
+                      <option key={item.id_producto} value={item.id_producto}>
+                        {item.nom_producto}
+                      </option>
+                    ))}
+                  </select>
+
+                  <button type="submit" className="btn btn-success">Agregar producto</button>
+                </form>
+
               </div>
 
-              
-            </form>
 
-            
           </div>
         </div>
       </div>

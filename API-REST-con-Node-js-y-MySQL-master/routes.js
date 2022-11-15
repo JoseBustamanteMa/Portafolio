@@ -351,13 +351,13 @@ routes.post('/pedido', (req, res)=>{
     })
 })
 // Delete 
-routes.delete('/pedido/:idReceta', (req, res)=>{
+routes.delete('/pedido/:idPedido', (req, res)=>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
-        conn.query('DELETE FROM pedido WHERE id_pedido = ?', [req.params.idReceta], (err, rows)=>{
+        conn.query('DELETE FROM pedido WHERE id_pedido = ?', [req.params.idPedido], (err, rows)=>{
             if(err) return res.send(err)
 
-            res.send('receta eliminado')
+            res.send('pedido eliminado')
         })
     })
 })
@@ -365,7 +365,7 @@ routes.delete('/pedido/:idReceta', (req, res)=>{
 routes.put('/pedido/:idReceta', (req, res)=>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
-        conn.query('UPDATE peddio set ? WHERE id_pedido = ?', [req.body, req.params.idReceta], (err, rows)=>{
+        conn.query('UPDATE pedido set ? WHERE id_pedido = ?', [req.body, req.params.idReceta], (err, rows)=>{
             if(err) return res.send(err)
 
             res.send('usuario receta')

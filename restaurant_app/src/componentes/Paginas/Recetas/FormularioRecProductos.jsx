@@ -98,6 +98,11 @@ const FormularioRecProductos = ({
     setRecetas(arrayEditado);
   };
 
+  const limpiarCasillas = () => {
+    setNomReceta('')
+    setPrecioReceta(0)
+  }
+
   return (
     <div>
       <div className="modal fade" id="myModal1">
@@ -105,11 +110,7 @@ const FormularioRecProductos = ({
           <div className="modal-content">
             <div className="modal-header">
               <h2 className="table">Modificar receta</h2>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-              ></button>
+              
             </div>
             <form onSubmit={actualizarReceta}>
               <div className="modal-body">
@@ -138,8 +139,9 @@ const FormularioRecProductos = ({
                   type="button"
                   className="btn btn-danger"
                   data-bs-dismiss="modal"
+                  onClick={limpiarCasillas}
                 >
-                  Cancelar
+                  Cerrar
                 </button>
               </div>
             </form>

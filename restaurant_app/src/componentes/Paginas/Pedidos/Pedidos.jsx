@@ -1,14 +1,18 @@
 import React from "react";
+import { BsCheckLg } from "react-icons/bs";
 import FormularioPedido from "./FormularioPedido";
 import FormularioPedidoRecetas from "./FormularioPedidoRecetas";
 
 const Pedidos = () => {
+
+  const [idPedReceta, setIdPedReceta] = React.useState("");
   const [idPedido, setIdPedido] = React.useState("");
   const [idUsuario, setIdUsuario] = React.useState("");
   const [idReceta, setIdReceta] = React.useState("");
   const [idMesa, setIdMesa] = React.useState("");
   const [valorTotal, setValorTotal] = React.useState(0);
   const [estado, setEstado] = React.useState(false);
+  const [estadoEditar, setEstadoEditar] = React.useState(false);
 
 
   const [recetas, setRecetas] = React.useState([]);
@@ -54,35 +58,109 @@ const Pedidos = () => {
       };
       obtenerUsuarios();
   }, []);
+// idRec, idPed
+  const eliminarRecetaDePedido = (id_ped_rec) => {
+    // let idPedRec = "";
+    // pedidoRecetas.forEach((item) => {
+    //   if (item.id_receta === idRec && item.id_pedido === idPed) {
+    //     idPedRec = item.id_ped_recetas;
+    //   }
+    // });
 
-  const eliminarRecetaDePedido = (idRec, idPed) => {
-    let idPedRec = "";
-    pedidoRecetas.forEach((item) => {
-      if (item.id_receta === idRec && item.id_pedido === idPed) {
-        idPedRec = item.id_ped_recetas;
-      }
-    });
-
-    if (idPedRec) {
+    // if (idPedRec) {
       if (window.confirm("¿Deseas eliminar la receta del pedido?")) {
         const requestInit = {
           method: "DELETE",
         };
         fetch(
-          "http://localhost:9000/api/pedido-recetas/" + idPedRec,
+          "http://localhost:9000/api/pedido-recetas/" + id_ped_rec,
           requestInit
         )
           .then((res) => res.text())
           .then((res) => console.log(res));
 
         const arrayEditado = pedidoRecetas.filter(
-          (item) => item.id_ped_recetas !== idPedRec
+          (item) => item.id_ped_recetas !== id_ped_rec
         );
 
         setPedidoRecetas(arrayEditado);
       }
-    }
+    // }
   };
+
+  const eliminarPedido = (idPe) => {
+
+    // iNICIO DE FUNCION ELIMINAR RECETAS DE PEDIDO
+    // 
+    // 
+    // 
+    // 
+    // 
+    if (window.confirm("¿Deseas eliminar el pedido?")) {
+    pedidoRecetas.forEach(pr => {
+      
+      if(pr.id_pedido === idPe){
+        
+        const requestInit = {
+          method: "DELETE",
+        };
+        fetch(
+          "http://localhost:9000/api/pedido-recetas/" + pr.id_ped_recetas,
+          requestInit
+        )
+          .then((res) => res.text())
+          .then((res) => console.log(res));
+
+          const arrayFiltrado = pedidoRecetas.filter((item) => item.id_ped_recetas !== pr.id_ped_recetas)
+          setPedidoRecetas(arrayFiltrado)
+      }
+    }) 
+
+
+
+
+
+
+
+
+
+
+    //INICIO DE FUNCION ELIMINAR PEDIDO
+    //
+    //
+    //
+    //
+    //
+    //
+    
+      const requestInit = {
+        method: "DELETE",
+      };
+      fetch(
+        "http://localhost:9000/api/pedido/" + idPe,
+        requestInit
+      )
+        .then((res) => res.text())
+        .then((res) => console.log(res));
+
+      const arrayEditado = pedidos.filter(
+        (item) => item.id_pedido !== idPe
+      );
+
+      setPedidos(arrayEditado);
+    }
+
+    console.log(idPe)
+  }
+
+  const editar = (item) => {
+    setEstadoEditar(true)
+    setIdPedido(item.id_pedido)
+    setIdUsuario(item.id_usuario)
+    setIdMesa(item.id_mesa)
+    setValorTotal(item.valorTotal)
+    setEstado(item.estado)
+  }
 
   
   return (
@@ -98,6 +176,7 @@ const Pedidos = () => {
         pedidos={pedidos} setPedidos={setPedidos}
         mesas={mesas} setMesas={setMesas}
         usuarios={usuarios} setUsuarios={setUsuarios}
+        estadoEditar={estadoEditar} setEstadoEditar={setEstadoEditar}
         
         />
       <h1 className="text-center">Pedidos</h1>
@@ -153,17 +232,18 @@ const Pedidos = () => {
                                 {r.nom_receta} - {r.precio_receta}
                               </div>
 
-                              <div className="col-6 ms-auto">
+                              <div onClick={() => setIdPedReceta(pr.id_ped_recetas)} className="col-6 ms-auto">
                                 <button
                                   onClick={() =>
                                     eliminarRecetaDePedido(
-                                      r.id_receta,
-                                      p.id_pedido
+                                      // r.id_receta,
+                                      // p.id_pedido
+                                      pr.id_ped_recetas
                                     )
                                   }
                                   className="btn btn-danger "
                                 >
-                                  Eliminar
+                                  Eliminar Receta
                                 </button>
                               </div>
 
@@ -179,8 +259,30 @@ const Pedidos = () => {
                 </div>
               ))}
 
-              <div className="container">
-                <p>Valor total: {p.valor_total}</p>
+              <div className="container mt-5">
+                <div className="row mt-5">
+                <div className="col-2">
+                  <p>Valor total: {p.valor_total}</p>
+                </div>
+                <div className="col-10 ">
+                  <div className="col-4 ms-auto d-flex mb-5">
+                  <button onClick={() => editar(p)} className="btn btn-warning" data-bs-toggle="modal"
+                  data-bs-target="#myModal">
+                      Modificar pedido
+                  </button>
+                  <button className="btn btn-danger" onClick={() => eliminarPedido(p.id_pedido)}>
+                    Eliminar pediddo
+                  </button>
+                  </div>
+                  
+                  {/* <div className="col-2 ms-auto">
+                  
+                  </div> */}
+                  
+                </div>
+                </div>
+                
+                
               </div>
             </div>
           ))}

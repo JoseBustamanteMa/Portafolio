@@ -14,6 +14,7 @@ import Proveedores from './componentes/Paginas/Proveedores/Proveedores';
 import Recetas from "./componentes/Paginas/Recetas/Recetas";
 import Pedidos from "./componentes/Paginas/Pedidos/Pedidos";
 
+
 const App =() => {
   return (
     <div>
@@ -32,8 +33,12 @@ const App =() => {
        </Switch>
       </Router> */}
 
-      <Pedidos/>
-      
+
+      {/* <Proveedores/> */}
+      {/* <Productos/> */}
+      {/* <Pedidos/> */}
+      <Recetas/>
+      {/* <Pedidos/> */}
     </div>
   );
 }
