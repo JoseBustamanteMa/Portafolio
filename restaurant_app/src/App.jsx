@@ -37,8 +37,8 @@ const App =() => {
       {/* <Proveedores/> */}
       {/* <Productos/> */}
       {/* <Pedidos/> */}
-      <Recetas/>
-      {/* <Pedidos/> */}
+      {/* <Recetas/> */}
+      <Pedidos/>
     </div>
   );
 }

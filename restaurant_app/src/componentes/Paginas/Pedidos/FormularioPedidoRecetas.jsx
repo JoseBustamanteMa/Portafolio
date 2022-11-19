@@ -3,7 +3,17 @@ import { nanoid } from 'nanoid';
 
 
 
-const FormularioPedidoRecetas = ({idReceta, setIdReceta, idPedido, setIdPedido, recetas, setRecetas, pedidoRecetas, setPedidoRecetas}) => {
+const FormularioPedidoRecetas = ({idReceta, setIdReceta, idPedido, setIdPedido, recetas, setRecetas, 
+  pedidoRecetas, setPedidoRecetas, pedidos, setPedidos, idUsuario,
+  setIdUsuario,
+  idMesa,
+  setIdMesa,
+  valorTotal,
+  setValorTotal,
+  estado,
+  setEstado,}) => {
+
+    
 
     const agregarRecetaAPedido = (e) => {
         e.preventDefault();
@@ -53,9 +63,56 @@ const FormularioPedidoRecetas = ({idReceta, setIdReceta, idPedido, setIdPedido, 
         setPedidoRecetas(arrayAgregado);
     
         }
+
+        
+
+        //INICIO DE FUNCION PARA CALCULAR VALOR TOTAL
+    //     let contador = 0
+    //     pedidoRecetas.forEach(item => {
+    //       if(item.id_pedido === idPedido){
+    //         console.log("Existe")
+    //       }
+    //      if(item.id_pedido !== idPedido){
+    //       console.log("No existe")
+    //      }
+    // })
+
+    // console.log(contador)
+
+    // const requestInit = {
+    //   method: "PUT",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify({
+    //     id_pedido: idPedido,
+    //     id_usuario: idUsuario,
+    //     id_mesa: idMesa,
+    //     valor_total: contador,
+    //     estado: estado,
+    //   }),
+    // };
+    // fetch("http://localhost:9000/api/pedido/" + idPedido, requestInit)
+    //   .then((res) => res.text())
+    //   .then((res) => console.log(res));
+
+    //   const arrayEditado = pedidos.map((item) =>
+    //   item.id_pedido === idPedido
+    //     ? {
+    //       id_pedido: idPedido,
+    //       id_usuario: idUsuario,
+    //       id_mesa: idMesa,
+    //       valor_total: contador,
+    //       estado: estado,
+    //       }
+    //     : item
+    // );
+
+    // setPedidos(arrayEditado)
     
         
       };
+
+      
+
 
       
   return (

@@ -725,4 +725,54 @@ routes.put('/solicitud/:idSolicitud', (req, res)=>{
         })
     })
 })
+
+//Crud boleta ---------------------------------------------------------------
+// Read 
+routes.get('/boleta', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+
+        conn.query('SELECT * FROM boleta', (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.json(rows)
+        })
+    })
+})
+// Instert into
+routes.post('/boleta', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+        conn.query('INSERT INTO boleta set ?', [req.body], (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.send('boleta añadido')
+        })
+    })
+})
+// Delete 
+routes.delete('/boleta/:idBoleta', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+        conn.query('DELETE FROM solicitud WHERE id_boleta = ?', [req.params.idBoleta], (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.send('boleta eliminado')
+        })
+    })
+})
+// Update
+routes.put('/boleta/:idBoleta', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+        conn.query('UPDATE solicitud set ? WHERE id_boleta = ?', [req.body, req.params.idBoleta], (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.send('solicitud cambiada')
+        })
+    })
+})
+
+
+
 module.exports = routes
