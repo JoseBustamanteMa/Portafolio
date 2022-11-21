@@ -1,5 +1,6 @@
 import React from 'react'
 import { nanoid } from 'nanoid'
+import Swal from 'sweetalert2'
 
 
 const FormularioProveedor = ({provs, setProvs, id , setId ,nombre , setNombre, correo , setCorreo, 
@@ -124,6 +125,14 @@ const FormularioProveedor = ({provs, setProvs, id , setId ,nombre , setNombre, c
             setTelefono('')
             setComuna('')
             setEditarProv(false)
+
+            Swal.fire({
+                title: 'Agregado',
+                text: 'Proveedor agregado correctamente',
+                icon: 'success',
+                showConfirmButton: false,
+                timer:2000
+            })
             
         
         }
@@ -193,6 +202,14 @@ const actualizarProveedor = (e) => {
             setTelefono('')
             setComuna('')
             setEditarProv(false)
+
+            Swal.fire({
+                title: 'Actualizado',
+                text: 'Proveedor actualizado correctamente',
+                icon: 'success',
+                showConfirmButton: false,
+                timer:2000
+            })
             
 
     }

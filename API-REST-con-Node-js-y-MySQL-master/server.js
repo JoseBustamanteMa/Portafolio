@@ -61,6 +61,9 @@ app.get('/solicitud', (req, res)=>{
 app.get('/pedido', (req, res)=>{
     res.send('Api')
 })
+app.get('/boleta', (req, res)=>{
+    res.send('Api')
+})
 app.use('/api', routes)
 
 // server running -----------------------------------

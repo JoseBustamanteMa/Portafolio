@@ -1,5 +1,6 @@
 import React from "react";
 import { nanoid, random } from "nanoid";
+import Swal from "sweetalert2";
 
 const FormularioReceta = ({
   idReceta,
@@ -102,6 +103,13 @@ const FormularioReceta = ({
 
     setRecetas(arrayAgregado);
     setIdReceta(randomId)
+    Swal.fire({
+      title: 'Agregado',
+      text: 'Receta agregada correctamente',
+      icon: 'succcess',
+      timer: 1500, 
+      showConfirmButton: false
+    })
     
 
     // }

@@ -1,5 +1,6 @@
 import React from "react";
 import { nanoid } from "nanoid";
+import Swal from "sweetalert2";
 
 const FormularioPedido = ({
   idPedido,
@@ -23,8 +24,27 @@ const FormularioPedido = ({
   estadoEditar,
   setEstadoEditar
 }) => {
+
+
+  const [errorMesa, setErrorMesa] = React.useState(false)
+  const [errorUsuario, setErrorUsuario] = React.useState(false)
+
   const agregarProducto = (e) => {
     e.preventDefault();
+
+    if(!idMesa.trim()){
+      
+      setErrorMesa(true)
+      return
+    }
+    setErrorMesa(false)
+
+    if(!idUsuario.trim()){
+      
+      setErrorUsuario(true)
+      return
+    }
+    setErrorUsuario(false)
 
     const randomId = nanoid(10);
 
@@ -55,10 +75,37 @@ const FormularioPedido = ({
     ];
 
     setPedidos(arrayAgregado);
+    Swal.fire({
+      title: 'Agregado',
+      text: 'Pedido agregado correctamente',
+      icon: 'success',
+      showDenyButton: false,
+      showConfirmButton: false,
+      allowOutsideClick: false,
+      timer:1500
+
+
+    })
+    setErrorMesa(false)
+    setErrorUsuario(false)
   };
 
   const actualizarPedido = (e) => {
     e.preventDefault();
+
+    if(!idMesa.trim()){
+      alert('Debes agregar una mesa')
+      setErrorMesa(true)
+      return
+    }
+    setErrorMesa(false)
+
+    if(!idUsuario.trim()){
+      alert('Debes ingresar un usuario')
+      setErrorUsuario(true)
+      return
+    }
+    setErrorUsuario(false)
 
     const requestInit = {
       method: "PUT",
@@ -87,8 +134,22 @@ const FormularioPedido = ({
         : item
     );
 
-    setRecetas(arrayEditado);
+    Swal.fire({
+      title: 'Actualizado',
+      text: 'Pedido actualizado correctamente',
+      icon: 'success',
+      showDenyButton: false,
+      showConfirmButton: false,
+      allowOutsideClick: false,
+      timer:1500
+
+
+    })
+
+    setPedidos(arrayEditado);
     setEstadoEditar(false)
+    setErrorMesa(false)
+    setErrorUsuario(false)
   };
 
   const limpiarCasillas = () => {
@@ -97,6 +158,8 @@ const FormularioPedido = ({
     setIdMesa('')
     setValorTotal(0)
     setEstadoEditar(false)
+    setErrorMesa(false)
+    setErrorUsuario(false)
   }
 
   return (
@@ -114,6 +177,10 @@ const FormularioPedido = ({
             </div>
             <form onSubmit={estadoEditar ?  actualizarPedido : agregarProducto}>
               <div className="modal-body">
+                {errorMesa && 
+                <div className="alert alert-danger mx-1 mb-0" role="alert">
+                  <p>¡Debes ingresar una mesa!</p>
+                </div>}
                 <select
                   onChange={(e) => setIdMesa(e.target.value)}
                   name="mesas"
@@ -126,7 +193,10 @@ const FormularioPedido = ({
                     </option>
                   ))}
                 </select>
-
+                {errorUsuario && 
+                <div className="alert alert-danger mx-1 mb-0" role="alert">
+                  <p>¡Debes ingresar un usuario!</p>
+                </div>}
                 <select
                   onChange={(e) => setIdUsuario(e.target.value)}
                   name="usuarios"

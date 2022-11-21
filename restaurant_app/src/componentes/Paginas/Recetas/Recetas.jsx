@@ -3,6 +3,7 @@ import FormularioReceta from "./FormularioReceta";
 import FormularioRecProductos from "./FormularioRecProductos";
 import { Link } from "react-router-dom";
 import ReactHtmlTableToExcel from "react-html-table-to-excel";
+import Swal from "sweetalert2";
 const Recetas = () => {
   const [idReceta, setIdReceta] = React.useState("");
   const [nomReceta, setNomReceta] = React.useState("");
@@ -76,23 +77,43 @@ const Recetas = () => {
 
     //console.log(idRecProd)
 
-    if (window.confirm()) {
-      const requestInit = {
-        method: "DELETE",
-      };
-      fetch(
-        "http://localhost:9000/api/receta-productos/" + idRecProd,
-        requestInit
-      )
-        .then((res) => res.text())
-        .then((res) => console.log(res));
+    Swal.fire({
+      title: 'Eliminar',
+      text: '¿Deseas eliminar el producto?',
+      icon: 'question',
+      confirmButtonColor: '#f81e04',
+      confirmButtonText: 'Sí',
+      showDenyButton: true,
+      denyButtonColor: '#01cc17'
+      
+    }).then(response => {
+      if(response.isConfirmed){
+        const requestInit = {
+          method: "DELETE",
+        };
+        fetch(
+          "http://localhost:9000/api/receta-productos/" + idRecProd,
+          requestInit
+        )
+          .then((res) => res.text())
+          .then((res) => console.log(res));
+  
+        const arrayEditado = recetaProductos.filter(
+          (item) => item.id_rec_producto !== idRecProd
+        );
+  
+        setRecetaProductos(arrayEditado);
+        Swal.fire({
+          title: 'Eliminado',
+          text: 'Producto eliminado correctamente',
+          icon: 'success',
+          timer: 1500, 
+          showConfirmButton: false  
+        })
+      }
+    })
 
-      const arrayEditado = recetaProductos.filter(
-        (item) => item.id_rec_producto !== idRecProd
-      );
-
-      setRecetaProductos(arrayEditado);
-    }
+    
   };
 
   //------------------------------------------------------------------
@@ -106,63 +127,82 @@ const Recetas = () => {
   const eliminarReceta = (idRec) => {
     // FUNCION ELIMINAR PRODUCTOS DE LA RECETA, ANTES DE ELIMINAR LA RECETA
 
-    if (window.confirm("Deseas eliminar la receta?")) {
-      recetaProductos.forEach((rp) => {
-        if (rp.id_receta === idRec) {
-          const requestInit = {
-            method: "DELETE",
-          };
-          fetch(
-            "http://localhost:9000/api/receta-productos/" + rp.id_rec_producto,
-            requestInit
-          )
-            .then((res) => res.text())
-            .then((res) => console.log(res));
-        }
-      });
+    Swal.fire({
+      title: 'Eliminar',
+      text: '¿Deseas eliminar la receta?',
+      icon: 'question',
+      showDenyButton: true,
+      denyButtonColor: '#01cc17',
+      confirmButtonColor: '#f81e04',
+      confirmButtonText: 'Sí'
+    }).then(response => {
+      if(response.isConfirmed){
+        recetaProductos.forEach((rp) => {
+          if (rp.id_receta === idRec) {
+            const requestInit = {
+              method: "DELETE",
+            };
+            fetch(
+              "http://localhost:9000/api/receta-productos/" + rp.id_rec_producto,
+              requestInit
+            )
+              .then((res) => res.text())
+              .then((res) => console.log(res));
+          }
+        });
+  
+        let arrayEditado = [];
+  
+        recetaProductos.forEach((rp) => {
+          if (rp.id_receta !== idRec) {
+            console.log(rp.id_rec_producto);
+            arrayEditado.push(rp);
+          }
+        });
+        setRecetaProductos(arrayEditado);
+  
+        // FIN FUNCION ELIMINAR PRODUCTOS DE LA RECETA, ANTES DE ELIMINAR LA RECETA
+        //--------------------
+        //--------------------
+        //--------------------
+        //--------------------
+  
+        //INICIO DEL DELETE RECETA
+        //-------------------------
+        //-------------------------
+        //-------------------------
+        //-------------------------
+  
+        const requestInit = {
+          method: "DELETE",
+        };
+        fetch("http://localhost:9000/api/receta/" + idRec, requestInit)
+          .then((res) => res.text())
+          .then((res) => console.log(res));
+  
+        const arrayFiltrado = recetas.filter((item) => item.id_receta !== idRec);
+  
+        setRecetas(arrayFiltrado);
+  
+        let arreglo = [];
+        recetaProductos.forEach((i) => {
+          arreglo.push(i.id_receta);
+        });
+  
+        let arrayRecetasNoRepetidas = [...new Set(arreglo)];
+        console.log(arrayRecetasNoRepetidas);
+        setArregloNombreReceta(arrayRecetasNoRepetidas);
+        Swal.fire({
+          title: 'Eliminada',
+          text: 'Receta eliminada correctamente',
+          icon: 'success',
+          showConfirmButton: false,
+          timer:1500
+        })
+      }
+    })
 
-      let arrayEditado = [];
-
-      recetaProductos.forEach((rp) => {
-        if (rp.id_receta !== idRec) {
-          console.log(rp.id_rec_producto);
-          arrayEditado.push(rp);
-        }
-      });
-      setRecetaProductos(arrayEditado);
-
-      // FIN FUNCION ELIMINAR PRODUCTOS DE LA RECETA, ANTES DE ELIMINAR LA RECETA
-      //--------------------
-      //--------------------
-      //--------------------
-      //--------------------
-
-      //INICIO DEL DELETE RECETA
-      //-------------------------
-      //-------------------------
-      //-------------------------
-      //-------------------------
-
-      const requestInit = {
-        method: "DELETE",
-      };
-      fetch("http://localhost:9000/api/receta/" + idRec, requestInit)
-        .then((res) => res.text())
-        .then((res) => console.log(res));
-
-      const arrayFiltrado = recetas.filter((item) => item.id_receta !== idRec);
-
-      setRecetas(arrayFiltrado);
-
-      let arreglo = [];
-      recetaProductos.forEach((i) => {
-        arreglo.push(i.id_receta);
-      });
-
-      let arrayRecetasNoRepetidas = [...new Set(arreglo)];
-      console.log(arrayRecetasNoRepetidas);
-      setArregloNombreReceta(arrayRecetasNoRepetidas);
-    }
+    
   };
   //----------------------------------------------------------------
   //----------------------------------------------------------------

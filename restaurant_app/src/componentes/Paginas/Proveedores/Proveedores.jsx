@@ -1,6 +1,7 @@
 import React from "react";
 import FormularioProveedor from "./FormularioProveedor";
 import ReactHtmlTableToExcel from "react-html-table-to-excel";
+import Swal from 'sweetalert2'
 
 const Proveedores = () => {
   const [provs, setProvs] = React.useState([]);
@@ -48,23 +49,50 @@ const Proveedores = () => {
     });
 
     if (!existeId) {
-      if (window.confirm("¿Deseas eliminar el proveedor?")) {
-        const requestInit = {
-          method: "DELETE",
-        };
-        fetch("http://localhost:9000/api/proveedor/" + id, requestInit)
-          .then((res) => res.text())
-          .then((res) => console.log(res));
 
-        const arrayEliminado = provs.filter((item) => item.id_proveedor !== id);
+      Swal.fire({
+        title: 'Eliminar',
+        text: '¿Deseas eliminar al proveedor?',
+        icon: 'question',
+        showDenyButton: true,
+        denyButtonColor:'#01cc17',
+        confirmButtonColor: '#f81e04',
+        confirmButtonText: 'Sí'
+      }).then(response => {
+        if(response.isConfirmed){
+          const requestInit = {
+            method: "DELETE",
+          };
+          fetch("http://localhost:9000/api/proveedor/" + id, requestInit)
+            .then((res) => res.text())
+            .then((res) => console.log(res));
+  
+          const arrayEliminado = provs.filter((item) => item.id_proveedor !== id);
+  
+          setProvs(arrayEliminado);
+          Swal.fire({
+            title: 'Eliminado',
+            text:  "Eliminado correctamente",
+            icon: 'success',
+            showConfirmButton: false,
+            timer: 2000
+          })
+  
+        }
+      })
 
-        setProvs(arrayEliminado);
-      }
+     
     }
     if (existeId) {
-      alert(
-        "¡No puedes eliminar el proveedor, porque está asignado a un producto!"
-      );
+
+      Swal.fire({
+        title: 'Advertencia',
+        text:  "¡No puedes eliminar el proveedor, porque está asignado a un producto!",
+        icon: 'warning',
+        showConfirmButton: false,
+        timer: 2000
+      })
+
     }
   };
 

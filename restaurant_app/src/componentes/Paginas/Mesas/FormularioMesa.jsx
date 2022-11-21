@@ -1,4 +1,5 @@
 import React from "react";
+import Swal from "sweetalert2";
 
 const FormularioMesa = ({
   mesas,
@@ -87,6 +88,15 @@ const FormularioMesa = ({
       setIdMesa("");
       setMinMesa("");
       setMaxMesa("");
+
+      
+      Swal.fire({
+        title: 'Agregada',
+        text: 'Mesa agregada con exito',
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 1500
+      })
     }
   };
 
@@ -145,6 +155,13 @@ const FormularioMesa = ({
       setIdMesa("");
       setMinMesa("");
       setMaxMesa("");
+      Swal.fire({
+        title: 'Actualizada',
+        text: 'Mesa actualizada con exito',
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 1000
+      })
     }
   };
 

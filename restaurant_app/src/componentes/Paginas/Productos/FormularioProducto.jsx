@@ -2,6 +2,7 @@ import React from 'react'
 import { nanoid } from 'nanoid'
 //import 'bootstrap/dist/css/bootstrap.css'
 //import Productos from './Productos'
+import Swal from 'sweetalert2'
 
 
 //class Formulario extends React.Component{
@@ -132,6 +133,12 @@ const [errorProductoNombre, setErrorProductoNombre] = React.useState(false)
     setErrorProductoNombre(false)
     setEstadoEditar(false)
     
+    Swal.fire({
+      title: '¡Exito!',
+      text: 'Producto agregado correctamente',
+      icon: "success",
+      timer: 1500
+    })
     }
     
     
@@ -205,6 +212,13 @@ const actualizarProducto = (e) => {
       setErrorProveedor(false)
       setErrorProducto(false)
       setErrorCantidad(false)
+
+      Swal.fire({
+        title: '¡Exito!',
+        text: 'Producto actualizado correctamente',
+        icon: "success",
+        timer: 1500
+      })
       
   }
 

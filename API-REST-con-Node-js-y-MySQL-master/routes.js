@@ -351,10 +351,10 @@ routes.post('/pedido', (req, res)=>{
     })
 })
 // Delete 
-routes.delete('/pedido/:idPedido', (req, res)=>{
+routes.delete('/pedido/:idReceta', (req, res)=>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
-        conn.query('DELETE FROM pedido WHERE id_pedido = ?', [req.params.idPedido], (err, rows)=>{
+        conn.query('DELETE FROM pedido WHERE id_pedido = ?', [req.params.idReceta], (err, rows)=>{
             if(err) return res.send(err)
 
             res.send('pedido eliminado')

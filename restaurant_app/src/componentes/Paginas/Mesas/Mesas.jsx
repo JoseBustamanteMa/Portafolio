@@ -1,6 +1,7 @@
 import React from "react";
 import FormularioMesa from "./FormularioMesa";
 import ReactHtmlTableToExcel from "react-html-table-to-excel";
+import Swal from 'sweetalert2'
 
 const Mesas = () => {
   const [mesas, setMesas] = React.useState([]);
@@ -20,18 +21,39 @@ const Mesas = () => {
   }, []);
 
   const eliminarMesa = (id) => {
-    if (window.confirm()) {
-      const requestInit = {
-        method: "DELETE",
-      };
-      fetch("http://localhost:9000/api/mesa/" + id, requestInit)
-        .then((res) => res.text())
-        .then((res) => console.log(res));
 
-      const arrayEliminado = mesas.filter((item) => item.id_mesa !== id);
-
-      setMesas(arrayEliminado);
+    Swal.fire({
+      title: 'Eliminar',
+      text: '¿Deseas eliminar la mesa?',
+      icon: 'question',
+      showDenyButton: true,
+      denyButtonColor: '#01cc17',
+      confirmButtonColor: '#f81e04',
+      confirmButtonText: 'Sí'
+    }).then(response => {
+      if(response.isConfirmed){
+        const requestInit = {
+          method: "DELETE",
+        };
+        fetch("http://localhost:9000/api/mesa/" + id, requestInit)
+          .then((res) => res.text())
+          .then((res) => console.log(res));
+  
+        const arrayEliminado = mesas.filter((item) => item.id_mesa !== id);
+  
+        setMesas(arrayEliminado);
+        Swal.fire({
+          title: 'Eliminada',
+          text: 'Mesa eliminada correctamente',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 2000
+        })
+      }
+      
     }
+      )
+    
   };
 
   const editar = (item) => {

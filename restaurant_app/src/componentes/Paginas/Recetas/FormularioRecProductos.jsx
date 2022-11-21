@@ -1,6 +1,7 @@
 import React from "react";
 import Recetas from "./Recetas";
 import { nanoid } from "nanoid";
+import Swal from "sweetalert2";
 
 const FormularioRecProductos = ({
   idReceta,
@@ -32,12 +33,23 @@ const FormularioRecProductos = ({
     });
 
     if (existeProducto) {
-      alert("El producto ya existe en la receta");
+      
+      Swal.fire({
+        title: 'Advertencia',
+        text: 'El producto ya existe en la boleta',
+        icon: "warning",
+        timer: 1500
+      })
       return;
     }
 
     if (!producto.trim()) {
-      alert("Elige un producto");
+      Swal.fire({
+        title: 'Advertencia',
+        text: 'Debes ingresar un producto',
+        icon: "warning",
+        timer: 1500
+      })
       return;
     }
 
@@ -67,6 +79,7 @@ const FormularioRecProductos = ({
       ];
 
       setRecetaProductos(arrayAgregado);
+      
     }
   };
 
@@ -96,6 +109,13 @@ const FormularioRecProductos = ({
     );
 
     setRecetas(arrayEditado);
+    Swal.fire({
+      title: 'Actualizada',
+      text: 'Receta actualizada correctamente',
+      icon: 'success',
+      timer: 1500, 
+      showConfirmButton: false
+    })
   };
 
   const limpiarCasillas = () => {

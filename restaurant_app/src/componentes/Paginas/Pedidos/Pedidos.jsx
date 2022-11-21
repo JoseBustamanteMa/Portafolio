@@ -2,10 +2,12 @@ import React from "react";
 import { nanoid } from "nanoid";
 import moment from 'moment'
 import { BsCheckLg } from "react-icons/bs";
+import Swal from 'sweetalert2';
 import FormularioPedido from "./FormularioPedido";
 import FormularioPedidoRecetas from "./FormularioPedidoRecetas";
 import Boletas from "../Boletas/Boletas"
 import ModalBoleta from "../Boletas/ModalBoleta"
+
 
 
 const Pedidos = () => {
@@ -21,6 +23,8 @@ const Pedidos = () => {
   const [idBoleta, setIdBoleta] = React.useState();
   const [totalPagar, setTotalPagar] = React.useState();
   const [fechaBoleta, setFechaBoleta] = React.useState();
+  const [encargado, setEncargado] = React.useState();
+
 
 
 
@@ -72,8 +76,8 @@ const Pedidos = () => {
 
     const obtenerBoletas = async () => {
       const data = await fetch("http://localhost:9000/api/boleta");
-      const rec = await data.json();
-      setBoletas(rec);
+      const bol = await data.json();
+      setBoletas(bol);
     };
 
     obtenerBoletas();
@@ -88,24 +92,46 @@ const Pedidos = () => {
     // });
 
     // if (idPedRec) {
-    if (window.confirm("¿Deseas eliminar la receta del pedido?")) {
-      const requestInit = {
-        method: "DELETE",
-      };
-      fetch(
-        "http://localhost:9000/api/pedido-recetas/" + id_ped_rec,
-        requestInit
-      )
-        .then((res) => res.text())
-        .then((res) => console.log(res));
 
-      const arrayEditado = pedidoRecetas.filter(
-        (item) => item.id_ped_recetas !== id_ped_rec
-      );
+    Swal.fire({
+      title: '¿Seguro?',
+      text: '¿Deseas eliminar la receta del pedido?',
+      icon: 'question',
+      showDenyButton: true,
+      denyButtonText: 'No',
+      confirmButtonText: 'Sí',
+      confirmButtonColor: '#f80505',
+      denyButtonColor: '#35b022',
+      allowOutsideClick: false
 
-      setPedidoRecetas(arrayEditado);
-    }
-    // }
+    }).then(response => {
+      if(response.isConfirmed){
+        const requestInit = {
+          method: "DELETE",
+        };
+        fetch(
+          "http://localhost:9000/api/pedido-recetas/" + id_ped_rec,
+          requestInit
+        )
+          .then((res) => res.text())
+          .then((res) => console.log(res));
+  
+        const arrayEditado = pedidoRecetas.filter(
+          (item) => item.id_ped_recetas !== id_ped_rec
+        );
+
+        Swal.fire({
+          title: 'Eliminado',
+          text: 'La receta se eliminó correctamente',
+          timer: 1500,
+          icon: "success"
+        })
+  
+        setPedidoRecetas(arrayEditado);
+      }
+    })
+
+    
   };
 
   const eliminarPedido = (idPe) => {
@@ -116,60 +142,105 @@ const Pedidos = () => {
     // 
     // 
     // 
-    if (window.confirm("¿Deseas eliminar el pedido?")) {
-      pedidoRecetas.forEach(pr => {
+    let existeP = ''
+    boletas.forEach(bl => {
+      if(bl.id_pedido === idPe){
+        Swal.fire({
+          title: 'Error',
+          text: 'No se puede eliminar el pedido ya que pertenece a una boleta',
+          icon: "warning", 
+          timer: 2000,
+          showConfirmButton:false
+        })
+        
+        existeP = 'existe'
+      }
+    })
 
-        if (pr.id_pedido === idPe) {
-
-          const requestInit = {
-            method: "DELETE",
-          };
-          fetch(
-            "http://localhost:9000/api/pedido-recetas/" + pr.id_ped_recetas,
-            requestInit
-          )
-            .then((res) => res.text())
-            .then((res) => console.log(res));
-
-          const arrayFiltrado = pedidoRecetas.filter((item) => item.id_ped_recetas !== pr.id_ped_recetas)
-          setPedidoRecetas(arrayFiltrado)
+    if(!existeP){
+      Swal.fire({
+        title: '¿Seguro?',
+        text: '¿Deseas eliminar el pedido?',
+        icon: 'question',
+        showDenyButton: true,
+        denyButtonText: 'No',
+        confirmButtonText: 'Sí',
+        confirmButtonColor: '#f80505',
+        allowOutsideClick: false
+  
+      }).then(response => {
+        if(response.isConfirmed){
+          
+            pedidoRecetas.forEach(pr => {
+      
+              if (pr.id_pedido === idPe) {
+      
+                const requestInit = {
+                  method: "DELETE",
+                };
+                fetch(
+                  "http://localhost:9000/api/pedido-recetas/" + pr.id_ped_recetas,
+                  requestInit
+                )
+                  .then((res) => res.text())
+                  .then((res) => console.log(res));
+      
+                const arrayFiltrado = pedidoRecetas.filter((item) => item.id_ped_recetas !== pr.id_ped_recetas)
+                setPedidoRecetas(arrayFiltrado)
+              }
+            })
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+            //INICIO DE FUNCION ELIMINAR PEDIDO
+            //
+            //
+            //
+            //
+            //
+            //
+      
+            const requestInit = {
+              method: "DELETE",
+            };
+            fetch("http://localhost:9000/api/pedido/" + idPe, requestInit
+            )
+              .then((res) => res.text())
+              .then((res) => console.log(res));
+      
+            const arrayEditado = pedidos.filter(
+              (item) => item.id_pedido !== idPe
+            );
+      
+            setPedidos(arrayEditado);
+          
         }
+
+        Swal.fire({
+      title: 'Eliminado',
+      text: 'Pedido eliminado correctamente',
+      icon: 'success',
+      showDenyButton: false,
+      showConfirmButton: false,
+      allowOutsideClick: false,
+      timer:1500
+
+
+    })
+
       })
-
-
-
-
-
-
-
-
-
-
-      //INICIO DE FUNCION ELIMINAR PEDIDO
-      //
-      //
-      //
-      //
-      //
-      //
-
-      const requestInit = {
-        method: "DELETE",
-      };
-      fetch(
-        "http://localhost:9000/api/pedido/" + idPe,
-        requestInit
-      )
-        .then((res) => res.text())
-        .then((res) => console.log(res));
-
-      const arrayEditado = pedidos.filter(
-        (item) => item.id_pedido !== idPe
-      );
-
-      setPedidos(arrayEditado);
     }
 
+    
+    
+    
     console.log(idPe)
   }
 
@@ -237,8 +308,8 @@ const Pedidos = () => {
   }
 
 
-  const emitirBoleta = (e, p) => {
-    e.preventDefault();
+  const emitirBoleta = (p) => {
+    
 
     let contador = 0
 pedidoRecetas.forEach(pr => {
@@ -255,40 +326,125 @@ pedidoRecetas.forEach(pr => {
 
 })
 
-window.confirm('¿Generar boleta?')
+
+let existePedidoEnBoleta = ''
+
+boletas.forEach(bl => {
+  if(bl.id_pedido === p.id_pedido){
+    existePedidoEnBoleta='existe'
     
-    {const randomId = nanoid(4);
-    const fechaInicio = moment()
-    setIdBoleta(randomId)
+  }
+})
 
-    const requestInit = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        id_boleta: randomId,
-        total_pagar : contador, 
-        f_boleta: fechaInicio.format("YYYY-MM-DD hh:mm:ss"), 
-        metodo_pago: "D",
-        id_pedido: p.id_pedido
-      }),
-    };
-    fetch("http://localhost:9000/api/boleta/", requestInit)
-      .then((res) => res.text())
-      .then((res) => console.log(res));
-
-    const arrayAgregado = [
-      ...boletas,
-      {
-        id_boleta: randomId,
-        total_pagar : contador, 
-        f_boleta: fechaInicio.format("YYYY-MM-DD hh:mm:ss"), 
-        metodo_pago: "D",
-        id_pedido: p.id_pedido
-      },
-    ];
-
-    setPedidos(arrayAgregado);
+if(existePedidoEnBoleta){
+  
+  Swal.fire({
+    title: 'Advertencia',
+    text: 'Ya existe una boleta asociada a este pedido',
+    icon: "warning",
+    timer: 2000
+  })
+  return
+  
 }
+
+let hayRecetas = ''
+
+pedidoRecetas.forEach(pr => {
+  if(p.id_pedido === pr.id_pedido){
+    hayRecetas= p.id_pedido
+  }
+})
+
+if(!hayRecetas){
+  Swal.fire({
+    title: 'Advertencia',
+    text: 'No existen productos para generar boleta',
+    icon: "warning",
+    timer: 2000
+  })
+  return
+}
+
+
+if(!existePedidoEnBoleta){
+  
+  
+  Swal.fire({
+    title: 'Generar boleta',
+    text: '¿Deseas generar la boleta?',
+    icon: "question",
+    showDenyButton: true,
+    denyButtonColor: '#f81e04',
+    confirmButtonColor: '#35b022',
+    confirmButtonText: 'Sí',
+    allowOutsideClick: false
+
+    
+  }).then(response=> {
+    if(response.isConfirmed){
+    
+  
+    
+    
+      const randomId = nanoid(4);
+      const fechaInicio = moment()
+    
+      Swal.fire({
+        title: 'Boleta',
+        html: `<div>
+        <p className:"display-1">Folio de boleta: ${randomId}</p>
+        <p>Fecha de emisión: ${fechaInicio.format("DD-MM-YYYY")}</p>
+        <p>Hora de emisión: ${fechaInicio.format("hh:mm:ss")}</p>
+        <p>Monto de boleta: $${contador}</p>
+        
+        
+        </div>`,
+        allowOutsideClick: false,
+
+      })
+      setIdBoleta(randomId)
+      setFechaBoleta(fechaInicio.format("YYYY-MM-DD hh:mm:ss"))
+      setIdUsuario(p.id_usuario)
+      setTotalPagar(contador)
+      
+    
+      const requestInit = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id_boleta: randomId,
+          total_pagar : contador, 
+          f_boleta: fechaInicio.format("YYYY-MM-DD hh:mm:ss"), 
+          metodo_pago: "D",
+          id_pedido: p.id_pedido
+        }),
+      };
+      fetch("http://localhost:9000/api/boleta/", requestInit)
+        .then((res) => res.text())
+        .then((res) => console.log(res));
+    
+      const arrayAgregado = [
+        ...boletas,
+        {
+          id_boleta: randomId,
+          total_pagar : contador, 
+          f_boleta: fechaInicio.format("YYYY-MM-DD hh:mm:ss"), 
+          metodo_pago: "D",
+          id_pedido: p.id_pedido
+        },
+      ];
+    
+      setBoletas(arrayAgregado);
+    }
+  })
+
+
+    
+  
+}
+
+
   };
 
   return (
@@ -402,15 +558,27 @@ window.confirm('¿Generar boleta?')
                     </div>
 
                     <div className="col-5 mt-4">
-                       <ModalBoleta 
+                       {/* <ModalBoleta 
                        idBoleta={idBoleta} setIdBoleta={setIdBoleta}
                        totalPagar={totalPagar} setTotalPagar={setTotalPagar}
                        fechaBoleta={fechaBoleta} setFechaBoleta={setFechaBoleta}
-                       />
-                       <button onClick={() => emitirBoleta(p)} className="btn btn-secondary" data-bs-toggle="modal"
-                        data-bs-target="#myModalBoleta">
+                       idUsuario={idUsuario} setIdUsuario={setIdUsuario}
+                       
+
+                       /> */}
+
+                        
+                        <button onClick={() => emitirBoleta(p)} className="btn btn-secondary" 
+                        // data-bs-toggle="modal"
+                        // data-bs-target="#myModalBoleta"
+                        >
                         Emitir boleta
                        </button>
+                        
+                       
+
+
+                       
                                      
                     </div>
                     

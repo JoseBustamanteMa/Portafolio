@@ -38,7 +38,8 @@ const App =() => {
       {/* <Productos/> */}
       {/* <Pedidos/> */}
       {/* <Recetas/> */}
-      <Pedidos/>
+      {/* <Pedidos/> */}
+      <Mesas/>
     </div>
   );
 }

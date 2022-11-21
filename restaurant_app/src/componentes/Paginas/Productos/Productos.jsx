@@ -2,6 +2,7 @@ import React from "react";
 //import { nanoid } from 'nanoid'
 import FormularioProducto from "./FormularioProducto";
 import ReactHtmlTableToExcel from "react-html-table-to-excel";
+import Swal from "sweetalert2";
 
 const Productos = () => {
   const [producto, setProducto] = React.useState("");
@@ -12,6 +13,7 @@ const Productos = () => {
   const [estadoEditar, setEstadoEditar] = React.useState(false);
   const [id, setId] = React.useState("");
   const [provs, setProvs] = React.useState([]);
+  const [recetaProductos, setRecetaProductos] = React.useState([]);
 
   React.useEffect(() => {
     const obtenerProductos = async () => {
@@ -28,6 +30,13 @@ const Productos = () => {
       setProvs(coms);
     };
     obtenerProveedores();
+
+    const obtenerRecetaProductos = async () => {
+      const data = await fetch("http://localhost:9000/api/receta-productos");
+      const rec = await data.json();
+      setRecetaProductos(rec);
+    };
+    obtenerRecetaProductos();
   }, []);
 
   const editar = (item) => {
@@ -39,18 +48,55 @@ const Productos = () => {
   };
 
   const eliminarProducto = (id) => {
-    if (window.confirm()) {
-      const requestInit = {
-        method: "DELETE",
-      };
-      fetch("http://localhost:9000/api/producto/" + id, requestInit)
-        .then((res) => res.text())
-        .then((res) => console.log(res));
 
-      const arrayEditado = productos.filter((item) => item.id_producto !== id);
+    let existeEnReceta = ''
+    recetaProductos.forEach(r => {
+      if(r.id_producto === id){
+        existeEnReceta = r.id_producto
+      }
+    })
 
-      setProductos(arrayEditado);
+    if(existeEnReceta){
+      Swal.fire({
+        title: 'Error',
+        text: 'El producto existe en una o mas recetas, no puede ser eliminado',
+        icon: "error",
+        timer: 2000,
+        showConfirmButton:false
+      })
+      return
     }
+
+    Swal.fire({
+      title: '¿Eliminar?',
+      text: '¿Deseas eliminar la receta?',
+      icon: "success",
+      showDenyButton: true,
+      denyButtonColor: '#01cc17',
+      confirmButtonText: 'Sí',
+      confirmButtonColor: '#f81e04  '
+    }).then( response => {
+      if(response.isConfirmed){
+        const requestInit = {
+          method: "DELETE",
+        };
+        fetch("http://localhost:9000/api/producto/" + id, requestInit)
+          .then((res) => res.text())
+          .then((res) => console.log(res));
+  
+        const arrayEditado = productos.filter((item) => item.id_producto !== id);
+  
+        setProductos(arrayEditado);
+        Swal.fire({
+          title: 'Eliminado',
+          text: 'Producto eliminado correctamente',
+          icon: "success",
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }
+    })
+   
   };
 
   return (
