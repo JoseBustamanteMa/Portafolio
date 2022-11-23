@@ -13,6 +13,8 @@ import Reservas from './componentes/Paginas/Reservas/Reservas';
 import Proveedores from './componentes/Paginas/Proveedores/Proveedores';
 import Recetas from "./componentes/Paginas/Recetas/Recetas";
 import Pedidos from "./componentes/Paginas/Pedidos/Pedidos";
+import PedidosCocina from "./componentes/Paginas/Pedidos/PedidosCocina";
+import PedidoProvider from "./componentes/Paginas/context/PedidoProvider";
 
 
 const App =() => {
@@ -38,8 +40,12 @@ const App =() => {
       {/* <Productos/> */}
       {/* <Pedidos/> */}
       {/* <Recetas/> */}
-      {/* <Pedidos/> */}
-      <Mesas/>
+      <PedidoProvider>
+
+        <Pedidos/>
+        {/* <PedidosCocina/> */}
+      </PedidoProvider>
+      {/* <Mesas/> */}
     </div>
   );
 }
