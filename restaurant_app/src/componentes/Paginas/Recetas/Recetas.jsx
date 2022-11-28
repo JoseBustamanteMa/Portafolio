@@ -85,9 +85,9 @@ const Recetas = () => {
       confirmButtonText: 'Sí',
       showDenyButton: true,
       denyButtonColor: '#01cc17'
-      
+
     }).then(response => {
-      if(response.isConfirmed){
+      if (response.isConfirmed) {
         const requestInit = {
           method: "DELETE",
         };
@@ -97,23 +97,23 @@ const Recetas = () => {
         )
           .then((res) => res.text())
           .then((res) => console.log(res));
-  
+
         const arrayEditado = recetaProductos.filter(
           (item) => item.id_rec_producto !== idRecProd
         );
-  
+
         setRecetaProductos(arrayEditado);
         Swal.fire({
           title: 'Eliminado',
           text: 'Producto eliminado correctamente',
           icon: 'success',
-          timer: 1500, 
-          showConfirmButton: false  
+          timer: 1500,
+          showConfirmButton: false
         })
       }
     })
 
-    
+
   };
 
   //------------------------------------------------------------------
@@ -136,7 +136,7 @@ const Recetas = () => {
       confirmButtonColor: '#f81e04',
       confirmButtonText: 'Sí'
     }).then(response => {
-      if(response.isConfirmed){
+      if (response.isConfirmed) {
         recetaProductos.forEach((rp) => {
           if (rp.id_receta === idRec) {
             const requestInit = {
@@ -150,9 +150,9 @@ const Recetas = () => {
               .then((res) => console.log(res));
           }
         });
-  
+
         let arrayEditado = [];
-  
+
         recetaProductos.forEach((rp) => {
           if (rp.id_receta !== idRec) {
             console.log(rp.id_rec_producto);
@@ -160,35 +160,35 @@ const Recetas = () => {
           }
         });
         setRecetaProductos(arrayEditado);
-  
+
         // FIN FUNCION ELIMINAR PRODUCTOS DE LA RECETA, ANTES DE ELIMINAR LA RECETA
         //--------------------
         //--------------------
         //--------------------
         //--------------------
-  
+
         //INICIO DEL DELETE RECETA
         //-------------------------
         //-------------------------
         //-------------------------
         //-------------------------
-  
+
         const requestInit = {
           method: "DELETE",
         };
         fetch("http://localhost:9000/api/receta/" + idRec, requestInit)
           .then((res) => res.text())
           .then((res) => console.log(res));
-  
+
         const arrayFiltrado = recetas.filter((item) => item.id_receta !== idRec);
-  
+
         setRecetas(arrayFiltrado);
-  
+
         let arreglo = [];
         recetaProductos.forEach((i) => {
           arreglo.push(i.id_receta);
         });
-  
+
         let arrayRecetasNoRepetidas = [...new Set(arreglo)];
         console.log(arrayRecetasNoRepetidas);
         setArregloNombreReceta(arrayRecetasNoRepetidas);
@@ -197,12 +197,12 @@ const Recetas = () => {
           text: 'Receta eliminada correctamente',
           icon: 'success',
           showConfirmButton: false,
-          timer:1500
+          timer: 1500
         })
       }
     })
 
-    
+
   };
   //----------------------------------------------------------------
   //----------------------------------------------------------------
@@ -242,9 +242,9 @@ const Recetas = () => {
                       <th className="col-4">Receta</th>
                       <th className="col-4">Productos</th>
                       <th className="col-4"></th>
-                      
+
                       <th className="">
-                        
+
                       </th>
                     </tr>
                   </thead>
@@ -270,53 +270,64 @@ const Recetas = () => {
                             setRecetaProductos={setRecetaProductos}
                           />
                         </td>
-                        <td className="">
-                          <thead>
-                            <tr className="align-middle">
-                             
-                              <th className="col-4">Nombre</th>
-                              <th className="col-2">Disponibilidad</th>
-                              <th className="col-2"></th>
-                            </tr>
-                          </thead>
-                          {recetaProductos.map(
-                            (rp) =>
-                              rp.id_receta === r.id_receta && (
-                                <div>
-                                  <table className="table table-success col-12  table-responsive table-hover box align-middle">
-                                    {productos.map(
-                                      (p) =>
-                                        rp.id_producto === p.id_producto && (
-                                          <tbody className="container">
-                                            <tr>
-                                              {" "}
-                                              
-                                              <td className="col-4">
-                                                {p.nom_producto}
-                                              </td>
-                                              {/* <td> aki va la disponibilidad del producto</td> */}
-                                              
-                                              <td className="col-2">
-                                                <button
-                                                  onClick={() =>
-                                                    eliminarProductoDeReceta(
-                                                      p.id_producto,
-                                                      r.id_receta
-                                                    )
-                                                  }
-                                                  className="btn btn-2"
-                                                >
-                                                  Eliminar
-                                                </button>
-                                              </td>
-                                            </tr>
-                                          </tbody>
-                                        )
-                                    )}
-                                  </table>
-                                </div>
-                              )
-                          )}
+                        <td>
+                          <table className="table table-success col-12  table-responsive table-hover box align-middle">
+                            <thead>
+                              <tr className="align-middle">
+
+                                <th className="col-1">Nombre</th>
+                                <th className="col-1">Disponibilidad</th>
+                                <th className="col-1"></th>
+                              </tr>
+                            </thead>
+
+                            {recetaProductos.map(
+                              (rp) =>
+                                rp.id_receta === r.id_receta && (
+
+                                  productos.map(
+                                    (p) =>
+                                      rp.id_producto === p.id_producto && (
+
+
+                                        <tbody className="container">
+                                          <tr>
+                                            {" "}
+
+                                            <td>
+                                              {p.nom_producto}
+                                            </td>
+                                            <td >
+
+                                            </td>
+                                            {/* <td> aki va la disponibilidad del producto</td> */}
+
+                                            <td children>
+                                              <button
+                                                onClick={() =>
+                                                  eliminarProductoDeReceta(
+                                                    p.id_producto,
+                                                    r.id_receta
+                                                  )
+                                                }
+                                                className="btn btn-2"
+                                              >
+                                                Eliminar
+                                              </button>
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      )
+                                  )
+                                ))}
+                          </table>
+
+
+
+
+
+
+
                         </td>
 
                         <td>

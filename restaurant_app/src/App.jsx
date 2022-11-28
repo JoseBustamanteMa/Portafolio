@@ -17,35 +17,25 @@ import PedidosCocina from "./componentes/Paginas/Pedidos/PedidosCocina";
 import PedidoProvider from "./componentes/Paginas/context/PedidoProvider";
 
 
-const App =() => {
+const App = () => {
   return (
     <div>
-      {/* <Router>
-        <Navbar/> 
+      <Router>
+        <Navbar />
         <Switch>
-          <Route path='/' exact component={Inicio}/>
-          <Route path='/reservas' component={Reservas}/>
-          <Route path='/productos' component={Productos}/>
-          <Route path='/recetas' component={Recetas}/>
-          <Route path='/empleados' component={Empleados}/>
-          <Route path='/rol' component={Roles}/>
-          <Route path='/mesas' component={Mesas}/>
-          <Route path='/proveedores' component={Proveedores}/>
-          <Route path='/ayuda' component={Ayuda}/>
-       </Switch>
-      </Router> */}
-
-
-      {/* <Proveedores/> */}
-      {/* <Productos/> */}
-      {/* <Pedidos/> */}
-      {/* <Recetas/> */}
-      <PedidoProvider>
-
-        <Pedidos/>
-        {/* <PedidosCocina/> */}
-      </PedidoProvider>
-      {/* <Mesas/> */}
+          <Route path='/' exact component={Inicio} />
+          <Route path='/reservas' component={Reservas} />
+          <Route path='/productos' component={Productos} />
+          <Route path='/recetas' component={Recetas} />
+          <Route path='/empleados' component={Empleados} />
+          <Route path='/rol' component={Roles} />
+          <Route path='/mesas' component={Mesas} />
+          <Route path='/proveedores' component={Proveedores} />
+          <PedidoProvider>
+            <Route path='/pedidos' component={Pedidos} />
+          </PedidoProvider>
+        </Switch>
+      </Router>
     </div>
   );
 }

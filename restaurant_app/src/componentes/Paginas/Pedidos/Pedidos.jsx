@@ -7,7 +7,7 @@ import FormularioPedido from "./FormularioPedido";
 import FormularioPedidoRecetas from "./FormularioPedidoRecetas";
 import Boletas from "../Boletas/Boletas"
 import ModalBoleta from "../Boletas/ModalBoleta"
-import {PedidosContext} from '../context/PedidoProvider'
+import { PedidosContext } from '../context/PedidoProvider'
 
 
 
@@ -27,14 +27,14 @@ const Pedidos = () => {
   const [encargado, setEncargado] = React.useState();
 
 
-  const {pedidos, setPedidos, recetas, setRecetas, pedidoRecetas, setPedidoRecetas, mesas, setMesas,
-  usuarios, setUsuarios, boletas, setBoletas} = React.useContext(PedidosContext)
+  const { pedidos, setPedidos, recetas, setRecetas, pedidoRecetas, setPedidoRecetas, mesas, setMesas,
+    usuarios, setUsuarios, boletas, setBoletas } = React.useContext(PedidosContext)
 
 
 
- 
 
-  
+
+
 
   React.useEffect(() => {
     const obtenerRecetas = async () => {
@@ -104,7 +104,7 @@ const Pedidos = () => {
       allowOutsideClick: false
 
     }).then(response => {
-      if(response.isConfirmed){
+      if (response.isConfirmed) {
         const requestInit = {
           method: "DELETE",
         };
@@ -114,7 +114,7 @@ const Pedidos = () => {
         )
           .then((res) => res.text())
           .then((res) => console.log(res));
-  
+
         const arrayEditado = pedidoRecetas.filter(
           (item) => item.id_ped_recetas !== id_ped_rec
         );
@@ -125,12 +125,12 @@ const Pedidos = () => {
           timer: 1500,
           icon: "success"
         })
-  
+
         setPedidoRecetas(arrayEditado);
       }
     })
 
-    
+
   };
 
   const eliminarPedido = (idPe) => {
@@ -143,20 +143,20 @@ const Pedidos = () => {
     // 
     let existeP = ''
     boletas.forEach(bl => {
-      if(bl.id_pedido === idPe){
+      if (bl.id_pedido === idPe) {
         Swal.fire({
           title: 'Error',
           text: 'No se puede eliminar el pedido ya que pertenece a una boleta',
-          icon: "warning", 
+          icon: "warning",
           timer: 2000,
-          showConfirmButton:false
+          showConfirmButton: false
         })
-        
+
         existeP = 'existe'
       }
     })
 
-    if(!existeP){
+    if (!existeP) {
       Swal.fire({
         title: '¿Seguro?',
         text: '¿Deseas eliminar el pedido?',
@@ -166,80 +166,80 @@ const Pedidos = () => {
         confirmButtonText: 'Sí',
         confirmButtonColor: '#f80505',
         allowOutsideClick: false
-  
+
       }).then(response => {
-        if(response.isConfirmed){
-          
-            pedidoRecetas.forEach(pr => {
-      
-              if (pr.id_pedido === idPe) {
-      
-                const requestInit = {
-                  method: "DELETE",
-                };
-                fetch(
-                  "http://localhost:9000/api/pedido-recetas/" + pr.id_ped_recetas,
-                  requestInit
-                )
-                  .then((res) => res.text())
-                  .then((res) => console.log(res));
-      
-                const arrayFiltrado = pedidoRecetas.filter((item) => item.id_ped_recetas !== pr.id_ped_recetas)
-                setPedidoRecetas(arrayFiltrado)
-              }
-            })
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-            //INICIO DE FUNCION ELIMINAR PEDIDO
-            //
-            //
-            //
-            //
-            //
-            //
-      
-            const requestInit = {
-              method: "DELETE",
-            };
-            fetch("http://localhost:9000/api/pedido/" + idPe, requestInit
-            )
-              .then((res) => res.text())
-              .then((res) => console.log(res));
-      
-            const arrayEditado = pedidos.filter(
-              (item) => item.id_pedido !== idPe
-            );
-      
-            setPedidos(arrayEditado);
-          
+        if (response.isConfirmed) {
+
+          pedidoRecetas.forEach(pr => {
+
+            if (pr.id_pedido === idPe) {
+
+              const requestInit = {
+                method: "DELETE",
+              };
+              fetch(
+                "http://localhost:9000/api/pedido-recetas/" + pr.id_ped_recetas,
+                requestInit
+              )
+                .then((res) => res.text())
+                .then((res) => console.log(res));
+
+              const arrayFiltrado = pedidoRecetas.filter((item) => item.id_ped_recetas !== pr.id_ped_recetas)
+              setPedidoRecetas(arrayFiltrado)
+            }
+          })
+
+
+
+
+
+
+
+
+
+
+          //INICIO DE FUNCION ELIMINAR PEDIDO
+          //
+          //
+          //
+          //
+          //
+          //
+
+          const requestInit = {
+            method: "DELETE",
+          };
+          fetch("http://localhost:9000/api/pedido/" + idPe, requestInit
+          )
+            .then((res) => res.text())
+            .then((res) => console.log(res));
+
+          const arrayEditado = pedidos.filter(
+            (item) => item.id_pedido !== idPe
+          );
+
+          setPedidos(arrayEditado);
+
         }
 
         Swal.fire({
-      title: 'Eliminado',
-      text: 'Pedido eliminado correctamente',
-      icon: 'success',
-      showDenyButton: false,
-      showConfirmButton: false,
-      allowOutsideClick: false,
-      timer:1500
+          title: 'Eliminado',
+          text: 'Pedido eliminado correctamente',
+          icon: 'success',
+          showDenyButton: false,
+          showConfirmButton: false,
+          allowOutsideClick: false,
+          timer: 1500
 
 
-    })
+        })
 
       })
     }
 
-    
-    
-    
+
+
+
     console.log(idPe)
   }
 
@@ -272,17 +272,17 @@ const Pedidos = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         id_pedido: p.id_pedido,
-          id_usuario: p.id_usuario,
-          id_mesa: p.id_mesa,
-          valor_total: contador,
-          estado: p.estado,
+        id_usuario: p.id_usuario,
+        id_mesa: p.id_mesa,
+        valor_total: contador,
+        estado: p.estado,
       }),
     };
     fetch("http://localhost:9000/api/pedido/" + p.id_pedido, requestInit)
       .then((res) => res.text())
       .then((res) => console.log(res));
 
-      const arrayEditado = pedidos.map((item) =>
+    const arrayEditado = pedidos.map((item) =>
       item.id_pedido === p.id_pedido
         ? {
           id_pedido: p.id_pedido,
@@ -290,7 +290,7 @@ const Pedidos = () => {
           id_mesa: p.id_mesa,
           valor_total: contador,
           estado: p.estado,
-          }
+        }
         : item
     );
     setIdPedido(p.id_pedido)
@@ -308,90 +308,90 @@ const Pedidos = () => {
 
 
   const emitirBoleta = (p) => {
-    
+
 
     let contador = 0
-pedidoRecetas.forEach(pr => {
-  if (pr.id_pedido === p.id_pedido) {
-    console.log('hola')
-    recetas.forEach(r => {
-      if (r.id_receta === pr.id_receta) {
-        contador = contador + r.precio_receta
-        console.log(contador)
+    pedidoRecetas.forEach(pr => {
+      if (pr.id_pedido === p.id_pedido) {
+        console.log('hola')
+        recetas.forEach(r => {
+          if (r.id_receta === pr.id_receta) {
+            contador = contador + r.precio_receta
+            console.log(contador)
+
+          }
+        })
+      }
+
+    })
+
+
+    let existePedidoEnBoleta = ''
+
+    boletas.forEach(bl => {
+      if (bl.id_pedido === p.id_pedido) {
+        existePedidoEnBoleta = 'existe'
 
       }
     })
-  }
 
-})
+    if (existePedidoEnBoleta) {
 
-
-let existePedidoEnBoleta = ''
-
-boletas.forEach(bl => {
-  if(bl.id_pedido === p.id_pedido){
-    existePedidoEnBoleta='existe'
-    
-  }
-})
-
-if(existePedidoEnBoleta){
-  
-  Swal.fire({
-    title: 'Advertencia',
-    text: 'Ya existe una boleta asociada a este pedido',
-    icon: "warning",
-    timer: 2000
-  })
-  return
-  
-}
-
-let hayRecetas = ''
-
-pedidoRecetas.forEach(pr => {
-  if(p.id_pedido === pr.id_pedido){
-    hayRecetas= p.id_pedido
-  }
-})
-
-if(!hayRecetas){
-  Swal.fire({
-    title: 'Advertencia',
-    text: 'No existen productos para generar boleta',
-    icon: "warning",
-    timer: 2000
-  })
-  return
-}
-
-
-if(!existePedidoEnBoleta){
-  
-  
-  Swal.fire({
-    title: 'Generar boleta',
-    text: '¿Deseas generar la boleta?',
-    icon: "question",
-    showDenyButton: true,
-    denyButtonColor: '#f81e04',
-    confirmButtonColor: '#35b022',
-    confirmButtonText: 'Sí',
-    allowOutsideClick: false
-
-    
-  }).then(response=> {
-    if(response.isConfirmed){
-    
-  
-    
-    
-      const randomId = nanoid(4);
-      const fechaInicio = moment()
-    
       Swal.fire({
-        title: 'Boleta',
-        html: `<div>
+        title: 'Advertencia',
+        text: 'Ya existe una boleta asociada a este pedido',
+        icon: "warning",
+        timer: 2000
+      })
+      return
+
+    }
+
+    let hayRecetas = ''
+
+    pedidoRecetas.forEach(pr => {
+      if (p.id_pedido === pr.id_pedido) {
+        hayRecetas = p.id_pedido
+      }
+    })
+
+    if (!hayRecetas) {
+      Swal.fire({
+        title: 'Advertencia',
+        text: 'No existen productos para generar boleta',
+        icon: "warning",
+        timer: 2000
+      })
+      return
+    }
+
+
+    if (!existePedidoEnBoleta) {
+
+
+      Swal.fire({
+        title: 'Generar boleta',
+        text: '¿Deseas generar la boleta?',
+        icon: "question",
+        showDenyButton: true,
+        denyButtonColor: '#f81e04',
+        confirmButtonColor: '#35b022',
+        confirmButtonText: 'Sí',
+        allowOutsideClick: false
+
+
+      }).then(response => {
+        if (response.isConfirmed) {
+
+
+
+
+          const randomId = nanoid(4);
+          const fechaInicio = moment()
+
+          Swal.fire({
+            title: 'Boleta',
+            html: `<div>
         <p className:"display-1">Folio de boleta: ${randomId}</p>
         <p>Fecha de emisión: ${fechaInicio.format("DD-MM-YYYY")}</p>
         <p>Hora de emisión: ${fechaInicio.format("hh:mm:ss")}</p>
@@ -399,215 +399,282 @@ if(!existePedidoEnBoleta){
         
         
         </div>`,
-        allowOutsideClick: false,
-        
+            allowOutsideClick: false,
 
+
+          })
+          setIdBoleta(randomId)
+          setFechaBoleta(fechaInicio.format("YYYY-MM-DD hh:mm:ss"))
+          setIdUsuario(p.id_usuario)
+          setTotalPagar(contador)
+
+
+          const requestInit = {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              id_boleta: randomId,
+              total_pagar: contador,
+              f_boleta: fechaInicio.format("YYYY-MM-DD hh:mm:ss"),
+              metodo_pago: "D",
+              id_pedido: p.id_pedido
+            }),
+          };
+          fetch("http://localhost:9000/api/boleta/", requestInit)
+            .then((res) => res.text())
+            .then((res) => console.log(res));
+
+          const arrayAgregado = [
+            ...boletas,
+            {
+              id_boleta: randomId,
+              total_pagar: contador,
+              f_boleta: fechaInicio.format("YYYY-MM-DD hh:mm:ss"),
+              metodo_pago: "D",
+              id_pedido: p.id_pedido
+            },
+          ];
+
+          setBoletas(arrayAgregado);
+        }
       })
-      setIdBoleta(randomId)
-      setFechaBoleta(fechaInicio.format("YYYY-MM-DD hh:mm:ss"))
-      setIdUsuario(p.id_usuario)
-      setTotalPagar(contador)
-      
-    
-      const requestInit = {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          id_boleta: randomId,
-          total_pagar : contador, 
-          f_boleta: fechaInicio.format("YYYY-MM-DD hh:mm:ss"), 
-          metodo_pago: "D",
-          id_pedido: p.id_pedido
-        }),
-      };
-      fetch("http://localhost:9000/api/boleta/", requestInit)
-        .then((res) => res.text())
-        .then((res) => console.log(res));
-    
-      const arrayAgregado = [
-        ...boletas,
-        {
-          id_boleta: randomId,
-          total_pagar : contador, 
-          f_boleta: fechaInicio.format("YYYY-MM-DD hh:mm:ss"), 
-          metodo_pago: "D",
-          id_pedido: p.id_pedido
-        },
-      ];
-    
-      setBoletas(arrayAgregado);
+
+
+
+
     }
-  })
-
-
-    
-  
-}
 
 
   };
 
   return (
     <div className="container">
-
-      <FormularioPedido
-        idPedido={idPedido} setIdPedido={setIdPedido}
-        idUsuario={idUsuario} setIdUsuario={setIdUsuario}
-        idMesa={idMesa} setIdMesa={setIdMesa}
-        valorTotal={valorTotal} setValorTotal={setValorTotal}
-        estado={estado} setEstado={setEstado}
-        recetas={recetas} setRecetas={setRecetas}
-        pedidos={pedidos} setPedidos={setPedidos}
-        mesas={mesas} setMesas={setMesas}
-        usuarios={usuarios} setUsuarios={setUsuarios}
-        estadoEditar={estadoEditar} setEstadoEditar={setEstadoEditar}
-
-      />
-      <h1 className="text-center">Pedidos</h1>
-      <div>
-        <div className="mt-5">
-          <button
-            className="btn btn-success"
-            data-bs-toggle="modal"
-            data-bs-target="#myModal"
-          >
-            Agregar receta
-          </button>
-          {pedidos.map((p) => (
-            <div key={p.id_pedido} className="card container">
-              <div className="mb-5 row mt-3">
-                <h1 className="mb-5 col-9">
-                  Folio del pedido: {p.id_pedido}
-                </h1>
-
-                <div onClick={() => setearPedido(p)} className="col-3 row">
-                  {/* Acá va el formulario de pedidoRecetas */}
-
-                  <FormularioPedidoRecetas
-                    idReceta={idReceta} setIdReceta={setIdReceta}
-                    idPedido={idPedido} setIdPedido={setIdPedido}
-                    recetas={recetas} setRecetas={setRecetas}
-                    pedidoRecetas={pedidoRecetas} setPedidoRecetas={setPedidoRecetas}
-                    pedidos={pedidos} setPedidos={setPedidos}
-                    idUsuario={idUsuario} setIdUsuario={setIdUsuario}
-                    idMesa={idMesa} setIdMesa={setIdMesa}
-                    valorTotal={valorTotal} setValorTotal={setValorTotal}
-                    estado={estado} setEstado={setEstado} />
-
-
-
-                  {/* Acá termina el formulario de pedidoRecetas */}
-                </div>
-                <h3>Mesa: {p.id_mesa} - {usuarios.map((u) => (
-                  u.id_usuario === p.id_usuario ? <div key={u.id_usuario}>Usuario: {u.nom_usuario}</div> : "Sin usuario asignado"
-                ))}</h3>
+      <div className="container box1">
+        <div className="col-12">
+          <hr />
+          <h1 className="text-center">Pedidos</h1>
+          <div className="container col-12 align-middle">
+            <div>
+              <div className="align-middle">
+                <FormularioPedido
+                  idPedido={idPedido} setIdPedido={setIdPedido}
+                  idUsuario={idUsuario} setIdUsuario={setIdUsuario}
+                  idMesa={idMesa} setIdMesa={setIdMesa}
+                  valorTotal={valorTotal} setValorTotal={setValorTotal}
+                  estado={estado} setEstado={setEstado}
+                  recetas={recetas} setRecetas={setRecetas}
+                  pedidos={pedidos} setPedidos={setPedidos}
+                  mesas={mesas} setMesas={setMesas}
+                  usuarios={usuarios} setUsuarios={setUsuarios}
+                  estadoEditar={estadoEditar} setEstadoEditar={setEstadoEditar}
+                />
               </div>
+              <div className="">
+                <button
+                  className="btn btn-success "
+                  data-bs-toggle="modal"
+                  data-bs-target="#myModal"
+                >
+                  Agregar Pedido
+                </button>
+              </div>
+            </div>
+            <div className="table mb-3">
+
+              {pedidos.map((p) => (
+                <div key={p.id_pedido}>
+                  <table
+                    id="1"
+                    className="table col-12 table-dark  table-hover box align-middle">
+
+
+                    <thead>
+                      <tr className="align-middle">
+                        <th className="col-1">Folio</th>
+                        <th className="col-1">Mesa</th>
+                        <th className="col-2">Usuario</th>
+                        <th className="col-5">Recetas</th>
+                        <th className="col-1">
+
+
+                          <div>
+                            <div>
+                              <div className="">
+                                <div onClick={() => setearPedido(p)}>
+                                  <FormularioPedidoRecetas
+                                    idReceta={idReceta} setIdReceta={setIdReceta}
+                                    idPedido={idPedido} setIdPedido={setIdPedido}
+                                    recetas={recetas} setRecetas={setRecetas}
+                                    pedidoRecetas={pedidoRecetas} setPedidoRecetas={setPedidoRecetas}
+                                    pedidos={pedidos} setPedidos={setPedidos}
+                                    idUsuario={idUsuario} setIdUsuario={setIdUsuario}
+                                    idMesa={idMesa} setIdMesa={setIdMesa}
+                                    valorTotal={valorTotal} setValorTotal={setValorTotal}
+                                    estado={estado} setEstado={setEstado} />
+
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </th>
+                      </tr>
+                    </thead>
+
+
+
+                    <tbody>
+                      <tr>
+                        <td>
+                          {p.id_pedido}
+                        </td>
+
+                        <td>
+                          {p.id_mesa}
+                        </td>
+
+                        <td>
+                          {usuarios.map((u) => (
+                            u.id_usuario === p.id_usuario ?
+                              <div key={u.id_usuario}>
+                                {u.nom_usuario}
+                              </div> : "Sin usuario asignado"
+                          ))}
+                        </td>
+                        <td>
+                          <table className="table table-success col-12   table-hover box align-middle">
+                            <thead>
+                              <tr className="align-middle">
+
+                                <th className="col-4">Nombre</th>
+                                <th className="col-4">Precio</th>
+                                <th className="col-4"></th>
+
+                              </tr>
+                            </thead>
+                            {pedidoRecetas.map((pr) => (
+                              p.id_pedido === pr.id_pedido && (
+                                recetas.map((r) => (
+
+
+                                  pr.id_receta === r.id_receta && (
 
 
 
 
-              {pedidoRecetas.map((pr) => (
-                <div key={pr.id_ped_recetas}>
 
-                  {p.id_pedido === pr.id_pedido &&
-                    <div>
-                      {recetas.map((r) => (
-                        <div key={r.id_receta} className="">
-                          {pr.id_receta === r.id_receta && (
-                            <div className="row">
-                              <li className="list-group-item text-center col-6 mx-auto my-2">
-                                <div className="row">
-                                  <div className="col-6">
-                                    {r.nom_receta} - {r.precio_receta}
+                                    <tbody key={r.id_receta} className="container">
+                                      <tr>
+
+                                        <td>
+                                          {r.nom_receta}
+                                        </td>
+
+                                        <td onClick={() => setIdPedReceta(pr.id_ped_recetas)}>
+                                          ${r.precio_receta}
+                                        </td>
+
+                                        <td>
+                                          <button
+                                            onClick={() =>
+                                              eliminarRecetaDePedido(
+                                                pr.id_ped_recetas
+                                              )
+                                            }
+                                            className="btn btn-danger "
+                                          >
+                                            x
+                                          </button>
+                                        </td>
+
+                                      </tr>
+
+
+                                    </tbody>
+
+                                  )
+                                ))
+                              )))
+                            }
+                          </table>
+                          <table className="table table-success col-12   table-hover box align-middle ">
+                            <thead>
+                               <tr>
+                              <th className="col-2">Valor a pagar:</th>
+                              <th className="col-2">${p.valor_total}</th>
+                              <th className="col-2"></th>
+
+                            </tr>
+                            </thead>
+                           
+
+                          </table>
+
+
+                        </td>
+
+                        <td className="container">
+
+
+
+
+                          <button onClick={() => editar(p)} className="btn btn-warning" data-bs-toggle="modal"
+                            data-bs-target="#myModal">
+                            Modificar
+                          </button>
+                          
+                          <button className="btn btn-danger" onClick={() => eliminarPedido(p.id_pedido)}>
+                            Cancelar
+                          </button>
+
+
+
+                          <div>
+                            <div className="">
+                              <div className="">
+                                <div className="">
+                                  <div className="">
+
+                                    <button onClick={() => sumaValorReceta(p)} className="btn btn-primary"> Total</button>
+
                                   </div>
 
-                                  <div onClick={() => setIdPedReceta(pr.id_ped_recetas)} className="col-6 ms-auto">
-                                    <button
-                                      onClick={() =>
-                                        eliminarRecetaDePedido(
-                                          // r.id_receta,
-                                          // p.id_pedido
-                                          pr.id_ped_recetas
-                                        )
-                                      }
-                                      className="btn btn-danger "
+                                  <div>
+
+                                    <button onClick={() => emitirBoleta(p)} className="btn btn-secondary"
+                                    // data-bs-toggle="modal"
+                                    // data-bs-target="#myModalBoleta"
                                     >
-                                      Eliminar Receta
+                                      Emitir boleta
                                     </button>
                                   </div>
 
-                                  <div></div>
                                 </div>
-                              </li>
-                            </div>
-                          )}
-                        </div>
-                      ))}
-                    </div>}
 
+                              </div>
+
+                            </div>
+                          </div>
+
+
+                        </td>
+
+
+
+
+                      </tr>
+                    </tbody>
+
+                  </table>
+                  <br />
                 </div>
               ))}
 
-              <div className="container mt-5">
-                <div className="row mt-5">
-                  <div className="col-4 d-flex ">
-                    <div className="col-5">
-                    <p>Valor total: {p.valor_total}</p>
-                    <button onClick={() => sumaValorReceta(p)} className="btn btn-primary">Calcular receta</button>
-
-                    </div>
-
-                    <div className="col-5 mt-4">
-                       {/* <ModalBoleta 
-                       idBoleta={idBoleta} setIdBoleta={setIdBoleta}
-                       totalPagar={totalPagar} setTotalPagar={setTotalPagar}
-                       fechaBoleta={fechaBoleta} setFechaBoleta={setFechaBoleta}
-                       idUsuario={idUsuario} setIdUsuario={setIdUsuario}
-                       
-
-                       /> */}
-
-                        
-                        <button onClick={() => emitirBoleta(p)} className="btn btn-secondary" 
-                        // data-bs-toggle="modal"
-                        // data-bs-target="#myModalBoleta"
-                        >
-                        Emitir boleta
-                       </button>
-                        
-                       
-
-
-                       
-                                     
-                    </div>
-                    
-                  </div>
-                  <div className="col-10 ">
-                    <div className="col-4 ms-auto d-flex mb-5">
-                      <button onClick={() => editar(p)} className="btn btn-warning" data-bs-toggle="modal"
-                        data-bs-target="#myModal">
-                        Modificar pedido
-                      </button>
-                      <button className="btn btn-danger" onClick={() => eliminarPedido(p.id_pedido)}>
-                        Eliminar pediddo
-                      </button>
-                    </div>
-
-                    {/* <div className="col-2 ms-auto">
-                  
-                  </div> */}
-
-                  </div>
-                </div>
-
-
-              </div>
             </div>
-          ))}
-        </div>
-      </div>
-    </div>
+          </div>
+
+        </div></div>
+    </div >
+
   );
 };
 
