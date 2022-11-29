@@ -38,7 +38,8 @@ const FormularioRecProductos = ({
         title: 'Advertencia',
         text: 'El producto ya existe en la boleta',
         icon: "warning",
-        timer: 1500
+        timer: 1500,
+        showConfirmButton: false
       })
       return;
     }

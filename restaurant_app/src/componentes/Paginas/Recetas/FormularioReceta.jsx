@@ -33,12 +33,23 @@ const FormularioReceta = ({
     })
 
     if (existeProducto) {
-      alert("El producto ya existe en la receta")
+      Swal.fire({
+        title: 'Advertencia',
+        text: 'El producto ya existe en la receta',
+        icon: 'warning',
+        timer: 1500,
+        showConfirmButton: false
+      })
       return
     }
 
     if (!producto.trim()) {
-      alert("Elige un producto")
+      Swal.fire({
+        title: 'Advertencia',
+        text: 'Debes ingresar un producto',
+        icon: "warning",
+        timer: 1500
+      })
       return
     }
 

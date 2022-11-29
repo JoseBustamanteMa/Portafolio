@@ -74,7 +74,7 @@ routes.post('/usuario', (req, res)=>{
 routes.delete('/usuario/:idUsuario', (req, res)=>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
-        conn.query('DELETE FROM usuario WHERE idUsuario = ?', [req.params.idUsuario], (err, rows)=>{
+        conn.query('DELETE FROM usuario WHERE id_usuario = ?', [req.params.idUsuario], (err, rows)=>{
             if(err) return res.send(err)
 
             res.send('usuario eliminado')
@@ -85,7 +85,7 @@ routes.delete('/usuario/:idUsuario', (req, res)=>{
 routes.put('/usuario/:idUsuario', (req, res)=>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
-        conn.query('UPDATE usuario set ? WHERE idUsuario = ?', [req.body, req.params.idUsuario], (err, rows)=>{
+        conn.query('UPDATE usuario set ? WHERE id_usuario = ?', [req.body, req.params.idUsuario], (err, rows)=>{
             if(err) return res.send(err)
 
             res.send('usuario cambiada')
@@ -707,7 +707,7 @@ routes.post('/solicitud', (req, res)=>{
 routes.delete('/solicitud/:idSolicitud', (req, res)=>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
-        conn.query('DELETE FROM solicitud WHERE idSolicitud = ?', [req.params.idSolicitud], (err, rows)=>{
+        conn.query('DELETE FROM solicitud WHERE id_solicitud = ?', [req.params.idSolicitud], (err, rows)=>{
             if(err) return res.send(err)
 
             res.send('solicitud eliminado')
@@ -718,7 +718,7 @@ routes.delete('/solicitud/:idSolicitud', (req, res)=>{
 routes.put('/solicitud/:idSolicitud', (req, res)=>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
-        conn.query('UPDATE solicitud set ? WHERE idSolicitud = ?', [req.body, req.params.idSolicitud], (err, rows)=>{
+        conn.query('UPDATE solicitud set ? WHERE id_solicitud = ?', [req.body, req.params.idSolicitud], (err, rows)=>{
             if(err) return res.send(err)
 
             res.send('solicitud cambiada')

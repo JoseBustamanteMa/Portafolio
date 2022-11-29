@@ -86,8 +86,9 @@ const FormularioPedido = ({
 
 
     })
-    setErrorMesa(false)
-    setErrorUsuario(false)
+    
+
+    limpiarCasillas()
   };
 
   const actualizarPedido = (e) => {
@@ -147,9 +148,9 @@ const FormularioPedido = ({
     })
 
     setPedidos(arrayEditado);
-    setEstadoEditar(false)
-    setErrorMesa(false)
-    setErrorUsuario(false)
+    
+
+    limpiarCasillas()
   };
 
   const limpiarCasillas = () => {

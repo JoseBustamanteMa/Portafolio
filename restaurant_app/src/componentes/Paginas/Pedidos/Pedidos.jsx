@@ -83,16 +83,35 @@ const Pedidos = () => {
   }, []);
   // idRec, idPed
   const eliminarRecetaDePedido = (id_ped_rec) => {
-    // let idPedRec = "";
-    // pedidoRecetas.forEach((item) => {
-    //   if (item.id_receta === idRec && item.id_pedido === idPed) {
-    //     idPedRec = item.id_ped_recetas;
-    //   }
-    // });
+   
 
-    // if (idPedRec) {
+    let existePedEnBoleta = ''
+    pedidoRecetas.forEach(pr => {
+      if(pr.id_ped_recetas === id_ped_rec){
+        boletas.forEach(bl => {
+          if(pr.id_pedido === bl.id_pedido){
+           
+            existePedEnBoleta = bl.id_pedido
+      }
+        })
+        return
+      }
+    })
 
-    Swal.fire({
+
+    if(existePedEnBoleta){
+      Swal.fire({
+        title: 'Advertencia',
+        text: 'Este pedido ya cuenta con una boleta, no puede ser modificado',
+        icon: 'warning',
+        timer: 1500,
+        showConfirmButton: false
+      })
+    }
+
+    if (!existePedEnBoleta) 
+
+    {Swal.fire({
       title: '¿Seguro?',
       text: '¿Deseas eliminar la receta del pedido?',
       icon: 'question',
@@ -129,7 +148,7 @@ const Pedidos = () => {
         setPedidoRecetas(arrayEditado);
       }
     })
-
+}
 
   };
 
@@ -165,6 +184,7 @@ const Pedidos = () => {
         denyButtonText: 'No',
         confirmButtonText: 'Sí',
         confirmButtonColor: '#f80505',
+        denyButtonColor: '#01cc17',
         allowOutsideClick: false
 
       }).then(response => {
@@ -219,20 +239,21 @@ const Pedidos = () => {
           );
 
           setPedidos(arrayEditado);
+          Swal.fire({
+            title: 'Eliminado',
+            text: 'Pedido eliminado correctamente',
+            icon: 'success',
+            showDenyButton: false,
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            timer: 1500
+  
+  
+          })
 
         }
 
-        Swal.fire({
-          title: 'Eliminado',
-          text: 'Pedido eliminado correctamente',
-          icon: 'success',
-          showDenyButton: false,
-          showConfirmButton: false,
-          allowOutsideClick: false,
-          timer: 1500
-
-
-        })
+       
 
       })
     }
@@ -415,7 +436,8 @@ const Pedidos = () => {
             body: JSON.stringify({
               id_boleta: randomId,
               total_pagar: contador,
-              f_boleta: fechaInicio.format("YYYY-MM-DD hh:mm:ss"),
+              fecha_boleta : fechaInicio.format('YYYY-MM-DD'),
+              hora_boleta : fechaInicio.format('hh:mm:ss'),
               metodo_pago: "D",
               id_pedido: p.id_pedido
             }),
@@ -429,7 +451,8 @@ const Pedidos = () => {
             {
               id_boleta: randomId,
               total_pagar: contador,
-              f_boleta: fechaInicio.format("YYYY-MM-DD hh:mm:ss"),
+              fecha_boleta : fechaInicio.format('YYYY-MM-DD'),
+              hora_boleta : fechaInicio.format('hh:mm:ss'),
               metodo_pago: "D",
               id_pedido: p.id_pedido
             },
@@ -510,7 +533,8 @@ const Pedidos = () => {
                                     idUsuario={idUsuario} setIdUsuario={setIdUsuario}
                                     idMesa={idMesa} setIdMesa={setIdMesa}
                                     valorTotal={valorTotal} setValorTotal={setValorTotal}
-                                    estado={estado} setEstado={setEstado} />
+                                    estado={estado} setEstado={setEstado}
+                                    boletas={boletas} setBoletas={setBoletas} />
 
                                 </div>
                               </div>
@@ -534,10 +558,10 @@ const Pedidos = () => {
 
                         <td>
                           {usuarios.map((u) => (
-                            u.id_usuario === p.id_usuario ?
+                            u.id_usuario === p.id_usuario &&
                               <div key={u.id_usuario}>
                                 {u.nom_usuario}
-                              </div> : "Sin usuario asignado"
+                              </div> 
                           ))}
                         </td>
                         <td>

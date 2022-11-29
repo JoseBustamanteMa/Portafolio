@@ -132,7 +132,7 @@ const PedidosCocina = () => {
         <div className='row col-12 '>
             <h1 className='text-center mb-5 bg-secondary text-white'>Pedidos en espera</h1>
         {pedidos.map((p) => (
-                p.estado === 0 &&
+                p.estado == 0 &&
                 <div className='card col-3 me-1 mb-5 border-secondary'> 
                     <div className='card-body'>
                         <div className='card-title'>
@@ -164,7 +164,7 @@ const PedidosCocina = () => {
             <div className='row col-12 '>
             <h1 className='text-center mb-5 bg-success'>Pedidos listos</h1>
         {pedidos.map((p) => (
-                p.estado === 1 &&
+                p.estado == 1 &&
                 <div className='card col-3 me-1 mb-5 border-secondary'> 
                     <div className='card-body'>
                         <div className='card-title'>

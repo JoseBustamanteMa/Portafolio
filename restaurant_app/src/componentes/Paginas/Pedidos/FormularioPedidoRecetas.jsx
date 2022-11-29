@@ -1,5 +1,7 @@
 import React from 'react'
 import { nanoid } from 'nanoid';
+import Swal from 'sweetalert2';
+import Boletas from '../Boletas/Boletas';
 
 
 
@@ -11,33 +13,67 @@ const FormularioPedidoRecetas = ({idReceta, setIdReceta, idPedido, setIdPedido, 
   valorTotal,
   setValorTotal,
   estado,
-  setEstado,}) => {
+  setEstado,
+boletas,
+setBoletas}) => {
 
     
 
     const agregarRecetaAPedido = (e) => {
         e.preventDefault();
     
-        let existeReceta = ''
-        pedidoRecetas.forEach(item => {
-            if(item.id_pedido === idPedido && item.id_receta === idReceta){
+        // let existeReceta = ''
+        // pedidoRecetas.forEach(item => {
+        //     if(item.id_pedido === idPedido && item.id_receta === idReceta){
                 
-                existeReceta = 'existe'
-                return
-            }
+        //         existeReceta = 'existe'
+        //         return
+        //     }
+        // })
+    
+        // if(existeReceta){
+        //     alert("El producto ya existe en la receta")
+        //     return
+        // }
+
+        let existePedidoEnBoleta = ''
+        
+        pedidoRecetas.forEach(pr => {
+          if(pr.id_pedido === idPedido){
+            boletas.forEach(bl => {
+              if(pr.id_pedido === bl.id_pedido){
+                existePedidoEnBoleta = pr.id_pedido
+              }
+              
+            })
+          }
         })
-    
-        if(existeReceta){
-            alert("El producto ya existe en la receta")
+
+
+        if(existePedidoEnBoleta){
+          Swal.fire({
+            title: 'Advertencia',
+            text: 'Este pedido ya cuenta con una boleta, no puede ser modificado',
+            icon: 'warning',
+            showConfirmButton: false,
+            timer: 2000
+          })
+        }
+
+        if(!existePedidoEnBoleta)
+
+        {if(!idReceta.trim()){
+            Swal.fire({
+              title: 'Advertencia',
+              text: 'Debes elegir una receta',
+              icon: 'warning',
+              timer: 2000,
+              showConfirmButton: false
+            })
             return
         }
     
-        if(!idReceta.trim()){
-            alert("Elige una receta")
-            return
-        }
-    
-        if(!existeReceta){
+        // if(!existeReceta){
             const randomId = nanoid(10);
     
         const requestInit = {
@@ -60,9 +96,9 @@ const FormularioPedidoRecetas = ({idReceta, setIdReceta, idPedido, setIdPedido, 
             id_receta: idReceta, },
         ];
     
-        setPedidoRecetas(arrayAgregado);
+        setPedidoRecetas(arrayAgregado);}
     
-        }
+        // }
 
         
 

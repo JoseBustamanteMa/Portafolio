@@ -15,12 +15,17 @@ import Recetas from "./componentes/Paginas/Recetas/Recetas";
 import Pedidos from "./componentes/Paginas/Pedidos/Pedidos";
 import PedidosCocina from "./componentes/Paginas/Pedidos/PedidosCocina";
 import PedidoProvider from "./componentes/Paginas/context/PedidoProvider";
+import Usuarios from "./componentes/Paginas/Usuarios/Usuarios";
+import Boletas from "./componentes/Paginas/Boletas/Boletas";
+import Solicitudes from "./componentes/Paginas/Solicitudes/Solicitudes";
+import SolicitudProvider from "./componentes/Paginas/context/SolicitudProvider";
+import FormularioSolicitud from "./componentes/Paginas/Solicitudes/FormularioSolicitud";
 
 
 const App = () => {
   return (
     <div>
-      <Router>
+      {/* <Router>
         <Navbar />
         <Switch>
           <Route path='/' exact component={Inicio} />
@@ -33,9 +38,35 @@ const App = () => {
           <Route path='/proveedores' component={Proveedores} />
           <PedidoProvider>
             <Route path='/pedidos' component={Pedidos} />
-          </PedidoProvider>
+            <Route path='/pedidos-cocina' component={PedidosCocina} />    */}
+            {/* Agregué pedidos cocina solo a la ruta, no lo enlacé con el nav-bar */}
+          {/* </PedidoProvider>
         </Switch>
-      </Router>
+      </Router> */}
+
+          {/* <PedidoProvider>
+
+            
+
+            <Pedidos />
+
+          </PedidoProvider> */}
+
+
+          {/* <Recetas/> */}
+
+          
+
+          <Usuarios/>
+          {/* <Boletas/> */}
+
+          
+
+          {/* <SolicitudProvider> */}
+
+          {/* <FormularioSolicitud/> */}
+          {/* <Solicitudes/> */}
+          {/* </SolicitudProvider> */}
     </div>
   );
 }
