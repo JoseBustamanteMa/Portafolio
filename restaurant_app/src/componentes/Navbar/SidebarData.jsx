@@ -27,6 +27,12 @@ export const SidebarData = [
         cName: 'nav-text'
     },
     {
+        tittle: 'PedidosCocina',
+        path:'/pedidos-cocina',
+        icon: <BsIcons.BsCalendar3/>,
+        cName: 'nav-text'
+    },
+    {
         tittle: 'Productos',
         path:'/Productos',
         icon: <FaIcons.FaBox/>,
@@ -39,8 +45,14 @@ export const SidebarData = [
         cName: 'nav-text'
     },
     {
-        tittle: 'Empleados',
-        path: '/empleados',
+        tittle: 'Solicitud',
+        path: '/solicitudes',
+        icon: <IoIcons.IoMdPeople/>,
+        cName: 'nav-text'
+    },
+    {
+        tittle: 'Usuario',
+        path: '/usuarios',
         icon: <IoIcons.IoMdPeople/>,
         cName: 'nav-text'
     },

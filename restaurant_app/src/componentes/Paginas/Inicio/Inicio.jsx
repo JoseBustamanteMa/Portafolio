@@ -1,10 +1,9 @@
 import React from 'react'
 
-function Inicio (){
+const Inicio = () => {
   return (
-    <div className='home'>
-        Home
-    </div>
+    <div>Inicio</div>
   )
 }
-export default Inicio;
+
+export default Inicio

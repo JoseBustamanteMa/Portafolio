@@ -83,23 +83,23 @@ const Pedidos = () => {
   }, []);
   // idRec, idPed
   const eliminarRecetaDePedido = (id_ped_rec) => {
-   
+
 
     let existePedEnBoleta = ''
     pedidoRecetas.forEach(pr => {
-      if(pr.id_ped_recetas === id_ped_rec){
+      if (pr.id_ped_recetas === id_ped_rec) {
         boletas.forEach(bl => {
-          if(pr.id_pedido === bl.id_pedido){
-           
+          if (pr.id_pedido === bl.id_pedido) {
+
             existePedEnBoleta = bl.id_pedido
-      }
+          }
         })
         return
       }
     })
 
 
-    if(existePedEnBoleta){
+    if (existePedEnBoleta) {
       Swal.fire({
         title: 'Advertencia',
         text: 'Este pedido ya cuenta con una boleta, no puede ser modificado',
@@ -109,46 +109,45 @@ const Pedidos = () => {
       })
     }
 
-    if (!existePedEnBoleta) 
+    if (!existePedEnBoleta) {
+      Swal.fire({
+        title: '¿Seguro?',
+        text: '¿Deseas eliminar la receta del pedido?',
+        icon: 'question',
+        showDenyButton: true,
+        denyButtonText: 'No',
+        confirmButtonText: 'Sí',
+        confirmButtonColor: '#f80505',
+        denyButtonColor: '#35b022',
+        allowOutsideClick: false
 
-    {Swal.fire({
-      title: '¿Seguro?',
-      text: '¿Deseas eliminar la receta del pedido?',
-      icon: 'question',
-      showDenyButton: true,
-      denyButtonText: 'No',
-      confirmButtonText: 'Sí',
-      confirmButtonColor: '#f80505',
-      denyButtonColor: '#35b022',
-      allowOutsideClick: false
+      }).then(response => {
+        if (response.isConfirmed) {
+          const requestInit = {
+            method: "DELETE",
+          };
+          fetch(
+            "http://localhost:9000/api/pedido-recetas/" + id_ped_rec,
+            requestInit
+          )
+            .then((res) => res.text())
+            .then((res) => console.log(res));
 
-    }).then(response => {
-      if (response.isConfirmed) {
-        const requestInit = {
-          method: "DELETE",
-        };
-        fetch(
-          "http://localhost:9000/api/pedido-recetas/" + id_ped_rec,
-          requestInit
-        )
-          .then((res) => res.text())
-          .then((res) => console.log(res));
+          const arrayEditado = pedidoRecetas.filter(
+            (item) => item.id_ped_recetas !== id_ped_rec
+          );
 
-        const arrayEditado = pedidoRecetas.filter(
-          (item) => item.id_ped_recetas !== id_ped_rec
-        );
+          Swal.fire({
+            title: 'Eliminado',
+            text: 'La receta se eliminó correctamente',
+            timer: 1500,
+            icon: "success"
+          })
 
-        Swal.fire({
-          title: 'Eliminado',
-          text: 'La receta se eliminó correctamente',
-          timer: 1500,
-          icon: "success"
-        })
-
-        setPedidoRecetas(arrayEditado);
-      }
-    })
-}
+          setPedidoRecetas(arrayEditado);
+        }
+      })
+    }
 
   };
 
@@ -247,13 +246,13 @@ const Pedidos = () => {
             showConfirmButton: false,
             allowOutsideClick: false,
             timer: 1500
-  
-  
+
+
           })
 
         }
 
-       
+
 
       })
     }
@@ -436,8 +435,8 @@ const Pedidos = () => {
             body: JSON.stringify({
               id_boleta: randomId,
               total_pagar: contador,
-              fecha_boleta : fechaInicio.format('YYYY-MM-DD'),
-              hora_boleta : fechaInicio.format('hh:mm:ss'),
+              fecha_boleta: fechaInicio.format('YYYY-MM-DD'),
+              hora_boleta: fechaInicio.format('hh:mm:ss'),
               metodo_pago: "D",
               id_pedido: p.id_pedido
             }),
@@ -451,8 +450,8 @@ const Pedidos = () => {
             {
               id_boleta: randomId,
               total_pagar: contador,
-              fecha_boleta : fechaInicio.format('YYYY-MM-DD'),
-              hora_boleta : fechaInicio.format('hh:mm:ss'),
+              fecha_boleta: fechaInicio.format('YYYY-MM-DD'),
+              hora_boleta: fechaInicio.format('hh:mm:ss'),
               metodo_pago: "D",
               id_pedido: p.id_pedido
             },
@@ -508,15 +507,15 @@ const Pedidos = () => {
                 <div key={p.id_pedido}>
                   <table
                     id="1"
-                    className="table col-12 table-dark  table-hover box align-middle">
+                    className="table col-12 table-dark table-hover box align-middle">
 
 
                     <thead>
                       <tr className="align-middle">
                         <th className="col-1">Folio</th>
                         <th className="col-1">Mesa</th>
-                        <th className="col-2">Usuario</th>
-                        <th className="col-5">Recetas</th>
+                        <th className="col-1">Usuario</th>
+                        <th className="col-8">Recetas</th>
                         <th className="col-1">
 
 
@@ -544,8 +543,6 @@ const Pedidos = () => {
                       </tr>
                     </thead>
 
-
-
                     <tbody>
                       <tr>
                         <td>
@@ -559,9 +556,9 @@ const Pedidos = () => {
                         <td>
                           {usuarios.map((u) => (
                             u.id_usuario === p.id_usuario &&
-                              <div key={u.id_usuario}>
-                                {u.nom_usuario}
-                              </div> 
+                            <div key={u.id_usuario}>
+                              {u.nom_usuario}
+                            </div>
                           ))}
                         </td>
                         <td>
@@ -569,9 +566,9 @@ const Pedidos = () => {
                             <thead>
                               <tr className="align-middle">
 
-                                <th className="col-4">Nombre</th>
+                                <th className="col-6">Nombre</th>
                                 <th className="col-4">Precio</th>
-                                <th className="col-4"></th>
+                                <th className="col-2"></th>
 
                               </tr>
                             </thead>
@@ -622,14 +619,14 @@ const Pedidos = () => {
                           </table>
                           <table className="table table-success col-12   table-hover box align-middle ">
                             <thead>
-                               <tr>
-                              <th className="col-2">Valor a pagar:</th>
-                              <th className="col-2">${p.valor_total}</th>
-                              <th className="col-2"></th>
+                              <tr>
+                                <th className="col-6">Valor a pagar:</th>
+                                <th className="col-4">${p.valor_total}</th>
+                                <th className="col-2"></th>
 
-                            </tr>
+                              </tr>
                             </thead>
-                           
+
 
                           </table>
 
@@ -640,51 +637,35 @@ const Pedidos = () => {
 
 
 
+                          <div className="container d-flex">
+                            <button onClick={() => editar(p)} className="btn btn-1" data-bs-toggle="modal"
+                              data-bs-target="#myModal">
+                              Modificar
+                            </button>
 
-                          <button onClick={() => editar(p)} className="btn btn-warning" data-bs-toggle="modal"
-                            data-bs-target="#myModal">
-                            Modificar
-                          </button>
-                          
-                          <button className="btn btn-danger" onClick={() => eliminarPedido(p.id_pedido)}>
-                            Cancelar
-                          </button>
-
-
-
-                          <div>
-                            <div className="">
-                              <div className="">
-                                <div className="">
-                                  <div className="">
-
-                                    <button onClick={() => sumaValorReceta(p)} className="btn btn-primary"> Total</button>
-
-                                  </div>
-
-                                  <div>
-
-                                    <button onClick={() => emitirBoleta(p)} className="btn btn-secondary"
-                                    // data-bs-toggle="modal"
-                                    // data-bs-target="#myModalBoleta"
-                                    >
-                                      Emitir boleta
-                                    </button>
-                                  </div>
-
-                                </div>
-
-                              </div>
-
-                            </div>
+                            <button className="btn btn-2" onClick={() => eliminarPedido(p.id_pedido)}>
+                              Cancelar
+                            </button>
                           </div>
 
+                          <br /><br />
 
+                          <div className="container">
+                            <div className="">
+
+                              <button onClick={() => sumaValorReceta(p)} className="btn btn-primary">Total</button>
+
+                            </div>
+
+                            <div>
+
+                              <button onClick={() => emitirBoleta(p)} className="btn btn-secondary"
+                              >
+                                Emitir boleta
+                              </button>
+                            </div>
+                          </div>
                         </td>
-
-
-
-
                       </tr>
                     </tbody>
 

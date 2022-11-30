@@ -25,8 +25,8 @@ import FormularioSolicitud from "./componentes/Paginas/Solicitudes/FormularioSol
 const App = () => {
   return (
     <div>
-      {/* <Router>
-        <Navbar />
+      <Router>
+        <Navbar/>
         <Switch>
           <Route path='/' exact component={Inicio} />
           <Route path='/reservas' component={Reservas} />
@@ -36,38 +36,17 @@ const App = () => {
           <Route path='/rol' component={Roles} />
           <Route path='/mesas' component={Mesas} />
           <Route path='/proveedores' component={Proveedores} />
+          <Route path='/usuarios' component={Usuarios} />
+          <Route path='/solicitudes' component={Solicitudes} />
           <PedidoProvider>
             <Route path='/pedidos' component={Pedidos} />
-            <Route path='/pedidos-cocina' component={PedidosCocina} />    */}
-            {/* Agregué pedidos cocina solo a la ruta, no lo enlacé con el nav-bar */}
-          {/* </PedidoProvider>
+            <Route path='/pedidos-cocina' component={PedidosCocina} />   
+          </PedidoProvider>
         </Switch>
-      </Router> */}
-
-          {/* <PedidoProvider>
-
-            
-
-            <Pedidos />
-
-          </PedidoProvider> */}
-
-
-          {/* <Recetas/> */}
-
-          
-
-          <Usuarios/>
-          {/* <Boletas/> */}
-
-          
-
-          {/* <SolicitudProvider> */}
-
-          {/* <FormularioSolicitud/> */}
-          {/* <Solicitudes/> */}
-          {/* </SolicitudProvider> */}
+      </Router>
+                
     </div>
+
   );
 }
 

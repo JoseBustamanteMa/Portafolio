@@ -60,4 +60,4 @@ function Navbar() {
   )
 }
 
-export default withAuthenticationRequired(Navbar)
+export default (Navbar)
