@@ -25,7 +25,7 @@ import FormularioSolicitud from "./componentes/Paginas/Solicitudes/FormularioSol
 const App = () => {
   return (
     <div>
-      <Router>
+      {/* <Router>
         <Navbar/>
         <Switch>
           <Route path='/' exact component={Inicio} />
@@ -43,7 +43,9 @@ const App = () => {
             <Route path='/pedidos-cocina' component={PedidosCocina} />   
           </PedidoProvider>
         </Switch>
-      </Router>
+      </Router> */}
+
+      <Reservas/>
                 
     </div>
 

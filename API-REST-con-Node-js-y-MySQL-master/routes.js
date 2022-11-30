@@ -258,7 +258,7 @@ routes.post('/reserva', (req, res)=>{
 routes.delete('/reserva/:idReserva', (req, res)=>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
-        conn.query('DELETE FROM empleado WHERE idReserva = ?', [req.params.idReserva], (err, rows)=>{
+        conn.query('DELETE FROM reserva WHERE id_reserva = ?', [req.params.idReserva], (err, rows)=>{
             if(err) return res.send(err)
 
             res.send('reserva eliminado')
@@ -269,7 +269,7 @@ routes.delete('/reserva/:idReserva', (req, res)=>{
 routes.put('/reserva/:idReserva', (req, res)=>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
-        conn.query('UPDATE reserva set ? WHERE idReserva = ?', [req.body, req.params.idReserva], (err, rows)=>{
+        conn.query('UPDATE reserva set ? WHERE id_reserva = ?', [req.body, req.params.idReserva], (err, rows)=>{
             if(err) return res.send(err)
 
             res.send('usuario reserva')
