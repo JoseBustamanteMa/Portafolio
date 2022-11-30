@@ -58,7 +58,7 @@ const FormularioSolicitud = ({
         solicitud: solicitud,
         fecha_solicitud: fecha.format('YYYY-MM-DD'),
         hora_solicitud: fecha.format('hh:mm:ss'),
-        estado: false
+        estado: 0
 
       })
     }
@@ -72,7 +72,7 @@ const FormularioSolicitud = ({
       solicitud: solicitud,
       fecha_solicitud: fecha.format('YYYY-MM-DD'),
       hora_solicitud: fecha.format('hh:mm:ss'),
-      estado: false
+      estado: 0
     }]
 
     setSolicitudes(arrayAgregado)
