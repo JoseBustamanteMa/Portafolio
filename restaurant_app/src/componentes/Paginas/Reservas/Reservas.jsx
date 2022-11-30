@@ -31,7 +31,7 @@ const Reservas = () => {
 
     obtenerReservas();
 
-  const obtenerUsuarios = async () => {
+    const obtenerUsuarios = async () => {
       const data = await fetch("http://localhost:9000/api/usuario");
       const sol = await data.json();
       setUsuarios(sol);
@@ -39,8 +39,8 @@ const Reservas = () => {
 
     obtenerUsuarios();
 
-    
-  const obtenerMesas = async () => {
+
+    const obtenerMesas = async () => {
       const data = await fetch("http://localhost:9000/api/mesa");
       const mesa = await data.json();
       setMesas(mesa);
@@ -63,8 +63,7 @@ const Reservas = () => {
       showDenyButton: true,
       denyButtonColor: '#01cc17'
     }).then(response => {
-      if(response.isConfirmed)
-      {
+      if (response.isConfirmed) {
         const requestInit = {
           method: "DELETE",
         };
@@ -72,7 +71,7 @@ const Reservas = () => {
           .then((res) => res.text())
           .then((res) => console.log(res));
         const arrayEliminado = reservas.filter((item) => item.id_reserva !== id);
-  
+
         setReservas(arrayEliminado);
 
 
@@ -87,9 +86,9 @@ const Reservas = () => {
       }
     })
 
-    
+
   };
- 
+
 
   // const editar = (s) => {
   //   setIdReserva(s.id_reserva)
@@ -102,38 +101,64 @@ const Reservas = () => {
   // }
 
   return (
-    <div>
-      
+    <div className='container'>
 
-      <div className='container'>
+
+      <div className='container box1 '>
+        <br />
+        <div className="text-center">
+          <h1>Reservaciones</h1>
+        </div>
+
 
         <FormularioReserva
-        reservas={reservas} setReservas={setReservas}
-        usuarios={usuarios} setUsuarios={setUsuarios}
-        mesas={mesas} setMesas={setMesas}
-        idReserva={idReserva} setIdReserva={setIdReserva}
-        cantPersonas={cantPersonas} setCantPersonas={setCantPersonas}
-        fechaReserva={fechaReserva} setFechaReserva={setFechaReserva}
-        fechaEfectuada={fechaEfectuada} setFechaEfectuada={setFechaEfectuada}
-        idMesa={idMesa} setIdMesa={setIdMesa}
-        idUsuario={idUsuario} setIdUsuario={setIdUsuario}
-        editarReserva={editarReserva} setEditarReserva={setEditarReserva}
+          reservas={reservas} setReservas={setReservas}
+          usuarios={usuarios} setUsuarios={setUsuarios}
+          mesas={mesas} setMesas={setMesas}
+          idReserva={idReserva} setIdReserva={setIdReserva}
+          cantPersonas={cantPersonas} setCantPersonas={setCantPersonas}
+          fechaReserva={fechaReserva} setFechaReserva={setFechaReserva}
+          fechaEfectuada={fechaEfectuada} setFechaEfectuada={setFechaEfectuada}
+          idMesa={idMesa} setIdMesa={setIdMesa}
+          idUsuario={idUsuario} setIdUsuario={setIdUsuario}
+          editarReserva={editarReserva} setEditarReserva={setEditarReserva}
         />
-        <div className='table'>
-          <ul>
-            {reservas.map(r=> (
-              // <li key={r.id_reserva}>{r.id_reserva}   ------- {r.fecha_reserva.split('T')[0]}  {r.fecha_reserva.split('T')[1].split('.')[0]}<button onClick={editar} className='btn btn-warning'>Editar</button></li>
-            <li className='list-group-item' key={r.id_reserva}>{r.fecha_reserva.split('T')[0]} - {r.hora_reserva} - Mesa: {r.id_mesa} --- Cantidad de personas: {r.cant_perso}
-            
-            <button className='btn btn-danger' onClick={() => eliminarReserva(r.id_reserva)}>Cancelar reserva</button>
-            </li>
-            ))}
-          </ul>
+        <table className='table col-12 table-dark  table-hover box align-middle'>
+          <thead>
+            <tr>
+              <th className='col-2'>Mesa</th>
+              <th className='col-6'>Fecha</th>
+              <th className='col-2'>Cantidad Personas</th>
+              <th className='col-2'></th>
+            </tr>
+          </thead>
+          {reservas.map(r => (
+            <tbody>
+              <tr>
 
-        </div>
+                <td>
+                  {r.id_mesa}
+                </td>
+                <td key={r.id_reserva}>
+                  {r.fecha_reserva.split('T')[0]} {r.hora_reserva}
+                </td>
+
+
+                <td>{r.cant_perso}</td>
+                <td><button className='btn btn-danger' onClick={() => eliminarReserva(r.id_reserva)}>Cancelar reserva</button>
+                </td>
+
+
+
+              </tr>
+            </tbody>))}
+            
+
+        </table>
+        <br />
       </div>
 
-    </div>
+    </div >
   )
 }
 
