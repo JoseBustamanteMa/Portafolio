@@ -27,8 +27,15 @@ const Pedidos = () => {
   const [encargado, setEncargado] = React.useState();
 
 
-  const { pedidos, setPedidos, recetas, setRecetas, pedidoRecetas, setPedidoRecetas, mesas, setMesas,
-    usuarios, setUsuarios, boletas, setBoletas } = React.useContext(PedidosContext)
+  // const { pedidos, setPedidos, recetas, setRecetas, pedidoRecetas, setPedidoRecetas, mesas, setMesas,
+  //   usuarios, setUsuarios, boletas, setBoletas } = React.useContext(PedidosContext)
+
+  const [recetas, setRecetas] = React.useState([]);
+    const [pedidos, setPedidos] = React.useState([]);
+    const [pedidoRecetas, setPedidoRecetas] = React.useState([]);
+    const [mesas, setMesas] = React.useState([]);
+    const [usuarios, setUsuarios] = React.useState([]);
+    const [boletas, setBoletas] = React.useState([]);
 
 
 

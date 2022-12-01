@@ -202,7 +202,9 @@ const FormularioReserva = ({
                         autoSave=""
                         value={fechaReserva} 
                         onChange={handleDateChange} 
-                        format="YYYY-MM-DD hh:mm"/>
+                        format="YYYY-MM-DD hh:mm"
+                        placeholder="Elige la fecha"
+                        />
                     </MuiPickersUtilsProvider>|
                 
 

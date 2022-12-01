@@ -7,13 +7,9 @@ import * as GiIcons from "react-icons/gi";
 import * as FiIcons  from "react-icons/fi";
 import * as BsIcons  from "react-icons/bs";
 
+
 export const SidebarData = [
-    {
-        tittle: 'Inicio',
-        path:'/',
-        icon: <FaIcons.FaHome/>,
-        cName: 'nav-text'
-    },
+   
     {
         tittle: 'Reservas',
         path:'/reservas',
