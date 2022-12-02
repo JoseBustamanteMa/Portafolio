@@ -1,5 +1,6 @@
 import React from "react";
 // import {format} from 'date-fns'
+import ReactHtmlTableToExcel from "react-html-table-to-excel";
 
 const Boletas = () => {
   const [boletas, setBoletas] = React.useState([]);
@@ -84,7 +85,7 @@ const Boletas = () => {
     
     <div className="container mt-5">
 
-
+    
     <div className="row d-flex justify-content-between">
       <div className="col-3 ">
 
@@ -109,21 +110,32 @@ const Boletas = () => {
         </li>
       ))} */}
       <div>
-        <table className="table table-dark table-responsive table-hover box align-middle">
-          <thead>
+      
+        <table id="1" className="table table-dark table-responsive table-hover box align-middle">
+        
+          <thead className="align-middle">
             <tr>
               <td>Folio</td>
               <td>Fecha</td>
               <td>Monto</td>
+              <td><ReactHtmlTableToExcel
+                    id="reporteBoleta"
+                    table="1"
+                    className="btn btn-3"
+                    filename="Reporte boleta"
+                    sheet="pagina 1"
+                    buttonText="Imp.Excel"/></td>
             </tr>
           </thead>
           <tbody>
-          {resultsDia.map((b) => (
+          {resultsDia.map((b, index) => (
             
-              <tr>
+              <tr key={index}>
                 <td>{b.id_boleta}</td>
                 <td>{b.fecha_boleta}</td>
                 <td>$ {b.total_pagar}</td>
+                <td></td>
+                
               </tr>
 
           ))}
@@ -132,16 +144,20 @@ const Boletas = () => {
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
             </tr>
             <tr>
               <td></td>
               <td></td>
               <td>Total</td>
+              <td></td>
+              
             </tr>
             <tr >
               <td>Ganancias periodo filtrado: </td>
               <td></td>
               <td>$ {ganancias}</td>
+              <td></td>
             </tr>  
           </tbody>
         </table>

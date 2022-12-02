@@ -7,53 +7,26 @@ import FormularioCliente from './FormularioCliente';
 const FormularioLogin = ({ user, setUser, correo, setCorreo, pass, setPass, usuarios, setUsuarios }) => {
 
 
-  const [pedidos, setPedidos] = React.useState([])
+  // const [pedidos, setPedidos] = React.useState([])
   // const [usuarios, setUsuarios] = React.useState([])
   const [comunas, setComunas] = React.useState([])
-  const [roles, setRoles] = React.useState([])
 
 
-  const [idUsuario, setIdUsuario] = React.useState('')
-  const [nomUsuario, setNomUsuario] = React.useState('')
-  const [nom2Usuario, setNom2Usuario] = React.useState('')
-  const [apPaternoUsuario, setApPaternoUsuario] = React.useState('')
-  const [apMaternoUsuario, setApMaternoUsuario] = React.useState('')
-  const [direccion, setDireccion] = React.useState('')
-  const [idComuna, setIdComuna] = React.useState('')
-  const [correoUsuario, setCorreoUsuario] = React.useState('')
-  const [passUsuario, setPassUsuario] = React.useState('')
-  const [passUsuario2, setPassUsuario2] = React.useState('')
-  const [rol, setRol] = React.useState('')
-
-  const EstadoDeUsuario = () => {
-
-  }
-
-  // React.useEffect(() => {
-  //   const obtenerUsuarios = async () => {
-  //     const data = await fetch("http://localhost:9000/api/usuario");
-  //     const rols = await data.json();
-  //     setUsuarios(rols);
-  //   };
-  //   obtenerUsuarios();
-  // }, [])
-  
-
-  
   React.useEffect(() => {
     const obtenerUsuarios = async () => {
       const data = await fetch("http://localhost:9000/api/usuario");
-      const usu = await data.json();
-      setUsuarios(usu);
+      const rols = await data.json();
+      setUsuarios(rols);
     };
     obtenerUsuarios();
+   
 
-    const obtenerPedidos = async () => {
-      const data = await fetch("http://localhost:9000/api/pedido");
-      const usu = await data.json();
-      setPedidos(usu);
-    };
-    obtenerPedidos();
+    // const obtenerPedidos = async () => {
+    //   const data = await fetch("http://localhost:9000/api/pedido");
+    //   const usu = await data.json();
+    //   setPedidos(usu);
+    // };
+    // obtenerPedidos();
 
     const obtenerComunas = async () => {
       const data = await fetch("http://localhost:9000/api/comuna");
@@ -62,12 +35,12 @@ const FormularioLogin = ({ user, setUser, correo, setCorreo, pass, setPass, usua
     };
     obtenerComunas();
 
-    const obtenerRoles = async () => {
-      const data = await fetch("http://localhost:9000/api/rol");
-      const usu = await data.json();
-      setRoles(usu);
-    };
-    obtenerRoles();
+    // const obtenerRoles = async () => {
+    //   const data = await fetch("http://localhost:9000/api/rol");
+    //   const usu = await data.json();
+    //   setRoles(usu);
+    // };
+    // obtenerRoles();
 
 
   }, []);
@@ -164,35 +137,20 @@ const FormularioLogin = ({ user, setUser, correo, setCorreo, pass, setPass, usua
           />
         </div>
         <div>
-          <a
-            data-bs-toggle="modal"
-            data-bs-target="#myModal"
-          >
-            <FormularioCliente
-              pedidos={pedidos} setPedidos={setPedidos}
-              usuarios={usuarios} setUsuarios={setUsuarios}
-              idUsuario={idUsuario} setIdUsuario={setIdUsuario}
-              nomUsuario={nomUsuario} setNomUsuario={setNomUsuario}
-              nom2Usuario={nom2Usuario} setNom2Usuario={setNom2Usuario}
-              apPaternoUsuario={apPaternoUsuario} setApPaternoUsuario={setApPaternoUsuario}
-              apMaternoUsuario={apMaternoUsuario} setApMaternoUsuario={setApMaternoUsuario}
-              direccion={direccion} setDireccion={setDireccion}
-              idComuna={idComuna} setIdComuna={setIdComuna}
-              correoUsuario={correoUsuario} setCorreoUsuario={setCorreoUsuario}
-              passUsuario={passUsuario} setPassUsuario={setPassUsuario}
-              passUsuario2={passUsuario2} setPassUsuario2={setPassUsuario2}
-              rol={rol} setRol={setRol}
-              roles={roles} setRoles={setRoles}
-              comunas={comunas} setComunas={setComunas}
-
-
-            />
-            ¿Desea registrarse?
-          </a>
+          
+            
+            
+          
         </div>
         <div className='container col-6'>
           {!user && <button className='btn btn-primary' type='submit'>Iniciar sesión</button>}</div>
       </form>
+      
+      <FormularioCliente
+              
+              comunas={comunas} setComunas={setComunas}
+              usuarios={usuarios} setUsuarios={setUsuarios}
+            />
       <br />
     </div>
   )

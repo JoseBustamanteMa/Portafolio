@@ -8,6 +8,7 @@ const Usuarios = () => {
   const [usuarios, setUsuarios] = React.useState([])
   const [comunas, setComunas] = React.useState([])
   const [roles, setRoles] = React.useState([])
+  const [reservas, setReservas] = React.useState([])
 
 
 
@@ -59,6 +60,12 @@ const Usuarios = () => {
       setRoles(usu);
     };
     obtenerRoles();
+    const obtenerReservas = async () => {
+      const data = await fetch("http://localhost:9000/api/reserva");
+      const usu = await data.json();
+      setReservas(usu);
+    };
+    obtenerReservas();
 
 
   }, []);
@@ -66,6 +73,16 @@ const Usuarios = () => {
 
 
   const eliminarUsuario = (id) => {
+
+    let existeEnBoleta = ''
+    reservas.forEach( r => {
+      if(r.id_usuario === id){
+        existeEnBoleta = r.id_usuario
+      }
+    })
+
+    console.log(existeEnBoleta)
+    console.log(id)
 
     let existe = ''
 
@@ -83,6 +100,17 @@ const Usuarios = () => {
         showConfirmButton: false,
         timer: 1500
       })
+      return
+    }
+    if (existeEnBoleta) {
+      Swal.fire({
+        title: 'Advertencia',
+        text: 'No se puede eliminar este usuario, ya que está siendo asignado',
+        icon: 'warning',
+        showConfirmButton: false,
+        timer: 1500
+      })
+      return
     }
 
     if (!existe) {

@@ -2,25 +2,26 @@ import { nanoid } from 'nanoid'
 import React from 'react'
 import Swal from 'sweetalert2'
 
-const FormularioCliente = ({pedidos,setPedidos,
-    usuarios, setUsuarios,
-    idUsuario, setIdUsuario ,
-    nomUsuario , setNomUsuario,
-    nom2Usuario , setNom2Usuario,
-    apPaternoUsuario , setApPaternoUsuario,
-    apMaternoUsuario, setApMaternoUsuario,
-    direccion, setDireccion,
-    idComuna ,setIdComuna,
-    correoUsuario, setCorreoUsuario,
-    passUsuario , setPassUsuario,
-    passUsuario2 , setPassUsuario2,
-    rol, setRol,
-    roles, setRoles,
+const FormularioCliente = ({
     comunas, setComunas,
-    editarUsuario, setEditarUsuario
+    usuarios, setUsuarios
 
 }) => {
 
+
+    const [idUsuario, setIdUsuario] = React.useState('')
+  const [nomUsuario, setNomUsuario] = React.useState('')
+  const [nom2Usuario, setNom2Usuario] = React.useState('')
+  const [apPaternoUsuario, setApPaternoUsuario] = React.useState('')
+  const [apMaternoUsuario, setApMaternoUsuario] = React.useState('')
+  const [direccion, setDireccion] = React.useState('')
+  const [idComuna, setIdComuna] = React.useState('')
+  const [correoUsuario, setCorreoUsuario] = React.useState('')
+  const [passUsuario, setPassUsuario] = React.useState('')
+  const [passUsuario2, setPassUsuario2] = React.useState('')
+  
+
+  
 
     const [errornomUsuario, setErrorNomUsuario] = React.useState(false)
     const [errornom2Usuario, setErrorNom2Usuario] = React.useState(false)
@@ -32,7 +33,7 @@ const FormularioCliente = ({pedidos,setPedidos,
     const [errorPassUsuario, setErrorPassUsuario] = React.useState(false)
     const [errorPassUsuario2, setErrorPassUsuario2] = React.useState(false)
     const [errorPassUsuarioCoincidencia, setErrorPassUsuarioCoincidencia] = React.useState(false)
-    const [errorRol, setErrorRol] = React.useState(false)
+    
     const [existeCorreo, setExisteCorreo] = React.useState(false)
 
 
@@ -140,127 +141,17 @@ const FormularioCliente = ({pedidos,setPedidos,
             // setEditarUsuario(false)
             
         }
+
+        Swal.fire({
+            title: 'Registrado',
+            text: `${nomUsuario} has sido registrado correctamente`
+        })
        
         limpiarCasillas()
 }   
 
 
-const actualizarUsuario = (e) => {
-    e.preventDefault()
-    //Validacion de datos
 
-    if(!nomUsuario.trim()){
-        setErrorNomUsuario(true)
-        return
-    }
-    setErrorNomUsuario(false)
-
-    
-    if(!apPaternoUsuario.trim()){
-        setErrorApPaternoUsuario(true)
-        return
-    }
-    setErrorApPaternoUsuario(false)
-
-    
-    if(!idComuna.trim()){
-        setErrorIdComuna(true)
-        return
-    }
-    setErrorIdComuna(false)
-
-
-
-    
-    
-    
-    if(!correoUsuario.trim()){
-        setErrorCorreoUsuario(true)
-        return
-    }
-    setErrorCorreoUsuario(false)
-
-    if(!passUsuario.trim()){
-        setErrorPassUsuario(true)
-        return
-    }
-    setErrorPassUsuario(false)
-
-    if(!passUsuario2.trim()){
-        setErrorPassUsuario2(true)
-        return
-    }
-
-    if(passUsuario !== passUsuario2){
-        setErrorPassUsuarioCoincidencia(true)
-        return
-    }
-    setErrorPassUsuarioCoincidencia(false)
-
-    if(!rol.trim()){
-        setErrorRol(true)
-        return
-    }
-    setErrorRol(false)
-
-
-
-    let existeCorreo = ''
-    usuarios.forEach(u => {
-        if(u.correo_usuario === correoUsuario){
-            existeCorreo = 'si'
-        }
-    })
-
-    if(existeCorreo){
-        setExisteCorreo(true)
-    }
-    if(!existeCorreo){
-        const requestInit = {
-            method: 'PUT',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                id_usuario: idUsuario, 
-                nom_usuario: nomUsuario,
-                nom2_usuario: nom2Usuario,
-                ap_paterno: apPaternoUsuario,
-                ap_materno: apMaternoUsuario,
-                direccion: direccion,
-                id_comuna: idComuna,
-                correo_usuario: correoUsuario,
-                usuario_pass : passUsuario,
-                id_rol: rol
-            })
-            }
-            fetch('http://localhost:9000/api/usuario/' + idUsuario, requestInit)
-            .then(res => res.text())
-            .then(res => console.log(res))
-    
-    
-            const arrayEditado = usuarios.map((item) => (item.id_usuario === idUsuario ? (
-                { id_usuario: idUsuario, 
-                    nom_usuario: nomUsuario,
-                    nom2_usuario: nom2Usuario,
-                    ap_paterno: apPaternoUsuario,
-                    ap_materno: apMaternoUsuario,
-                    direccion: direccion,
-                    id_comuna: idComuna,
-                    correo_usuario: correoUsuario,
-                    usuario_pass : passUsuario,
-                    id_rol: rol} 
-            ) : item))
-    
-            setUsuarios(arrayEditado)
-    
-           
-
-    }
-
-    limpiarCasillas()
-    
-     
-
-    }
 
     const limpiarCasillas = () => {
         setIdUsuario('')
@@ -272,9 +163,9 @@ const actualizarUsuario = (e) => {
         setIdComuna('')
         setPassUsuario('')
         setPassUsuario2('')
-        setRol('')
+        
         setDireccion('')
-        setEditarUsuario(false)
+       
 
         setErrorNomUsuario(false)
         setErrorNom2Usuario(false)
@@ -284,15 +175,15 @@ const actualizarUsuario = (e) => {
         setErrorIdComuna(false)
         setErrorPassUsuario(false)
         setErrorPassUsuario2(false)
-        setErrorRol(false)
+        
         setErrorDireccion(false)
         
     }
 
   return (
     <div>
-      <div>
-        <button className='btn btn-primary' data-bs-toggle="modal" data-bs-target="#myModal">¿Desea Registrarse?</button>
+      <div className='text-center mb-3'>
+        <a className='' data-bs-toggle="modal" data-bs-target="#myModal">¿Desea Registrarse?</a>
       </div>
 
 
@@ -302,7 +193,7 @@ const actualizarUsuario = (e) => {
 
       
       <div className="modal-header">
-        <h4 className="modal-title"> Agregar Usuario</h4>
+        <h4 className="modal-title">Agregar Usuario</h4>
         
       </div>
       <form onSubmit={agregarUsuario}>
@@ -429,7 +320,7 @@ const actualizarUsuario = (e) => {
       </div>
       <div className="modal-footer">
 
-        <button className='btn btn-success'>Registrarse</button>
+        <button type='submit' className='btn btn-success'>Registrarse</button>
         
         <button onClick={limpiarCasillas} type="button" className="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
       </div>

@@ -36,7 +36,7 @@ const FormularioRecProductos = ({
       
       Swal.fire({
         title: 'Advertencia',
-        text: 'El producto ya existe en la boleta',
+        text: 'El producto ya existe en la receta',
         icon: "warning",
         timer: 1500,
         showConfirmButton: false
