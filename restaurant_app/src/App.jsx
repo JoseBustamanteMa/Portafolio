@@ -22,20 +22,20 @@ import Solicitudes from "./componentes/Paginas/Solicitudes/Solicitudes";
 import SolicitudProvider from "./componentes/Paginas/context/SolicitudProvider";
 import FormularioSolicitud from "./componentes/Paginas/Solicitudes/FormularioSolicitud";
 import FormularioLogin from "./componentes/Login/FormularioLogin"
-import {ProtectedRoute} from "./componentes/Login/ProtectedRoute"
+import { ProtectedRoute } from "./componentes/Login/ProtectedRoute"
 
 
 const App = () => {
   const [user, setUser] = React.useState(null)
-    const [correo, setCorreo] = React.useState('')
-    const [pass, setPass] = React.useState('')
-   const [usuarios, setUsuarios] = React.useState([])
+  const [correo, setCorreo] = React.useState('')
+  const [pass, setPass] = React.useState('')
+  const [usuarios, setUsuarios] = React.useState([])
 
 
-  
+
   return (
 
-    
+
     <div>
       {/* <Router>
         <Navbar/>
@@ -57,55 +57,56 @@ const App = () => {
         </Switch>
       </Router> */}
 
-<>
+      <>
 
-{/* <FormularioLogin 
+        {/* <FormularioLogin 
 user={user} setUser={setUser} correo={correo} setCorreo={setCorreo} pass={pass} 
 setPass={setPass} usuarios={usuarios} setUsuarios={setUsuarios}/> */}
-<BrowserRouter>
-{/* <Navigation/> */}
-  {/* {
+        <BrowserRouter>
+          {/* <Navigation/> */}
+          {/* {
     user ? <button>Cerrar sesión</button> : <button>Iniciar sesión</button>
   } */}
-  
-    <Navbar user={user} setUser={setUser}/>
-  
-  <Routes>
-    <Route path="*" element={<FormularioLogin user={user} setUser={setUser} correo={correo} setCorreo={setCorreo} pass={pass} 
-      setPass={setPass} usuarios={usuarios} setUsuarios={setUsuarios}/>}/>
-      
-    <Route element={<ProtectedRoute isAllowed={!!user}/>}>
 
-      
-      {/* <Route path="/NavBar" element={<Navbar/>} /> */}
-      <Route path='/productos' element={<Productos/>} />
-      <Route path='/solicitudes' element={<Solicitudes/>} />
-      
-      <Route path="/reservas" element={<Reservas/>}/>
-      <Route path='/recetas' element={<Recetas/>} />
-      <Route path='/empleados' element={<Empleados/>} />
-      <Route path='/rol' element={<Roles/>} />
-      <Route path='/mesas' element={<Mesas/>} />
-      <Route path='/proveedores' element={<Proveedores/>} />
-      <Route path='/usuarios' element={<Usuarios/>} />
-      <Route path='/pedidos' element={<Pedidos/>} />
-      <Route path='/pedidos-cocina' element={<PedidosCocina/>} />   
-    </Route>
+          <Navbar user={user} setUser={setUser} />
 
-    <Route element={<ProtectedRoute isAllowed={!!user && user.rol.includes('0003')}/>}>
-        <Route path='/pedidos' element={<Pedidos/>} />
-        <Route path='/pedidos-cocina' element={<PedidosCocina/>} />
-        <Route path='/recetas' element={<Recetas/>} />
-    </Route>
-</Routes>
+          <Routes>
+            <Route path="*" element={<FormularioLogin user={user} setUser={setUser} correo={correo} setCorreo={setCorreo} pass={pass}
+              setPass={setPass} usuarios={usuarios} setUsuarios={setUsuarios} />} />
+
+            <Route element={<ProtectedRoute isAllowed={!!user} />}>
 
 
-</BrowserRouter>
+              {/* <Route path="/NavBar" element={<Navbar/>} /> */}
+              <Route path='/productos' element={<Productos />} />
+              <Route path='/solicitudes' element={<Solicitudes />} />
 
-          
-          
+              <Route path="/reservas" element={<Reservas />} />
+              <Route path='/recetas' element={<Recetas />} />
+              <Route path='/empleados' element={<Empleados />} />
+              <Route path='/rol' element={<Roles />} />
+              <Route path='/mesas' element={<Mesas />} />
+              <Route path='/proveedores' element={<Proveedores />} />
+              <Route path='/usuarios' element={<Usuarios />} />
+              <Route path='/pedidos' element={<Pedidos />} />
+              <Route path='/Boletas' element={<Boletas />} />
+              <Route path='/pedidos-cocina' element={<PedidosCocina />} />
+            </Route>
 
-</>
+            <Route element={<ProtectedRoute isAllowed={!!user && user.rol.includes('0003')} />}>
+              <Route path='/pedidos' element={<Pedidos />} />
+              <Route path='/pedidos-cocina' element={<PedidosCocina />} />
+              <Route path='/recetas' element={<Recetas />} />
+            </Route>
+          </Routes>
+
+
+        </BrowserRouter>
+
+
+
+
+      </>
     </div>
 
   );

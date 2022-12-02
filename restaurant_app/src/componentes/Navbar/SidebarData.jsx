@@ -30,7 +30,7 @@ export const SidebarData = [
     },
     {
         tittle: 'Productos',
-        path:'/Productos',
+        path:'/productos',
         icon: <FaIcons.FaBox/>,
         cName: 'nav-text'
     },
@@ -43,6 +43,12 @@ export const SidebarData = [
     {
         tittle: 'Solicitud',
         path: '/solicitudes',
+        icon: <IoIcons.IoMdPeople/>,
+        cName: 'nav-text'
+    },
+    {
+        tittle: 'Boletas',
+        path: '/boletas',
         icon: <IoIcons.IoMdPeople/>,
         cName: 'nav-text'
     },
